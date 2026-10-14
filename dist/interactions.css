@@ -1,0 +1,27 @@
+/* Additive motion layer: the original layout, colors and typography stay intact. */
+.header nav a:hover:after,.header nav a:focus-visible:after{transform:scaleX(1)}
+.button,.outline-button,.contact-links>a,.contact-links>button{position:relative;isolation:isolate;overflow:hidden;translate:var(--magnet-x,0px) var(--magnet-y,0px);transition:translate .4s var(--ease),transform .4s var(--ease),background .3s,border-color .3s,box-shadow .4s}
+.button>span,.outline-button>span,.contact-links>*>span:last-child{display:inline-block;transition:transform .4s var(--ease)}
+.button:hover>span,.outline-button:hover>span,.contact-links>*:hover>span:last-child{transform:translate(3px,-3px)}
+.contact-links>*:hover,.contact-links>*:focus-visible{border-color:var(--accent);box-shadow:0 8px 32px #0003}
+.tap-wave{position:absolute;pointer-events:none;z-index:-1;border-radius:50%;width:220px;height:220px;background:#c4b18e38;translate:-50% -50%;animation:tap-wave .7s ease-out forwards}
+.primary .tap-wave{background:#4d3e3033}
+.project-image{transform:perspective(900px) rotateX(var(--tilt-x,0deg)) rotateY(var(--tilt-y,0deg));transition:transform .65s var(--ease),box-shadow .65s var(--ease);isolation:isolate}
+.project-image:before,.about-photo:before{content:'';position:absolute;inset:0;z-index:2;pointer-events:none;background:radial-gradient(circle at var(--shine-x,50%) var(--shine-y,50%),#f1d6a935,transparent 55%);opacity:0;transition:opacity .4s}
+.project-card:hover .project-image:before,.about-photo:hover:before{opacity:1}
+.project-card:hover .project-image{box-shadow:0 18px 35px #0005}
+.project-card:focus-visible img{transform:scale(1.04);filter:saturate(.9) brightness(.92)}
+.project-card:focus-visible .card-arrow{background:var(--ink);color:var(--bg)}
+.project-card h2{transition:color .3s}.project-card:hover h2,.project-card:focus-visible h2{color:var(--accent)}
+.project-image img{translate:var(--image-x,0px) var(--image-y,0px)}
+.hero-image{translate:var(--hero-x,0px) var(--hero-y,0px);transition:translate 1.1s var(--ease)}
+.about-photo img{translate:var(--image-x,0px) var(--image-y,0px);transition:translate .65s var(--ease),transform 1.2s var(--ease)}
+.traits>div,.about-facts>div,.skills-strip>span:not(.eyebrow){transition:color .3s,translate .4s var(--ease)}
+.traits>div:hover,.about-facts>div:hover,.skills-strip>span:not(.eyebrow):hover{color:var(--accent);translate:0 -4px}
+.fact-icon{transition:transform .4s var(--ease),color .3s}.about-facts>div:hover .fact-icon{transform:rotate(-8deg);color:var(--accent)}
+.contact-art{translate:var(--orbit-x,0px) var(--orbit-y,0px);transition:translate 1s var(--ease)}
+.logo{transition:color .3s,text-shadow .3s}.logo:hover{color:var(--accent);text-shadow:0 0 24px #c4b18e33}
+@keyframes tap-wave{from{scale:0;opacity:1}to{scale:1.7;opacity:0}}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){.hero-image{scale:1.025}.project-image img{transition:translate .65s var(--ease),transform .8s var(--ease),filter .8s}}
+@media(hover:none){.button:active,.filter:active,.contact-links>*:active{scale:.98}.project-image{transform:none}}
+@media(prefers-reduced-motion:reduce){.hero-image,.about-photo img,.project-image img,.contact-art,.button,.outline-button,.contact-links>*,.traits>div,.about-facts>div,.skills-strip>span{translate:none!important;scale:1!important}.project-image{transform:none!important}.tap-wave{display:none}.button>span,.outline-button>span,.contact-links>*>span:last-child{transform:none!important}}
