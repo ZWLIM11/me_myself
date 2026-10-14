@@ -44,11 +44,11 @@
         transition = document.startViewTransition(update);
         await transition.finished;
       } else {
-        const exit = main.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:`translateY(${-direction * 45}px)`}], {duration:280,easing:'cubic-bezier(.4,0,1,1)',fill:'forwards'});
+        const exit = main.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:`translateY(${-direction * 18}px)`}], {duration:160,easing:'cubic-bezier(.4,0,1,1)',fill:'forwards'});
         await exit.finished.catch(()=>{});
         update(); exit.cancel();
         if (!reduceMotion.matches) {
-          const enter = main.animate([{opacity:0,transform:`translateY(${direction * 65}px)`},{opacity:1,transform:'translateY(0)'}],{duration:900,delay:120,fill:'both',easing:'cubic-bezier(.16,1,.3,1)'});
+          const enter = main.animate([{opacity:0,transform:`translateY(${direction * 24}px)`},{opacity:1,transform:'translateY(0)'}],{duration:390,delay:0,fill:'both',easing:'cubic-bezier(.16,1,.3,1)'});
           await enter.finished.catch(()=>{}); enter.cancel();
         }
       }

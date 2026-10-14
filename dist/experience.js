@@ -5,16 +5,16 @@
   const header = document.querySelector('.header');
   const animations = new Set();
   // Animate on entry instead of hiding content: everything remains readable if JS fails.
-  const selector = '.home-block > *, .about-layout > *, .about-toolkit, .photo-gallery > *, .projects-intro, #project-grid > *, .contact-content > *, .photography-page > h1';
+  const selector = '.home-block > :not(.project-grid):not(.photo-carousel), .home-block .project-card, .about-layout > *, .about-toolkit, .photo-gallery > *, .projects-intro, #project-grid > *, .contact-content > *, .photography-page > h1';
   const seen = new WeakSet();
   const observer = new IntersectionObserver(entries => {
     entries.forEach(({target,isIntersecting}) => {
       if (!isIntersecting || target.closest('[hidden]') || reduced.matches || document.documentElement.classList.contains('is-routing')) return;
-      const animation = target.animate([{opacity:.15,translate:'0 42px'},{opacity:1,translate:'0 0'}],{duration:850,easing:'cubic-bezier(.22,1,.36,1)'});
+      const animation = target.animate([{opacity:.65,translate:'0 14px'},{opacity:1,translate:'0 0'}],{duration:460,easing:'cubic-bezier(.2,.65,.3,1)'});
       animations.add(animation); animation.finished.then(()=>animations.delete(animation),()=>animations.delete(animation));
       observer.unobserve(target);
     });
-  }, {threshold:.08});
+  }, {threshold:0,rootMargin:'0px 0px 45px 0px'});
   function watch() { document.querySelectorAll(selector).forEach(element=>{if(!seen.has(element)){seen.add(element);observer.observe(element);}}); }
   watch();
   const mutation = new MutationObserver(watch);
@@ -35,15 +35,16 @@
   const projects=document.querySelector('#projects');
   const end=document.createElement('div');end.className='chapter-end';end.innerHTML='<a href="#photography">Next chapter · Through my lens ↗</a>';projects.append(end);
   const cursor=document.createElement('div');cursor.className='focus-cursor';cursor.setAttribute('aria-hidden','true');
-  cursor.innerHTML='<span class="focus-ring"><span class="focus-label"></span></span>';
+  cursor.innerHTML='<span class="focus-ring"><svg class="circuit-orbit" viewBox="0 0 64 64"><g class="circuit-rotor"><path d="M32 5 55 18v28L32 59 9 46V18Z"/><path d="M32 5v9l8 5M55 46l-8-5v-9M9 46l8-5 8 5"/><circle cx="32" cy="5" r="2.5"/><circle cx="55" cy="46" r="2.5"/><circle cx="9" cy="46" r="2.5"/></g><path class="code-core" d="m27 26-6 6 6 6m10-12 6 6-6 6m-3-15-4 18"/></svg><span class="focus-label"></span></span>';
   document.body.append(cursor);
   const name=document.querySelector('#home-title');
-  let frame=0, point=null, position=null;
-  function hideCursor(){cancelAnimationFrame(frame);frame=0;point=null;position=null;cursor.classList.remove('visible','has-label','over-action');name.classList.remove('name-lit');}
-  function draw(){
+  let frame=0, point=null, position=null, lastTime=0;
+  function hideCursor(){cancelAnimationFrame(frame);frame=0;point=null;position=null;lastTime=0;cursor.classList.remove('visible','has-label','over-action');name.classList.remove('name-lit');}
+  function draw(time){
     frame=0;if(!point)return;
     if(!position)position={...point};
-    position.x+=(point.x-position.x)*.24;position.y+=(point.y-position.y)*.24;
+    const blend=1-Math.exp(-Math.min(lastTime?time-lastTime:16,50)/38);lastTime=time;
+    position.x+=(point.x-position.x)*blend;position.y+=(point.y-position.y)*blend;
     cursor.style.transform=`translate3d(${position.x}px,${position.y}px,0)`;cursor.classList.add('visible');
     if(Math.abs(point.x-position.x)+Math.abs(point.y-position.y)>.2)frame=requestAnimationFrame(draw);
   }
