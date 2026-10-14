@@ -3,6 +3,6 @@
   "version": "1.0.0",
   "private": true,
   "description": "An interactive, cinematic portfolio for Lim Ziwei",
-  "scripts": { "start": "node scripts/serve.mjs", "check": "node --check dist/app.js && node --check dist/content.js && node --check dist/interactions.js && node --check dist/collections.js && node --check dist/collections-content.js && node --check dist/experience.js && node --check dist/polish.js", "test": "node scripts/test-interactions.mjs" },
+  "scripts": { "start": "node scripts/serve.mjs", "check": "node --check dist/app.js && node --check dist/content.js && node --check dist/interactions.js && node --check dist/collections.js && node --check dist/collections-content.js && node --check dist/experience.js && node --check dist/polish.js && node --check dist/editor.js && node --check dist/gallery-sync.js && node --check worker.mjs", "test": "node scripts/test-interactions.mjs && node scripts/test-photography.mjs" },
   "engines": { "node": ">=18" }
 }

@@ -1,0 +1,12 @@
+{
+  "name": "me-myself",
+  "main": "worker.mjs",
+  "compatibility_date": "2026-10-14",
+  "assets": {
+    "directory": "./dist",
+    "binding": "ASSETS",
+    "run_worker_first": ["/api/*"]
+  }
+  // After creating your R2 bucket, add this binding before the next Git deployment:
+  // , "r2_buckets": [{"binding":"PHOTOS","bucket_name":"ziwei-photography"}]
+}

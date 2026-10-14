@@ -22,6 +22,10 @@ Open http://127.0.0.1:4173. Run `npm run check` to check JavaScript syntax.
 
 ## Update your details
 
+### Photography editor
+
+Open `/photography-editor.html` to upload photos and edit titles, categories, image descriptions, locations, and captions. A visibility switch hides/restores photos without deleting them. Photos are stored in Cloudflare R2 and populate both gallery views. Your current Workers deployment uses `worker.mjs` and `wrangler.jsonc`; follow [PHOTOGRAPHY-SETUP.md](PHOTOGRAPHY-SETUP.md) to connect storage and the private editor key. Until that setup is completed, uploads are unavailable and the existing public gallery still works. Run `node scripts/test-photography.mjs` for API tests with mocked storage.
+
 The expanded home page includes featured projects, a photography carousel, a short biography, clickable skills, and a contact section. The Photography page has category filters; real photos open in an accessible dialog when supplied.
 
 ### Spaces ready for your content
