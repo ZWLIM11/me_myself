@@ -1,0 +1,28 @@
+/* Quiet, page-specific scenery. Decorative layers never intercept input. */
+body,body:has(.about-page.active),body:has(.projects-page.active){background:#101412}
+.page:not(.home-page),.home-block{isolation:isolate;position:relative;background-color:#101412}
+.page:not(.home-page)::before,.home-block::before{content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;background-repeat:no-repeat}
+/* Home: keep the portrait, add fine framing around the editorial composition. */
+.home-hero::after{content:'';position:absolute;inset:115px 3.3% 100px;pointer-events:none;background:linear-gradient(#c4b18e50,#c4b18e50) left top/40px 1px no-repeat,linear-gradient(#c4b18e50,#c4b18e50) left top/1px 40px no-repeat,linear-gradient(#c4b18e40,#c4b18e40) right bottom/40px 1px no-repeat,linear-gradient(#c4b18e40,#c4b18e40) right bottom/1px 40px no-repeat}
+/* About: a sparse graph, suggesting connections between interests. */
+.about-page,.personal-block{background-image:radial-gradient(ellipse at 95% 25%,#25483b30,transparent 65%)}
+.about-page::before,.personal-block::before{background-image:url('assets/field-notes.svg');background-position:right top;background-size:min(78vw,1050px) auto;opacity:.23;mask-image:linear-gradient(90deg,transparent 15%,#000 75%)}
+/* Projects: circuit traces on a faint engineering grid. */
+.projects-page,.featured-block{background-image:radial-gradient(ellipse at 95% 10%,#24474b38,transparent 65%)}
+.projects-page::before,.featured-block::before{background-image:url('assets/data-traces.svg'),linear-gradient(#819c9b12 1px,transparent 1px),linear-gradient(90deg,#819c9b12 1px,transparent 1px);background-size:min(85vw,1150px) auto,80px 80px,80px 80px;background-position:right top,center top,center top;background-repeat:no-repeat,repeat,repeat;opacity:.38;mask-image:linear-gradient(110deg,transparent 5%,#000 95%)}
+/* Photography: oversized lens contours and registration marks. */
+.photography-page,.photo-preview{background-image:radial-gradient(ellipse at 95% 10%,#3d394532,transparent 60%)}
+.photography-page::before,.photo-preview::before{background-image:repeating-radial-gradient(circle at 100% 0,transparent 0 89px,#a59ab922 90px 91px,transparent 92px 155px);background-size:100% 900px;opacity:.65;mask-image:linear-gradient(145deg,transparent 15%,#000 55%,transparent 90%)}
+/* Contact: dotted coordinates beneath the existing orbital illustration. */
+.contact-page,.home-connect{background-image:radial-gradient(ellipse at right center,#29463b38,transparent 65%)}
+.contact-page::before,.home-connect::before{background-image:radial-gradient(circle,#9eb8a440 1px,transparent 1.5px),url('assets/field-notes.svg');background-size:30px 30px,850px auto;background-repeat:repeat,no-repeat;background-position:right center;opacity:.32;mask-image:linear-gradient(90deg,transparent 20%,#000 100%)}
+.contact-art{background:radial-gradient(ellipse at center,#809f8114,transparent 65%)}
+/* Gentle contrast keeps cards readable without covering the page artwork. */
+.tool-card{background:#10141280}.header.is-scrolled{background:#101412ed}
+@media(max-width:700px){
+ .home-hero::after{inset:100px 4% 95px;background-size:24px 1px,1px 24px,24px 1px,1px 24px}
+ .about-page::before,.personal-block::before{background-size:700px auto;opacity:.15}
+ .projects-page::before,.featured-block::before{background-size:700px auto,56px 56px,56px 56px;opacity:.25}
+ .photography-page::before,.photo-preview::before{opacity:.4}
+ .contact-page::before,.home-connect::before{opacity:.23}
+}
