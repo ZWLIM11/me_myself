@@ -10,30 +10,64 @@
   const infoDialog = document.querySelector('#info-dialog');
   let current = 'home';
   let transition;
+  let navigating = false;
+  let queuedPage = null;
   const escape = text => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const safeUrl = value => { if (!value) return ''; try { const url = new URL(value, location.href); return ['http:', 'https:'].includes(url.protocol) ? url.href : ''; } catch { return ''; } };
 
   function closeMenu() { nav.classList.remove('open'); menu.setAttribute('aria-expanded', 'false'); menu.setAttribute('aria-label', 'Open navigation'); }
-  function showPage(id, initial = false) {
+  async function showPage(id, initial = false) {
     if (!pages.includes(id)) id = 'home';
     closeMenu();
+    if (navigating) { queuedPage = id; return; }
     if (current === id && !initial) return;
     const direction = pages.indexOf(id) >= pages.indexOf(current) ? 1 : -1;
     document.documentElement.style.setProperty('--page-direction', direction);
-    transition?.skipTransition();
     const update = () => {
       for (const page of document.querySelectorAll('.page')) { page.hidden = page.id !== id; page.classList.toggle('active', page.id === id); }
       document.querySelectorAll('.header nav a').forEach(link => { const active = link.hash === '#' + id; link.classList.toggle('active', active); if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); });
       document.querySelector('#page-number').textContent = String(pages.indexOf(id) + 1).padStart(2, '0');
       document.title = `${id === 'home' ? 'Data & Possibility' : id[0].toUpperCase() + id.slice(1)} — Lim Ziwei`;
       current = id;
+      if (!initial) document.getElementById(id).classList.add('has-entered');
       window.scrollTo({top: 0, behavior: 'instant'});
       if (!initial) document.querySelector('#main').focus({preventScroll:true});
       document.dispatchEvent(new CustomEvent('portfolio:pagechange'));
     };
-    if (document.startViewTransition && !reduceMotion.matches && !initial) transition = document.startViewTransition(update);
-    else { update(); if (!reduceMotion.matches && !initial) document.querySelector('#main').animate([{opacity:0,transform:`translateY(${direction * 35}px)`},{opacity:1,transform:'translateY(0)'}],{duration:650,easing:'cubic-bezier(.22,1,.36,1)'}); }
+    if (initial || reduceMotion.matches) { update(); return; }
+    navigating = true;
+    document.documentElement.classList.add('is-routing');
+    const main = document.querySelector('#main');
+    main.setAttribute('aria-busy', 'true');
+    try {
+      if (document.startViewTransition) {
+        transition = document.startViewTransition(update);
+        await transition.finished;
+      } else {
+        const exit = main.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:`translateY(${-direction * 45}px)`}], {duration:280,easing:'cubic-bezier(.4,0,1,1)',fill:'forwards'});
+        await exit.finished.catch(()=>{});
+        update(); exit.cancel();
+        if (!reduceMotion.matches) {
+          const enter = main.animate([{opacity:0,transform:`translateY(${direction * 65}px)`},{opacity:1,transform:'translateY(0)'}],{duration:900,delay:120,fill:'both',easing:'cubic-bezier(.16,1,.3,1)'});
+          await enter.finished.catch(()=>{}); enter.cancel();
+        }
+      }
+    } catch { if (current !== id) update(); }
+    finally {
+      transition = null;
+      navigating = false;
+      document.documentElement.classList.remove('is-routing');
+      main.removeAttribute('aria-busy');
+      document.dispatchEvent(new CustomEvent('portfolio:transitionend'));
+      const next = queuedPage; queuedPage = null;
+      if (next && next !== current) showPage(next);
+    }
   }
+  reduceMotion.addEventListener('change', () => {
+    if (!reduceMotion.matches) return;
+    transition?.skipTransition();
+    document.querySelector('#main').getAnimations().forEach(animation=>animation.cancel());
+  });
   document.addEventListener('click', event => {
     const link = event.target.closest('a[href^="#"]');
     if (!link || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;

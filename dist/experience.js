@@ -9,7 +9,7 @@
   const seen = new WeakSet();
   const observer = new IntersectionObserver(entries => {
     entries.forEach(({target,isIntersecting}) => {
-      if (!isIntersecting || target.closest('[hidden]') || reduced.matches) return;
+      if (!isIntersecting || target.closest('[hidden]') || reduced.matches || document.documentElement.classList.contains('is-routing')) return;
       const animation = target.animate([{opacity:.15,translate:'0 42px'},{opacity:1,translate:'0 0'}],{duration:850,easing:'cubic-bezier(.22,1,.36,1)'});
       animations.add(animation); animation.finished.then(()=>animations.delete(animation),()=>animations.delete(animation));
       observer.unobserve(target);
@@ -21,6 +21,15 @@
   mutation.observe(document.querySelector('#project-grid'),{childList:true});
   mutation.observe(document.querySelector('#photo-gallery'),{childList:true});
   document.addEventListener('portfolio:pagechange',()=>{document.querySelectorAll(selector).forEach(element=>observer.observe(element));hideCursor();});
+  document.addEventListener('portfolio:transitionend',()=>{
+    document.querySelectorAll(selector).forEach(element=>{
+      if(element.closest('[hidden]'))return;
+      const rect=element.getBoundingClientRect();
+      // Already-visible content has just entered with the page. Reveal only later scroll content.
+      if(rect.top<innerHeight && rect.bottom>0) observer.unobserve(element);
+      else observer.observe(element);
+    });
+  });
   const updateHeader = () => header.classList.toggle('is-scrolled',scrollY>30);
   window.addEventListener('scroll',updateHeader,{passive:true}); updateHeader();
   const projects=document.querySelector('#projects');
