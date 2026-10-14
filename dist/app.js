@@ -9,6 +9,7 @@
   const projectDialog = document.querySelector('#project-dialog');
   const infoDialog = document.querySelector('#info-dialog');
   let current = 'home';
+  let transition;
   const escape = text => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const safeUrl = value => { if (!value) return ''; try { const url = new URL(value, location.href); return ['http:', 'https:'].includes(url.protocol) ? url.href : ''; } catch { return ''; } };
 
@@ -17,6 +18,9 @@
     if (!pages.includes(id)) id = 'home';
     closeMenu();
     if (current === id && !initial) return;
+    const direction = pages.indexOf(id) >= pages.indexOf(current) ? 1 : -1;
+    document.documentElement.style.setProperty('--page-direction', direction);
+    transition?.skipTransition();
     const update = () => {
       for (const page of document.querySelectorAll('.page')) { page.hidden = page.id !== id; page.classList.toggle('active', page.id === id); }
       document.querySelectorAll('.header nav a').forEach(link => { const active = link.hash === '#' + id; link.classList.toggle('active', active); if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); });
@@ -25,10 +29,20 @@
       current = id;
       window.scrollTo({top: 0, behavior: 'instant'});
       if (!initial) document.querySelector('#main').focus({preventScroll:true});
+      document.dispatchEvent(new CustomEvent('portfolio:pagechange'));
     };
-    if (document.startViewTransition && !reduceMotion.matches && !initial) document.startViewTransition(update);
-    else { update(); document.body.classList.remove('page-switching'); void document.body.offsetWidth; document.body.classList.add('page-switching'); }
+    if (document.startViewTransition && !reduceMotion.matches && !initial) transition = document.startViewTransition(update);
+    else { update(); if (!reduceMotion.matches && !initial) document.querySelector('#main').animate([{opacity:0,transform:`translateY(${direction * 35}px)`},{opacity:1,transform:'translateY(0)'}],{duration:650,easing:'cubic-bezier(.22,1,.36,1)'}); }
   }
+  document.addEventListener('click', event => {
+    const link = event.target.closest('a[href^="#"]');
+    if (!link || event.defaultPrevented || event.metaKey || event.ctrlKey || event.shiftKey || event.altKey) return;
+    const id = link.hash.slice(1);
+    if (!pages.includes(id)) return;
+    event.preventDefault();
+    if (location.hash !== link.hash) history.pushState(null, '', link.hash);
+    showPage(id);
+  });
   window.addEventListener('hashchange', () => showPage(location.hash.slice(1)));
   menu.addEventListener('click', () => { const open = menu.getAttribute('aria-expanded') !== 'true'; nav.classList.toggle('open', open); menu.setAttribute('aria-expanded', String(open)); menu.setAttribute('aria-label', open ? 'Close navigation' : 'Open navigation'); });
   document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });

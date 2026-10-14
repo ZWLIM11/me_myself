@@ -56,6 +56,7 @@
   });
   window.addEventListener('blur', reset);
   window.addEventListener('hashchange', reset);
+  document.addEventListener('portfolio:pagechange', reset);
   window.addEventListener('scroll', reset, {passive:true});
   motion.addEventListener('change', reset);
   pointer.addEventListener('change', reset);

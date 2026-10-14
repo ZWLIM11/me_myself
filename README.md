@@ -4,6 +4,8 @@ A responsive, cinematic portfolio with four pages, smooth transitions, filterabl
 
 The additive interaction layer includes pointer-reactive project image tilt and highlights, magnetic buttons, click ripples, portrait parallax, and hover accents. Touch input keeps the existing tap interactions; reduced-motion preferences disable movement. Run `npm test` for interaction lifecycle checks.
 
+Spacious chapters use scroll-entry reveals and directional page transitions with a browser fallback. A fine-pointer-only constellation cursor shows contextual action labels while preserving the native cursor. Motion respects accessibility preferences, and the fixed navigation remains available during long sections. These additions live in `dist/experience.css` and `dist/experience.js`.
+
 ## Run locally
 
 Requires Node.js 18 or newer. No dependencies or build step.
