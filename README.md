@@ -8,6 +8,10 @@ Spacious chapters use scroll-entry reveals and directional page transitions with
 
 ## Run locally
 
+The latest polish layer (`dist/polish.js` and `dist/polish.css`) adds short heading-line staggers, a rotating Data / Code / Photography seal, subtle hero depth, a sliding navigation underline, and a gold reading-progress line. The photography filmstrip has larger frames, a frame counter, arrow-key controls, and an expanding photo viewer with previous/next controls. All decorative motion respects reduced-motion preferences.
+
+For project-card video previews, fill in `caseStudies[projectId].previewVideoUrl` in `dist/collections-content.js` with a short MP4/WebM clip. Clips load only on interaction, play muted on desktop hover, and have a separate Play/Pause button for touch and keyboard visitors. They pause offscreen, on navigation, and when the tab loses focus. Reduced-motion and data-saving visitors receive manual playback. Empty fields leave the existing project images intact. The longer walkthrough still belongs in `videoUrl`.
+
 Requires Node.js 18 or newer. No dependencies or build step.
 
 ```sh

@@ -5,13 +5,17 @@
   const header = document.querySelector('.header');
   const animations = new Set();
   // Animate on entry instead of hiding content: everything remains readable if JS fails.
-  const selector = '.home-block > :not(.project-grid):not(.photo-carousel), .home-block .project-card, .about-layout > *, .about-toolkit, .photo-gallery > *, .projects-intro, #project-grid > *, .contact-content > *, .photography-page > h1';
+  const selector = '.home-content, .home-block > :not(.project-grid):not(.photo-carousel), .home-block .project-card, .about-layout > *, .about-toolkit, .photo-gallery > *, .projects-intro, #project-grid > *, .contact-content > *, .photography-page > h1';
   const seen = new WeakSet();
   const observer = new IntersectionObserver(entries => {
     entries.forEach(({target,isIntersecting}) => {
       if (!isIntersecting || target.closest('[hidden]') || reduced.matches || document.documentElement.classList.contains('is-routing')) return;
-      const animation = target.animate([{opacity:.65,translate:'0 14px'},{opacity:1,translate:'0 0'}],{duration:460,easing:'cubic-bezier(.2,.65,.3,1)'});
-      animations.add(animation); animation.finished.then(()=>animations.delete(animation),()=>animations.delete(animation));
+      const lines=target.querySelectorAll('.heading-line');
+      const parts=lines.length?[...lines,...target.querySelectorAll('.body-copy,.hero-copy,.actions')]:[target];
+      parts.forEach((part,index)=>{
+        const animation = part.animate([{opacity:.35,translate:'0 14px'},{opacity:1,translate:'0 0'}],{duration:440,delay:Math.min(index*45,135),fill:'backwards',easing:'cubic-bezier(.2,.65,.3,1)'});
+        animations.add(animation); animation.finished.then(()=>animations.delete(animation),()=>animations.delete(animation));
+      });
       observer.unobserve(target);
     });
   }, {threshold:0,rootMargin:'0px 0px 45px 0px'});

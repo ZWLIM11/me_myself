@@ -39,7 +39,7 @@
     const related=event.target.closest('[data-open-related]');
     if(related){dialog.close();document.querySelector(`#home-sections [data-project="${related.dataset.openRelated}"]`).click();}
     const photo=event.target.closest('[data-photo]');
-    if(photo){const p=data.photography.find(p=>p.id===photo.dataset.photo);document.querySelector('#info-content').innerHTML=`<p class="eyebrow">${e(p.category)}</p><h2 id="info-title">${e(p.title)}</h2><img class="lightbox-photo" src="${e(url(p.src))}" alt="${e(p.alt||p.title)}"><p>${e(p.caption||p.location)}</p>`;dialog.showModal();}
+    if(photo){const p=data.photography.find(p=>p.id===photo.dataset.photo);if(window.openPortfolioPhoto){window.openPortfolioPhoto(p,photo);return;}document.querySelector('#info-content').innerHTML=`<p class="eyebrow">${e(p.category)}</p><h2 id="info-title">${e(p.title)}</h2><img class="lightbox-photo" src="${e(url(p.src))}" alt="${e(p.alt||p.title)}"><p>${e(p.caption||p.location)}</p>`;dialog.showModal();}
   });
   window.renderProjectExtras = project => {
     const study=data.caseStudies[project.id]||{};

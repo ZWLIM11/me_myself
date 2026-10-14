@@ -19,8 +19,9 @@ window.PORTFOLIO.skills = [
   {name:'Web / App',icon:'</>',projects:[],description:'You’re exploring this portfolio: responsive layouts, interactive galleries, and accessible browser interactions.'}
 ];
 window.PORTFOLIO.caseStudies = Object.fromEntries(['food','interview','streaming'].map(id => [id, {
-  videoUrl:'', videoPoster:'', demoUrl:'', screenshots:[],
+  previewVideoUrl:'', videoUrl:'', videoPoster:'', demoUrl:'', screenshots:[],
   role:'', approach:'', results:'', lessons:''
 }]));
 // screenshots: [{src:'assets/project-screen.jpg', alt:'Describe the screen', caption:'Optional caption'}]
 // videoUrl accepts a direct browser-playable video file. Use demoUrl for a hosted demo or video page.
+// previewVideoUrl: short, muted MP4/WebM clip for project-card previews (loaded only on interaction).
