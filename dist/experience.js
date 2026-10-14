@@ -25,12 +25,19 @@
   window.addEventListener('scroll',updateHeader,{passive:true}); updateHeader();
   const projects=document.querySelector('#projects');
   const end=document.createElement('div');end.className='chapter-end';end.innerHTML='<a href="#photography">Next chapter · Through my lens ↗</a>';projects.append(end);
-  const cursor=document.createElement('div');cursor.className='data-cursor';cursor.setAttribute('aria-hidden','true');
-  cursor.innerHTML='<svg viewBox="0 0 84 84"><g class="satellites"><path d="M16 25 64 16 70 62 25 71 16 25 70 62M25 71 64 16"/><circle cx="16" cy="25" r="3"/><circle cx="64" cy="16" r="3"/><circle cx="70" cy="62" r="3"/><circle cx="25" cy="71" r="3"/></g></svg><span class="cursor-label"></span>';
+  const cursor=document.createElement('div');cursor.className='focus-cursor';cursor.setAttribute('aria-hidden','true');
+  cursor.innerHTML='<span class="focus-ring"><span class="focus-label"></span></span>';
   document.body.append(cursor);
-  let frame=0, point=null;
-  function hideCursor(){cancelAnimationFrame(frame);frame=0;point=null;cursor.classList.remove('visible','has-label');}
-  function draw(){frame=0;if(!point)return;cursor.style.transform=`translate3d(${point.x-42}px,${point.y-42}px,0)`;cursor.classList.add('visible');}
+  const name=document.querySelector('#home-title');
+  let frame=0, point=null, position=null;
+  function hideCursor(){cancelAnimationFrame(frame);frame=0;point=null;position=null;cursor.classList.remove('visible','has-label','over-action');name.classList.remove('name-lit');}
+  function draw(){
+    frame=0;if(!point)return;
+    if(!position)position={...point};
+    position.x+=(point.x-position.x)*.24;position.y+=(point.y-position.y)*.24;
+    cursor.style.transform=`translate3d(${position.x}px,${position.y}px,0)`;cursor.classList.add('visible');
+    if(Math.abs(point.x-position.x)+Math.abs(point.y-position.y)>.2)frame=requestAnimationFrame(draw);
+  }
   document.addEventListener('pointermove',event=>{
     if(reduced.matches||!fine.matches||event.pointerType==='touch'||document.querySelector('dialog[open]')){hideCursor();return;}
     point={x:event.clientX,y:event.clientY};
@@ -38,8 +45,11 @@
     const photo=event.target.closest('[data-photo]');
     const tool=event.target.closest('[data-skill]');
     const action=event.target.closest('a,button');
-    const label=project?'EXPLORE ↗':photo?'VIEW ↗':tool?'DISCOVER ↗':action?'OPEN ↗':'';
-    cursor.querySelector('.cursor-label').textContent=label;cursor.classList.toggle('has-label',!!label);
+    const label=project?'EXPLORE ↗':photo?'VIEW ↗':tool?'DISCOVER ↗':'';
+    cursor.querySelector('.focus-label').textContent=label;cursor.classList.toggle('has-label',!!label);cursor.classList.toggle('over-action',!!action);
+    const overName=event.target.closest('#home-title');
+    name.classList.toggle('name-lit',!!overName);
+    if(overName){const rect=name.getBoundingClientRect();name.style.setProperty('--name-light',`${event.clientX-rect.left}px`);}
     if(!frame)frame=requestAnimationFrame(draw);
   },{passive:true});
   document.addEventListener('pointerout',event=>{if(!event.relatedTarget)hideCursor();},{passive:true});

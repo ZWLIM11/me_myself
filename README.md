@@ -4,7 +4,7 @@ A responsive, cinematic portfolio with four pages, smooth transitions, filterabl
 
 The additive interaction layer includes pointer-reactive project image tilt and highlights, magnetic buttons, click ripples, portrait parallax, and hover accents. Touch input keeps the existing tap interactions; reduced-motion preferences disable movement. Run `npm test` for interaction lifecycle checks.
 
-Spacious chapters use scroll-entry reveals and directional page transitions with a browser fallback. A fine-pointer-only constellation cursor shows contextual action labels while preserving the native cursor. Motion respects accessibility preferences, and the fixed navigation remains available during long sections. These additions live in `dist/experience.css` and `dist/experience.js`.
+Spacious chapters use scroll-entry reveals and directional page transitions with a browser fallback. A small trailing ring expands into contextual action badges over projects and photos, while preserving the native cursor. Portrait lettering has a pointer-following warm highlight, and photo hover reveals camera-style corner marks. Motion respects accessibility preferences, and the fixed navigation remains available during long sections. These additions live in `dist/experience.css` and `dist/experience.js`.
 
 ## Run locally
 
@@ -46,3 +46,4 @@ Hero portrait: generated for this portfolio from the supplied visual reference.
 Project photographs: Unsplash images, saved locally to avoid runtime image dependencies. Source image IDs are recorded in `dist/assets/credits.txt`.
 
 Fonts: DM Sans and Manrope via Google Fonts, with system-font fallbacks.
+

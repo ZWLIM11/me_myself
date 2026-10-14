@@ -28,3 +28,19 @@
 @media(max-width:700px){.header{height:80px}.page:not(.home-page){padding:130px 7% 85px}.home-block{min-height:85svh;padding:85px 7%;gap:35px}.home-block .project-grid{gap:45px}.home-block .project-image,.project-image{height:250px}.home-connect{min-height:65svh}.photo-track .photo-card{flex-basis:83%}.photo-frame{height:320px}.photo-gallery{grid-template-columns:1fr;gap:40px}.photo-gallery .photo-frame{height:360px}.photo-reserved{font-size:11px;bottom:30px;left:27px}.photo-reserved small{font-size:8px}.photo-caption strong{font-size:14px}.photo-caption>span{font-size:12px}.personal-block .tool-grid,.about-toolkit .tool-grid{grid-template-columns:repeat(2,minmax(0,1fr));gap:14px}.tool-card{font-size:12px;min-height:115px}.about-layout{gap:40px}.about-photo{height:420px}.about-facts{gap:20px}.about-toolkit{margin-top:65px}.projects-intro{margin-bottom:40px}.project-card h2{font-size:23px}.project-card p{max-width:85%;font-size:13px}.next-page{margin-top:45px}.data-cursor{display:none}.contact-content{padding:0}.contact-page footer{margin-top:65px}}
 @media(hover:none),(pointer:coarse),(prefers-reduced-motion:reduce){.data-cursor{display:none}}
 @media(prefers-reduced-motion:reduce){::view-transition-old(root),::view-transition-new(root),::view-transition-group(site-header){animation:none!important}}
+/* Refined editorial pointer: a small trailing ring that becomes an action badge. */
+.focus-cursor{position:fixed;top:0;left:0;z-index:50;pointer-events:none;opacity:0;transition:opacity .2s;will-change:transform}
+.focus-cursor.visible{opacity:1}
+.focus-ring{position:absolute;display:grid;place-items:center;width:22px;height:22px;translate:-50% -50%;border:1px solid #d6c29e9c;border-radius:50%;background:transparent;transition:width .4s var(--ease),height .4s var(--ease),background .3s,border-color .3s,box-shadow .3s}
+.focus-cursor.over-action .focus-ring{width:44px;height:44px;border-color:#e5d5b3;box-shadow:0 0 0 5px #c4b18e0b}
+.focus-cursor.has-label .focus-ring{width:88px;height:88px;background:#d8c6a5ed;border-color:#e9dcc1;color:#1c2017;box-shadow:0 6px 30px #0003}
+.focus-label{font-size:9px;letter-spacing:.06em;white-space:nowrap;font-weight:600;opacity:0;scale:.8;transition:opacity .25s,scale .4s var(--ease)}
+.focus-cursor.has-label .focus-label{opacity:1;scale:1}
+@media(hover:hover) and (pointer:fine) and (prefers-reduced-motion:no-preference){
+  #home-title.name-lit{background:radial-gradient(ellipse 130px 130px at var(--name-light,50%) 50%,#e9bb82 0%,#d2b892 32%,#f0efe9 78%);background-clip:text;-webkit-background-clip:text;color:transparent}
+  .photo-card .photo-frame:after{border:0;background:linear-gradient(var(--accent),var(--accent)) left top/24px 1px no-repeat,linear-gradient(var(--accent),var(--accent)) left top/1px 24px no-repeat,linear-gradient(var(--accent),var(--accent)) right top/24px 1px no-repeat,linear-gradient(var(--accent),var(--accent)) right top/1px 24px no-repeat,linear-gradient(var(--accent),var(--accent)) left bottom/24px 1px no-repeat,linear-gradient(var(--accent),var(--accent)) left bottom/1px 24px no-repeat,linear-gradient(var(--accent),var(--accent)) right bottom/24px 1px no-repeat,linear-gradient(var(--accent),var(--accent)) right bottom/1px 24px no-repeat;opacity:0;scale:1.08;transition:opacity .4s,scale .65s var(--ease)}
+  .photo-card:hover .photo-frame:after,.photo-card:focus-visible .photo-frame:after{opacity:1;scale:1}
+  .project-card .project-category{transition:letter-spacing .5s var(--ease),color .3s}
+  .project-card:hover .project-category{letter-spacing:.16em;color:var(--accent)}
+}
+@media(hover:none),(pointer:coarse),(prefers-reduced-motion:reduce){.focus-cursor{display:none}}
