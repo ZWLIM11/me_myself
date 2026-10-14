@@ -22,9 +22,20 @@ Open http://127.0.0.1:4173. Run `npm run check` to check JavaScript syntax.
 
 ## Update your details
 
-### Photography editor
+### Add your photographs in code
 
-Open `/photography-editor.html` to upload photos and edit titles, categories, image descriptions, locations, and captions. A visibility switch hides/restores photos without deleting them. Photos are stored in Cloudflare R2 and populate both gallery views. Your current Workers deployment uses `worker.mjs` and `wrangler.jsonc`; follow [PHOTOGRAPHY-SETUP.md](PHOTOGRAPHY-SETUP.md) to connect storage and the private editor key. Until that setup is completed, uploads are unavailable and the existing public gallery still works. Run `node scripts/test-photography.mjs` for API tests with mocked storage.
+1. Put your image files in `dist/assets/`, for example `dist/assets/kl-sunset.jpg`.
+2. Edit an entry in `window.PORTFOLIO.photography` in `dist/collections-content.js`:
+
+```js
+{id:'city', category:'City', title:'Evening in KL', location:'Kuala Lumpur',
+ src:'assets/kl-sunset.jpg', alt:'Kuala Lumpur skyline at sunset',
+ caption:'The last light over the city.'}
+```
+
+Add more entries with unique `id` values for more photographs. Empty `src` fields remain placeholders. Commit and push your changes to `main`, then let Cloudflare redeploy. The homepage filmstrip, gallery filters, and photo viewer use this same list.
+
+The website has no upload editor or photography API. No R2 storage or editor key is required. Your Workers deployment uses the static `dist` assets via `wrangler.jsonc`; deploy with `npx wrangler deploy` from the repository root.
 
 The expanded home page includes featured projects, a photography carousel, a short biography, clickable skills, and a contact section. The Photography page has category filters; real photos open in an accessible dialog when supplied.
 

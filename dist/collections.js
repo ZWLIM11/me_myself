@@ -32,15 +32,6 @@
   for(const [button,direction] of [[prev,-1],[next,1]])button.addEventListener('click',()=>track.scrollBy({left:direction*track.clientWidth*.75,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'}));
   track.addEventListener('scroll',syncArrows,{passive:true});
   new ResizeObserver(syncArrows).observe(track); syncArrows();
-  window.refreshPhotography=()=>{
-    const categories=['All',...new Set(data.photography.map(p=>p.category))];
-    document.querySelector('#photo-filters').innerHTML=categories.map((category,i)=>`<button class="filter ${i?'':'active'}" data-photo-filter="${e(category)}" aria-pressed="${!i}">${e(category)}</button>`).join('');
-    renderPhotos('All');track.innerHTML=data.photography.map(photoCard).join('');syncArrows();
-    const count=data.photography.filter(p=>url(p.src)).length;
-    document.querySelector('.honest-stats>span:last-child strong').textContent=count||'Soon';
-    if(count)document.querySelector('#photography .body-copy').textContent='Places, small details, and everyday moments that catch my eye.';
-    document.dispatchEvent(new Event('portfolio:photographychange'));
-  };
   const dialog=document.querySelector('#info-dialog');
   document.addEventListener('click',event=>{
     const tool=event.target.closest('[data-skill]');
