@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const config = window.PORTFOLIO;
-  const pages = ['home', 'about', 'projects', 'contact'];
+  const pages = ['home', 'about', 'projects', 'photography', 'contact'];
   const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
   const nav = document.querySelector('.header nav');
   const menu = document.querySelector('.menu-toggle');
@@ -41,10 +41,11 @@
     document.querySelectorAll('.filter').forEach(b => { const active = b === button; b.classList.toggle('active', active); b.setAttribute('aria-pressed', String(active)); });
     renderProjects(button.dataset.filter);
   }));
-  grid.addEventListener('click', event => {
+  document.addEventListener('click', event => {
     const button = event.target.closest('[data-project]'); if (!button) return;
     const p = config.projects.find(p => p.id === button.dataset.project); if (!p) return;
     document.querySelector('#project-detail').innerHTML = `<div class="detail-hero"><img src="${escape(p.image)}" alt="${escape(p.alt)}"></div><div class="detail-content"><p class="eyebrow">${escape(p.label)} / PROJECT EXPLORATION</p><h2 id="project-dialog-title">${escape(p.fullTitle)}</h2><div class="tags">${p.tags.map(t => `<span>${escape(t)}</span>`).join('')}</div><div class="detail-columns"><div><h3>Project overview</h3><p>${escape(p.overview)}</p></div><div><h3>Areas of exploration</h3><ul>${p.features.map(f => `<li>${escape(f)}</li>`).join('')}</ul></div></div>${p.url && safeUrl(p.url) ? `<a class="text-link" href="${escape(safeUrl(p.url))}" target="_blank" rel="noopener noreferrer">View repository ↗</a>` : `<p class="detail-note">${escape(p.note)}</p>`}</div>`;
+    if (window.renderProjectExtras) document.querySelector('#project-detail').insertAdjacentHTML('beforeend', window.renderProjectExtras(p));
     projectDialog.showModal();
   });
   function showInfo(type) {

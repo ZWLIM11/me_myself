@@ -16,6 +16,21 @@ Open http://127.0.0.1:4173. Run `npm run check` to check JavaScript syntax.
 
 ## Update your details
 
+The expanded home page includes featured projects, a photography carousel, a short biography, clickable skills, and a contact section. The Photography page has category filters; real photos open in an accessible dialog when supplied.
+
+### Spaces ready for your content
+
+Edit `dist/collections-content.js`:
+
+- `photography`: add image paths, descriptive alt text, captions, and locations. Empty slots remain clearly labelled placeholders. Add more entries with unique IDs as needed.
+- `caseStudies`: each project has `videoUrl` (direct MP4/WebM video file), `videoPoster`, `demoUrl` (hosted experience or video page), `screenshots`, `role`, `approach`, `results`, and `lessons`. Videos use native playback controls and pause when the dialog closes.
+- `skills`: maintain the related project IDs and descriptions behind each clickable skill.
+- `instagram`: add your profile URL when ready.
+
+The contact form has a reserved section only; no visitor information is collected or sent until message delivery and spam protection are implemented. Résumé, email, and LinkedIn slots remain in `dist/content.js`. No photo count or project results are fabricated.
+
+For Cloudflare Pages, connect this repository’s `main` branch, choose no framework, use `exit 0` as the build command, and set the output directory to `dist`.
+
 - Edit `dist/content.js` for email, LinkedIn, GitHub, résumé URL, and project content. Blank contact and résumé fields display honest “coming soon” dialogs.
 - Edit `dist/index.html` for the biography, education, and homepage text.
 - Replace `dist/assets/portrait.png` with your actual portrait when ready. The current image is AI-generated editorial imagery inspired by the supplied reference, not a verified photograph of Lim Ziwei.
