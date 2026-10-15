@@ -1,5 +1,9 @@
 /* Individual compositions within the same cinematic palette. */
 html{scrollbar-gutter:stable}
+.chapter-controls{position:relative;display:flex;align-items:center;justify-content:space-between;gap:16px;padding:18px 24px max(18px,env(safe-area-inset-bottom));border-top:1px solid #c4b18e15;background:#101412}
+.chapter-controls .chapter-dock,.chapter-controls #motion-toggle{position:static;margin:0;flex-shrink:0}
+.home-page .home-hero{height:calc(100svh - 84px)}
+@media(max-width:700px){.chapter-controls{padding:14px 16px max(14px,env(safe-area-inset-bottom));gap:10px}.home-page .home-hero{height:calc(100svh - 74px)}}
 .page:not(.home-page){padding-inline:7%;padding-bottom:125px}
 .section-heading{padding-bottom:22px;border-bottom:1px solid var(--line);margin-bottom:50px}
 .about-layout{grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:55px 9%;align-items:start}

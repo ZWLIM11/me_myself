@@ -8,7 +8,8 @@
   // Persistent chapter shortcuts also work through the keyboard and native hashes.
   const dock=document.createElement('nav');dock.className='chapter-dock';dock.setAttribute('aria-label','Chapter shortcuts');
   dock.innerHTML=`<span class="chapter-caption" aria-hidden="true"></span><div>${pages.map((id,i)=>`<a href="#${id}" aria-label="${names[i]} — chapter ${i+1}">${String(i+1).padStart(2,'0')}</a>`).join('')}</div>`;
-  document.body.append(dock);
+  const controls=document.createElement('div');controls.className='chapter-controls';
+  controls.append(dock,document.querySelector('#motion-toggle'));document.body.append(controls);
   const progress=document.createElement('div');progress.className='chapter-progress';progress.setAttribute('aria-hidden','true');progress.innerHTML='<span></span>';document.querySelector('.header').append(progress);
   function updateChapter(){
     const id=document.querySelector('.page.active').id,index=pages.indexOf(id);
