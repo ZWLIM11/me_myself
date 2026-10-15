@@ -1,5 +1,7 @@
 # Lim Ziwei — Portfolio
 
+Home is a focused introduction. About, Projects, Photography, and Contact each have their own page; the homepage no longer duplicates their sections. Navigation uses a short opaque curtain transition, with instant switching when reduced motion is enabled. The Photography page retains its filters and expanding image viewer.
+
 A responsive, cinematic portfolio with four pages, smooth transitions, filterable projects, accessible project dialogs, mobile navigation, and reduced-motion support.
 
 The additive interaction layer includes pointer-reactive project image tilt and highlights, magnetic buttons, click ripples, portrait parallax, and hover accents. Touch input keeps the existing tap interactions; reduced-motion preferences disable movement. Run `npm test` for interaction lifecycle checks.

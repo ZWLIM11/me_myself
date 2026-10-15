@@ -46,12 +46,6 @@
   document.addEventListener('visibilitychange',()=>{seal.classList.toggle('is-visible',heroVisible&&!document.hidden);if(document.hidden)pausePreviews();});
   schedule();moveIndicator();
 
-  const track=document.querySelector('#photo-track');
-  const counter=document.createElement('span');counter.className='film-counter';document.querySelector('.carousel-controls').prepend(counter);
-  function countFrames(){const cards=[...track.children];const x=track.getBoundingClientRect().left;let nearest=0;cards.forEach((card,i)=>{if(Math.abs(card.getBoundingClientRect().left-x)<Math.abs(cards[nearest].getBoundingClientRect().left-x))nearest=i;});counter.textContent=`FRAME ${String(nearest+1).padStart(2,'0')} / ${String(cards.length).padStart(2,'0')}`;}
-  track.addEventListener('scroll',countFrames,{passive:true});new ResizeObserver(countFrames).observe(track);countFrames();
-  track.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight'].includes(event.key))return;event.preventDefault();track.scrollBy({left:(event.key==='ArrowRight'?1:-1)*(track.firstElementChild.getBoundingClientRect().width+24),behavior:reduced.matches?'instant':'smooth'});});
-
   // No preview requests until a visitor hovers or explicitly presses Play.
   const previews=new Set();
   function pausePreview(state){state.wanted=false;state.video.pause();state.video.classList.remove('is-playing');state.button.textContent='▷ Play preview';state.button.setAttribute('aria-pressed','false');}

@@ -8,6 +8,7 @@
   const grid = document.querySelector('#project-grid');
   const projectDialog = document.querySelector('#project-dialog');
   const infoDialog = document.querySelector('#info-dialog');
+  const curtain=document.createElement('div');curtain.id='page-curtain';curtain.setAttribute('aria-hidden','true');curtain.innerHTML='<span></span>';document.body.append(curtain);
   let current = 'home';
   let transition;
   let navigating = false;
@@ -40,18 +41,15 @@
     const main = document.querySelector('#main');
     main.setAttribute('aria-busy', 'true');
     try {
-      if (document.startViewTransition) {
-        transition = document.startViewTransition(update);
-        await transition.finished;
-      } else {
-        const exit = main.animate([{opacity:1,transform:'translateY(0)'},{opacity:0,transform:`translateY(${-direction * 18}px)`}], {duration:160,easing:'cubic-bezier(.4,0,1,1)',fill:'forwards'});
-        await exit.finished.catch(()=>{});
-        update(); exit.cancel();
-        if (!reduceMotion.matches) {
-          const enter = main.animate([{opacity:0,transform:`translateY(${direction * 24}px)`},{opacity:1,transform:'translateY(0)'}],{duration:390,delay:0,fill:'both',easing:'cubic-bezier(.16,1,.3,1)'});
-          await enter.finished.catch(()=>{}); enter.cancel();
-        }
-      }
+      const curtain=document.querySelector('#page-curtain');
+      curtain.querySelector('span').textContent=String(pages.indexOf(id)+1).padStart(2,'0')+' / '+id.toUpperCase();
+      const cover=curtain.animate([{transform:'translateY(100%)'},{transform:'translateY(0)'}],{duration:180,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'});
+      await cover.finished.catch(()=>{});
+      update();
+      const reveal=curtain.animate([{transform:'translateY(0)'},{transform:'translateY(-100%)'}],{duration:240,easing:'cubic-bezier(.2,.65,.3,1)',fill:'forwards'});
+      cover.cancel();
+      if(reduceMotion.matches)reveal.finish();
+      await reveal.finished.catch(()=>{});reveal.cancel();
     } catch { if (current !== id) update(); }
     finally {
       transition = null;
@@ -89,13 +87,14 @@
     document.querySelectorAll('.filter').forEach(b => { const active = b === button; b.classList.toggle('active', active); b.setAttribute('aria-pressed', String(active)); });
     renderProjects(button.dataset.filter);
   }));
-  document.addEventListener('click', event => {
-    const button = event.target.closest('[data-project]'); if (!button) return;
-    const p = config.projects.find(p => p.id === button.dataset.project); if (!p) return;
+  function openProject(id) {
+    const p = config.projects.find(p => p.id === id); if (!p) return;
     document.querySelector('#project-detail').innerHTML = `<div class="detail-hero"><img src="${escape(p.image)}" alt="${escape(p.alt)}"></div><div class="detail-content"><p class="eyebrow">${escape(p.label)} / PROJECT EXPLORATION</p><h2 id="project-dialog-title">${escape(p.fullTitle)}</h2><div class="tags">${p.tags.map(t => `<span>${escape(t)}</span>`).join('')}</div><div class="detail-columns"><div><h3>Project overview</h3><p>${escape(p.overview)}</p></div><div><h3>Areas of exploration</h3><ul>${p.features.map(f => `<li>${escape(f)}</li>`).join('')}</ul></div></div>${p.url && safeUrl(p.url) ? `<a class="text-link" href="${escape(safeUrl(p.url))}" target="_blank" rel="noopener noreferrer">View repository ↗</a>` : `<p class="detail-note">${escape(p.note)}</p>`}</div>`;
     if (window.renderProjectExtras) document.querySelector('#project-detail').insertAdjacentHTML('beforeend', window.renderProjectExtras(p));
     projectDialog.showModal();
-  });
+  }
+  window.openPortfolioProject=openProject;
+  document.addEventListener('click',event=>{const button=event.target.closest('[data-project]');if(button)openProject(button.dataset.project);});
   function showInfo(type) {
     if (type === 'email' && config.email) { window.open('https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(config.email), '_blank', 'noopener,noreferrer'); return; }
     if (type === 'jobstreet') { window.open(safeUrl(config.jobstreet) || 'https://my.jobstreet.com/profiles/lim-ziwei-qmt24rpynk', '_blank', 'noopener,noreferrer'); return; }
