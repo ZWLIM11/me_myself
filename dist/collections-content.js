@@ -22,6 +22,22 @@ window.PORTFOLIO.caseStudies = Object.fromEntries(['food','interview','streaming
   previewVideoUrl:'', videoUrl:'', videoPoster:'', demoUrl:'', screenshots:[],
   problem:'', role:'', approach:'', results:'', lessons:''
 }]));
+window.PORTFOLIO.caseStudies.interview.demoUrl = 'https://ai-int.notait.com';
+
+// Add verified entries here. Empty sections are hidden on the public website.
+window.PORTFOLIO.timeline = [
+  {kind:'Education', period:'Currently studying', title:'Bachelor of Data Science', organization:'TAR UMT', description:''}
+];
+// Timeline entry: {kind:'Experience', period:'2026', title:'Role', organization:'Organization', description:'What you did'}
+window.PORTFOLIO.credentials = [];
+// Credential: {title:'Certificate or achievement', issuer:'Issuer', date:'2026', url:'https://...', image:'assets/certificate.jpg'}
+window.PORTFOLIO.photoCollections = [
+  {id:'city-life',title:'City & street',description:'Places in motion.',categories:['City','Street']},
+  {id:'outdoors',title:'Further afield',description:'Nature and new places.',categories:['Nature','Travel']},
+  {id:'everyday',title:'Everyday details',description:'Small moments, closer up.',categories:['Food']}
+];
+// Collections appear when a matching photo has a src. Set photo.album to a collection id
+// for explicit grouping, or use the collection's categories for automatic grouping.
 // screenshots: [{src:'assets/project-screen.jpg', alt:'Describe the screen', caption:'Optional caption'}]
 // videoUrl accepts a direct browser-playable video file. Use demoUrl for a hosted demo or video page.
 // previewVideoUrl: short, muted MP4/WebM clip for project-card previews (loaded only on interaction).

@@ -10,8 +10,10 @@
   }
   const skills = () => `<div class="tool-grid">${data.skills.map((skill,i)=>`<button class="tool-card" data-skill="${i}"><span aria-hidden="true">${e(skill.icon)}</span>${e(skill.name)}<span class="tool-arrow" aria-hidden="true">↗</span></button>`).join('')}</div>`;
   document.querySelector('.skills-strip').outerHTML = `<section class="about-toolkit"><p class="eyebrow">SKILLS & TOOLS</p><h2>Explore my toolkit.</h2>${skills()}</section>`;
-  const categories=['All',...new Set(data.photography.map(p=>p.category))];
-  document.querySelector('#photo-filters').innerHTML=categories.map((category,i)=>`<button class="filter ${i?'':'active'}" data-photo-filter="${e(category)}" aria-pressed="${!i}">${e(category)}</button>`).join('');
+  let album=null;
+  const pool=()=>data.photography.filter(p=>!album||(p.album?p.album===album.id:album.categories.includes(p.category)));
+  function renderFilters(){const categories=['All',...new Set(pool().map(p=>p.category))];document.querySelector('#photo-filters').innerHTML=categories.map((category,i)=>`<button class="filter ${i?'':'active'}" data-photo-filter="${e(category)}" aria-pressed="${!i}">${e(category)}</button>`).join('');}
+  renderFilters();
   let galleryPhotos=[], selectedPhoto=null;
   const gallery=document.querySelector('#photo-gallery');
   function selectPhoto(id, origin) {
@@ -36,12 +38,13 @@
     }
   }
   const renderPhotos=category=>{
-    galleryPhotos=data.photography.filter(p=>category==='All'||p.category===category);
+    galleryPhotos=pool().filter(p=>category==='All'||p.category===category);
     gallery.innerHTML=`<div class="gallery-feature" aria-live="polite"></div><div class="gallery-selection"><div class="gallery-toolbar"><span class="eyebrow">CONTACT SHEET</span><div><button class="gallery-prev" aria-label="Previous featured photograph">←</button><span class="gallery-count"></span><button class="gallery-next" aria-label="Next featured photograph">→</button></div></div><div class="gallery-rail">${galleryPhotos.map(photo=>`<button class="gallery-thumb" data-photo-select="${e(photo.id)}" aria-label="Feature ${e(photo.title)}" aria-pressed="false"><span class="thumb-visual photo-${e(photo.category.toLowerCase())}">${url(photo.src)?`<img src="${e(url(photo.src))}" alt="" loading="lazy">`:'<span aria-hidden="true">⌑</span>'}</span><span>${e(photo.category)}<small>${url(photo.src)?e(photo.title):'Coming soon'}</small></span></button>`).join('')}</div><p class="gallery-hint">Choose a frame to bring it into focus.</p></div>`;
     if(galleryPhotos.length)selectPhoto(galleryPhotos.some(p=>p.id===selectedPhoto)?selectedPhoto:galleryPhotos[0].id);
-    else gallery.querySelector('.gallery-feature').innerHTML='<p>No photographs in this collection yet.</p>';
+    else {gallery.querySelector('.gallery-feature').innerHTML='<p>No photographs in this collection yet.</p>';gallery.querySelector('.gallery-count').textContent='00 / 00';gallery.querySelectorAll('.gallery-toolbar button').forEach(button=>button.disabled=true);}
   };
   renderPhotos('All');
+  document.addEventListener('portfolio:albumchange',event=>{album=(data.photoCollections||[]).find(item=>item.id===event.detail)||null;renderFilters();renderPhotos('All');});
   gallery.addEventListener('click',event=>{
     const thumb=event.target.closest('[data-photo-select]');
     if(thumb){

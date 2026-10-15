@@ -26,6 +26,20 @@ Open http://127.0.0.1:4173. Run `npm run check` to check JavaScript syntax.
 
 ## Update your details
 
+### Timeline, credentials, and collections
+
+Edit `timeline`, `credentials`, and `photoCollections` in `dist/collections-content.js`. Timeline entries require a title and organization; credentials require a title and issuer. Empty sections are hidden. The education entry uses the existing TAR UMT details; no employment history or awards have been invented.
+
+Photo collections become visible once a photo in a matching category has a `src`. Optionally set a photo's `album` to a collection ID to group it explicitly. Category filters and the photo viewer operate within the selected collection.
+
+The Projects playground is a browser-only K-means demonstration with synthetic points. Visitors can adjust the group count, advance the algorithm, reset it, or generate another sample. It is separate from the portfolio's project results.
+
+### Shareable project pages
+
+Each project has its own address: `/projects/food/`, `/projects/interview/`, and `/projects/streaming/`. The project dialog links to it; the AI Interview project links to `https://ai-int.notait.com`. Add verified case-study text, video, screenshots, or repository links to the existing content fields. Empty detailed sections stay hidden on standalone pages.
+
+Run `npm run build` (or `node scripts/build-project-pages.mjs`) after content edits to regenerate the static pages. The Cloudflare Wrangler build also runs this generator before deployment. Generated HTML is committed so direct static hosting works too.
+
 Email opens a Gmail compose window; Contact also provides a visible address, email-app link, and Copy email button. JobStreet opens the supplied profile directly. The Motion control remembers the visitor's reduced-motion preference and also respects their system setting.
 
 Résumé remains reserved until `resumeUrl` is filled in `dist/content.js`. Project case-study fields (`problem`, `role`, `approach`, `results`, `lessons`, videos and screenshots) remain empty in `dist/collections-content.js` for verified details later.

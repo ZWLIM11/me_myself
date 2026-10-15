@@ -1,6 +1,7 @@
 {
   "name": "me-myself",
   "compatibility_date": "2026-10-14",
+  "build": { "command": "node scripts/build-project-pages.mjs" },
   "assets": {
     "directory": "./dist",
     "not_found_handling": "404-page"
