@@ -94,7 +94,7 @@
     image.animate([from,{opacity:1,transform:'none'}],{duration:360,easing:'cubic-bezier(.2,.65,.3,1)'});
   }
   window.openPortfolioPhoto=(photo,source)=>{
-    const ids=[...source.parentElement.querySelectorAll('[data-photo]')].map(el=>el.dataset.photo);
+    const ids=source.closest('#photo-gallery')?[...document.querySelectorAll('#photo-gallery [data-photo-select]')].map(el=>el.dataset.photoSelect):[...source.parentElement.querySelectorAll('[data-photo]')].map(el=>el.dataset.photo);
     photos=data.photography.filter(p=>safeURL(p.src)&&ids.includes(p.id));index=photos.findIndex(p=>p.id===photo.id);if(index<0)return;
     const origin=source.querySelector('img').getBoundingClientRect();image.style.transformOrigin='top left';
     lightbox.showModal();showPhoto(origin);

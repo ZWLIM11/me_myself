@@ -95,14 +95,18 @@
     document.querySelectorAll('.filter').forEach(b => { const active = b === button; b.classList.toggle('active', active); b.setAttribute('aria-pressed', String(active)); });
     renderProjects(button.dataset.filter);
   }));
-  function openProject(id) {
+  function openProject(id, source) {
     const p = config.projects.find(p => p.id === id); if (!p) return;
+    source ||= [...document.querySelectorAll('[data-project]')].find(card => card.dataset.project === id && !card.closest('[hidden]'));
+    const origin = source ? {image:source.querySelector('img').getBoundingClientRect(),title:source.querySelector('h2').getBoundingClientRect(),fontSize:parseFloat(getComputedStyle(source.querySelector('h2')).fontSize)} : null;
     document.querySelector('#project-detail').innerHTML = `<div class="detail-hero"><img src="${escape(p.image)}" alt="${escape(p.alt)}"></div><div class="detail-content"><p class="eyebrow">${escape(p.label)} / PROJECT EXPLORATION</p><h2 id="project-dialog-title">${escape(p.fullTitle)}</h2><div class="tags">${p.tags.map(t => `<span>${escape(t)}</span>`).join('')}</div><div class="detail-columns"><div><h3>Project overview</h3><p>${escape(p.overview)}</p></div><div><h3>Areas of exploration</h3><ul>${p.features.map(f => `<li>${escape(f)}</li>`).join('')}</ul></div></div>${p.url && safeUrl(p.url) ? `<a class="text-link" href="${escape(safeUrl(p.url))}" target="_blank" rel="noopener noreferrer">View repository ↗</a>` : `<p class="detail-note">${escape(p.note)}</p>`}</div>`;
     if (window.renderProjectExtras) document.querySelector('#project-detail').insertAdjacentHTML('beforeend', window.renderProjectExtras(p));
     projectDialog.showModal();
+    projectDialog.scrollTop = 0;
+    document.dispatchEvent(new CustomEvent('portfolio:projectopen', {detail:{source,origin}}));
   }
   window.openPortfolioProject=openProject;
-  document.addEventListener('click',event=>{const button=event.target.closest('[data-project]');if(button)openProject(button.dataset.project);});
+  document.addEventListener('click',event=>{const button=event.target.closest('[data-project]');if(button)openProject(button.dataset.project,button);});
   function showInfo(type) {
     if (type === 'email' && config.email) { window.open('https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(config.email), '_blank', 'noopener,noreferrer'); return; }
     if (type === 'jobstreet') { window.open(safeUrl(config.jobstreet) || 'https://my.jobstreet.com/profiles/lim-ziwei-qmt24rpynk', '_blank', 'noopener,noreferrer'); return; }
@@ -112,7 +116,12 @@
     infoDialog.showModal();
   }
   document.querySelectorAll('[data-dialog]').forEach(button => button.addEventListener('click', () => showInfo(button.dataset.dialog)));
-  document.querySelectorAll('dialog').forEach(dialog => { dialog.querySelector('.close-dialog').addEventListener('click', () => dialog.close()); dialog.addEventListener('click', event => { if (event.target === dialog) { const rect = dialog.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) dialog.close(); } if (event.target.closest('[data-close]')) dialog.close(); }); });
+  document.querySelectorAll('dialog').forEach(dialog => {
+    const close = () => dialog === projectDialog && window.closePortfolioProject ? window.closePortfolioProject() : dialog.close();
+    dialog.querySelector('.close-dialog').addEventListener('click', close);
+    dialog.addEventListener('cancel', event => { if(dialog === projectDialog && window.closePortfolioProject){event.preventDefault();close();} });
+    dialog.addEventListener('click', event => { if (event.target === dialog) { const rect = dialog.getBoundingClientRect(); if (event.clientX < rect.left || event.clientX > rect.right || event.clientY < rect.top || event.clientY > rect.bottom) close(); } if (event.target.closest('[data-close]')) close(); });
+  });
   document.querySelectorAll('a[href="https://github.com/ZWLIM11"]').forEach(link => { if (safeUrl(config.github)) link.href = safeUrl(config.github); });
   const clock = () => { document.querySelector('#local-time').textContent = new Intl.DateTimeFormat('en-GB', {timeZone:'Asia/Kuala_Lumpur',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date()) + ' MYT'; };
   clock(); setInterval(clock, 60000); document.querySelector('#year').textContent = new Date().getFullYear();

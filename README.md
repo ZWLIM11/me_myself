@@ -2,7 +2,9 @@
 
 Home is a focused introduction. About, Projects, Photography, and Contact each have their own page; the homepage no longer duplicates their sections. Navigation uses a short opaque curtain transition, with instant switching when reduced motion is enabled. The Photography page retains its filters and expanding image viewer.
 
-A responsive, cinematic portfolio with four pages, smooth transitions, filterable projects, accessible project dialogs, mobile navigation, and reduced-motion support.
+A responsive, cinematic portfolio with five pages, smooth transitions, filterable projects, accessible project dialogs, mobile navigation, and reduced-motion support.
+
+The chapter design layer (`dist/chapters.css` and `dist/chapters.js`) gives About an editorial portrait layout and an interactive skills network, Projects a larger lead card with expanding detail imagery, Photography a featured frame and selectable contact sheet, and Contact a split layout on desktop. The chapter dock and progress line track navigation. Skill connections use shared project IDs from the content file; they are not proficiency ratings. Touch and keyboard input are supported, and motion follows the existing preference control.
 
 The additive interaction layer includes pointer-reactive project image tilt and highlights, magnetic buttons, click ripples, portrait parallax, and hover accents. Touch input keeps the existing tap interactions; reduced-motion preferences disable movement. Run `npm test` for interaction lifecycle checks.
 
@@ -10,7 +12,7 @@ Spacious chapters use scroll-entry reveals and directional page transitions with
 
 ## Run locally
 
-The latest polish layer (`dist/polish.js` and `dist/polish.css`) adds short heading-line staggers, a rotating Data / Code / Photography seal, subtle hero depth, a sliding navigation underline, and a gold reading-progress line. The photography filmstrip has larger frames, a frame counter, arrow-key controls, and an expanding photo viewer with previous/next controls. All decorative motion respects reduced-motion preferences.
+The polish layer (`dist/polish.js` and `dist/polish.css`) adds short heading-line staggers, a rotating Data / Code / Photography seal, subtle hero depth, a sliding navigation underline, and a gold reading-progress line. The photography contact sheet has a frame counter, arrow-key controls, and an expanding photo viewer with previous/next controls. The rotating Home badge opens a small interest explorer. All decorative motion respects reduced-motion preferences.
 
 For project-card video previews, fill in `caseStudies[projectId].previewVideoUrl` in `dist/collections-content.js` with a short MP4/WebM clip. Clips load only on interaction, play muted on desktop hover, and have a separate Play/Pause button for touch and keyboard visitors. They pause offscreen, on navigation, and when the tab loses focus. Reduced-motion and data-saving visitors receive manual playback. Empty fields leave the existing project images intact. The longer walkthrough still belongs in `videoUrl`.
 
@@ -39,7 +41,7 @@ Résumé remains reserved until `resumeUrl` is filled in `dist/content.js`. Proj
  caption:'The last light over the city.'}
 ```
 
-Add more entries with unique `id` values for more photographs. Empty `src` fields remain placeholders. Commit and push your changes to `main`, then let Cloudflare redeploy. The homepage filmstrip, gallery filters, and photo viewer use this same list.
+Add more entries with unique `id` values for more photographs. Empty `src` fields remain placeholders. Commit and push your changes to `main`, then let Cloudflare redeploy. The featured frame, contact sheet, gallery filters, and photo viewer use this same list.
 
 The website has no upload editor or photography API. No R2 storage or editor key is required. Your Workers deployment uses the static `dist` assets via `wrangler.jsonc`; deploy with `npx wrangler deploy` from the repository root.
 
