@@ -40,18 +40,26 @@
     document.documentElement.classList.add('is-routing');
     const main = document.querySelector('#main');
     main.setAttribute('aria-busy', 'true');
+    const routeAnimations=[];
     try {
       const curtain=document.querySelector('#page-curtain');
       curtain.querySelector('span').textContent=String(pages.indexOf(id)+1).padStart(2,'0')+' / '+id.toUpperCase();
-      const cover=curtain.animate([{transform:'translateY(100%)'},{transform:'translateY(0)'}],{duration:180,easing:'cubic-bezier(.4,0,.2,1)',fill:'forwards'});
+      const cover=curtain.animate([{transform:`translateY(${direction*100}%)`},{transform:'translateY(0)'}],{duration:230,easing:'cubic-bezier(.45,0,.25,1)',fill:'forwards'});
+      routeAnimations.push(cover);
       await cover.finished.catch(()=>{});
       update();
-      const reveal=curtain.animate([{transform:'translateY(0)'},{transform:'translateY(-100%)'}],{duration:240,easing:'cubic-bezier(.2,.65,.3,1)',fill:'forwards'});
+      const reveal=curtain.animate([{transform:'translateY(0)'},{transform:`translateY(${-direction*100}%)`}],{duration:310,easing:'cubic-bezier(.25,.7,.25,1)',fill:'forwards'});
+      routeAnimations.push(reveal);
+      if(!reduceMotion.matches){
+        const arrival=main.animate([{opacity:.85,transform:`translateY(${direction*12}px)`},{opacity:1,transform:'translateY(0)'}],{duration:310,easing:'cubic-bezier(.2,.7,.2,1)'});
+        routeAnimations.push(arrival);
+      }
       cover.cancel();
       if(reduceMotion.matches)reveal.finish();
       await reveal.finished.catch(()=>{});reveal.cancel();
     } catch { if (current !== id) update(); }
     finally {
+      routeAnimations.forEach(animation=>animation.cancel());
       transition = null;
       navigating = false;
       document.documentElement.classList.remove('is-routing');
