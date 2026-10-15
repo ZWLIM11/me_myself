@@ -26,6 +26,8 @@ Open http://127.0.0.1:4173. Run `npm run check` to check JavaScript syntax.
 
 ## Update your details
 
+The Home badge and Projects' 3D slot open a draggable robot guide (`dist/robot-guide.js` and `.css`). Select one of five destinations, use the arrow keys to rotate, reset the view, or trigger a short wave. This is a CSS 3D figure with no external engine or tracking. Reduced motion disables the wave and rotation easing; direct rotation remains under visitor control.
+
 ### Timeline, credentials, and collections
 
 Edit `timeline`, `credentials`, and `photoCollections` in `dist/collections-content.js`. Timeline entries require a title and organization; credentials require a title and issuer. Empty sections are hidden. The education entry uses the existing TAR UMT details; no employment history or awards have been invented.

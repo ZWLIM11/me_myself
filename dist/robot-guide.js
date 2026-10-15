@@ -1,0 +1,30 @@
+(() => {
+  'use strict';
+  const dialog=document.querySelector('#curiosity-dialog'),trigger=document.querySelector('.curiosity-trigger');
+  trigger.setAttribute('aria-label','Play with the 3D guide');trigger.querySelector('.curiosity-hint').textContent='3D GUIDE ↗';
+  const pages=[['home','Home','The introduction. Start with a little possibility.','⌂'],['about','About','Meet the person, interests, and tools behind the work.','⌘'],['projects','Projects','Explore the builds, or try the data playground.','</>'],['photography','Photography','A place for moments outside the screen.','⌑'],['contact','Contact','Start a conversation and see where an idea can go.','↗']];
+  const cube=(name,front)=>`<div class="bot-part ${name}">${['front','back','left','right','top','bottom'].map(side=>`<div class="bot-face ${side}">${side==='front'?front:''}</div>`).join('')}</div>`;
+  dialog.classList.add('robot-dialog');
+  dialog.innerHTML=`<div class="robot-dialog-bar"><p class="eyebrow">ZW / YOUR LITTLE GUIDE</p><button class="close-dialog" aria-label="Close curiosity explorer">×</button></div><div class="robot-dialog-content"><h2 id="curiosity-title">A little curious.<br><em>A little interactive.</em></h2><p class="curiosity-intro">Drag the figure to turn it. Choose a destination to make a connection.</p><div class="robot-stage" tabindex="0" role="group" aria-label="Rotate the 3D robot" aria-describedby="robot-help"><div class="robot-floor" aria-hidden="true"></div><div class="robot-object" aria-hidden="true"><div class="bot-antenna"></div>${cube('bot-head','<div class="bot-eyes"><i></i><i></i></div><span class="bot-mouth"></span>')}${cube('bot-body','<span class="bot-badge">&lt;/&gt;</span>')}${cube('bot-arm arm-left','')}${cube('bot-arm arm-right','')}<div class="bot-foot foot-left"></div><div class="bot-foot foot-right"></div></div><span class="robot-coordinate" aria-hidden="true">X −12° / Y −22°</span></div><div class="robot-tools"><span id="robot-help">Drag / use arrow keys when focused</span><button class="text-link" id="robot-wave">Say hello ✦</button><button class="text-link" id="robot-reset">Reset view</button></div><div class="robot-routes" role="group" aria-label="Choose a page">${pages.map(([id,name,,icon])=>`<button data-robot-page="${id}" aria-pressed="false"><span aria-hidden="true">${icon}</span>${name}</button>`).join('')}</div><div class="robot-selection" aria-live="polite"><h3></h3><p></p></div><a class="button primary curiosity-destination" href="#projects">Explore Projects ↗</a></div>`;
+  const stage=dialog.querySelector('.robot-stage'),figure=dialog.querySelector('.robot-object');let x=-12,y=-22,drag=null,wave=null;
+  function paint(){figure.style.transform=`rotateX(${x}deg) rotateY(${y}deg)`;dialog.querySelector('.robot-coordinate').textContent=`X ${Math.round(x)}° / Y ${Math.round(y)}°`;}
+  function select(id){const page=pages.find(p=>p[0]===id)||pages[2];dialog.querySelectorAll('[data-robot-page]').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.robotPage===page[0])));dialog.querySelector('.robot-selection h3').textContent=page[1];dialog.querySelector('.robot-selection p').textContent=page[2];dialog.querySelector('.curiosity-destination').href='#'+page[0];dialog.querySelector('.curiosity-destination').textContent='Explore '+page[1]+' ↗';dialog.querySelector('.bot-badge').textContent=page[3];}
+  stage.addEventListener('pointerdown',event=>{if(event.button!==0)return;drag={id:event.pointerId,x:event.clientX,y:event.clientY,rx:x,ry:y};stage.setPointerCapture(event.pointerId);stage.classList.add('dragging');stage.focus({preventScroll:true});});
+  stage.addEventListener('pointermove',event=>{if(!drag||event.pointerId!==drag.id)return;x=Math.max(-45,Math.min(45,drag.rx-(event.clientY-drag.y)*.35));y=drag.ry+(event.clientX-drag.x)*.65;paint();});
+  function release(){drag=null;stage.classList.remove('dragging');}
+  stage.addEventListener('pointerup',release);stage.addEventListener('pointercancel',release);stage.addEventListener('lostpointercapture',release);
+  stage.addEventListener('keydown',event=>{if(!['ArrowLeft','ArrowRight','ArrowUp','ArrowDown','Home'].includes(event.key))return;event.preventDefault();if(event.key==='Home'){x=-12;y=-22;}else if(event.key==='ArrowLeft')y-=15;else if(event.key==='ArrowRight')y+=15;else x=Math.max(-45,Math.min(45,x+(event.key==='ArrowUp'?-10:10)));paint();});
+  dialog.addEventListener('click',event=>{const choice=event.target.closest('[data-robot-page]');if(choice)select(choice.dataset.robotPage);});
+  dialog.querySelector('#robot-reset').addEventListener('click',()=>{x=-12;y=-22;paint();});
+  dialog.querySelector('#robot-wave').addEventListener('click',()=>{
+    wave?.cancel();dialog.querySelector('.robot-selection h3').textContent='Hello, curious human.';
+    dialog.querySelector('.robot-selection p').textContent='Pick a page below the figure. I’ll show you where to go.';
+    if(!window.portfolioMotion.matches)wave=dialog.querySelector('.arm-right').animate([{rotate:'0deg'},{rotate:'-115deg'},{rotate:'-80deg'},{rotate:'-115deg'},{rotate:'0deg'}],{duration:900,easing:'ease-in-out'});
+  });
+  dialog.addEventListener('close',()=>{release();wave?.cancel();});
+  window.portfolioMotion.addEventListener('change',()=>{if(window.portfolioMotion.matches)wave?.cancel();});
+  const slot=document.createElement('section');slot.className='robot-slot';slot.innerHTML='<div><p class="eyebrow">A SMALL DETOUR / 3D</p><h2>Meet your <em>curious guide.</em></h2><p>A little figure with five places to take you. Turn it around, say hello, and choose a path.</p><button class="button primary" aria-haspopup="dialog">Play with the 3D guide ↗</button></div><div class="robot-slot-mark" aria-hidden="true">[ ◉ ◉ ]<span>&lt; / &gt;</span></div>';
+  document.querySelector('#projects .chapter-end').before(slot);slot.querySelector('button').addEventListener('click',()=>{select('projects');dialog.showModal();});
+  trigger.addEventListener('click',()=>select(document.querySelector('.page.active').id));
+  select('projects');paint();
+})();
