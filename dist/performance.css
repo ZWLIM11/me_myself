@@ -1,0 +1,10 @@
+/* Keep large zoomed surfaces inexpensive to composite. */
+.grain{background-image:none;display:none}
+.header.is-scrolled,.header nav,.chapter-dock,dialog::backdrop,#photo-lightbox::backdrop{backdrop-filter:none}
+dialog::backdrop,#photo-lightbox::backdrop{background:#060906eb}
+.hero-image{will-change:auto}
+.page::before{max-height:1100px}
+html.is-resizing .hero-image,html.is-resizing .contact-art{transform:none!important}
+html.is-resizing .focus-cursor{display:none}
+html.is-resizing .orbit,html.is-resizing .hero-seal svg,body:has(dialog[open]) .orbit,body:has(dialog[open]) .hero-seal svg{animation-play-state:paused!important}
+@media(max-width:900px){.focus-cursor{display:none}.hero-image{transform:none!important}.page::before{mask-image:none}}

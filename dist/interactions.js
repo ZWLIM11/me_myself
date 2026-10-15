@@ -16,7 +16,7 @@
   function reset() { cancelAnimationFrame(frame); frame = 0; latest = null; active = null; for (const element of [...tracked]) clear(element); }
   function update() {
     frame = 0;
-    if (!latest || motion.matches || !pointer.matches) return;
+    if (!latest || motion.matches || !pointer.matches || innerWidth < 900 || document.documentElement.classList.contains('is-resizing')) return;
     const { x, y, target } = latest;
     const element = target.closest(responsive);
     if (active !== element) { clear(active); active = element; }
@@ -54,6 +54,7 @@
     wave.addEventListener('animationend', () => wave.remove(), {once:true});
     setTimeout(() => wave.remove(), 900);
   });
+  window.addEventListener('resize', reset);
   window.addEventListener('blur', reset);
   window.addEventListener('hashchange', reset);
   document.addEventListener('portfolio:pagechange', reset);

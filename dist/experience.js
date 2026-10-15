@@ -53,7 +53,7 @@
     if(Math.abs(point.x-position.x)+Math.abs(point.y-position.y)>.2)frame=requestAnimationFrame(draw);
   }
   document.addEventListener('pointermove',event=>{
-    if(reduced.matches||!fine.matches||event.pointerType==='touch'||document.querySelector('dialog[open]')){hideCursor();return;}
+    if(innerWidth<900||document.documentElement.classList.contains('is-resizing')||reduced.matches||!fine.matches||event.pointerType==='touch'||document.querySelector('dialog[open]')){hideCursor();return;}
     point={x:event.clientX,y:event.clientY};
     const project=event.target.closest('[data-project]');
     const photo=event.target.closest('[data-photo]');
@@ -68,6 +68,7 @@
   },{passive:true});
   document.addEventListener('pointerout',event=>{if(!event.relatedTarget)hideCursor();},{passive:true});
   document.addEventListener('click',hideCursor);
+  window.addEventListener('resize',hideCursor);
   window.addEventListener('blur',hideCursor);
   window.addEventListener('scroll',hideCursor,{passive:true});
   document.addEventListener('visibilitychange',()=>{if(document.hidden)hideCursor();});

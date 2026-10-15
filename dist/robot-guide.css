@@ -9,3 +9,27 @@
 .robot-slot{display:flex;justify-content:space-between;align-items:center;gap:35px;border:1px solid #c4b18e30;border-radius:9px;padding:40px;margin-top:60px;background:radial-gradient(ellipse at right,#2c47344d,transparent 70%)}.robot-slot h2{font-size:clamp(28px,3vw,40px);letter-spacing:-.04em;font-weight:400;margin:15px 0}.robot-slot p:not(.eyebrow){font-size:14px;line-height:1.8;color:#a8b49c;max-width:430px;margin-bottom:24px}.robot-slot-mark{font:32px monospace;color:var(--accent);white-space:nowrap;transform:rotate(-8deg);padding:25px}.robot-slot-mark span{display:block;text-align:center;font-size:20px;margin-top:15px}
 @media(max-width:700px){.robot-dialog-content{padding:0 18px 24px}.robot-dialog-bar{padding:10px 16px}.robot-stage{height:235px}.robot-object{scale:.85}.robot-routes{grid-template-columns:repeat(3,minmax(0,1fr));row-gap:10px}.robot-routes button:nth-child(n+4):before{display:none}.robot-tools{gap:10px}.robot-tools>span{width:100%;font-size:10px}.robot-routes button{font-size:11px;min-height:60px}.robot-selection{min-height:110px}.robot-slot{padding:25px;display:block}.robot-slot-mark{display:none}}
 html[data-motion=off] .robot-object{transition:none}
+/* Byte: enamel shell, recessed glass visor, and articulated shoulders. */
+.robot-object{transition:none;will-change:auto}
+.robot-stage.dragging .robot-object{will-change:transform}
+.bot-face{border-color:#c6d1bd66;border-radius:9px;background:#718373}
+.bot-face.front{background:linear-gradient(145deg,#d7ddcb,#8eaa94 48%,#526f60)}
+.bot-face.top{background:#c4ceba}.bot-face.left{background:#526d60}.bot-face.right{background:#7d9681}.bot-face.back{background:#617e6c}
+.bot-head{--size:94px;left:53px;top:31px}
+.bot-head .front{border-radius:17px;padding:8px}
+.bot-visor{position:absolute;inset:13px 6px 12px;border-radius:21px;background:linear-gradient(145deg,#182e2b,#061513);border:2px solid #485f50;box-shadow:inset 0 2px 4px #0008}
+.bot-eyes{top:32px;gap:20px}.bot-eyes i{width:13px;height:16px;border-radius:7px;background:#bcebcf;box-shadow:none}
+.bot-mouth{bottom:23px;border-color:#bcebcf;width:20px}
+.bot-body .front{border-radius:13px;background:linear-gradient(145deg,#b5c4ad,#5d7e69)}
+.bot-badge{display:grid;place-items:center;width:42px;height:35px;border-radius:9px;background:#112d26;color:#c8e8bf;font-size:18px;border:1px solid #708e73}
+.bot-arm{--size:26px;top:148px}.arm-left{left:28px}.arm-right{right:28px}
+.bot-foot{height:15px;border-radius:6px;background:#97b49d}
+.bot-antenna{background:#a9c8ad}.bot-antenna:before{background:#bcebcf;box-shadow:none}
+.robot-tools{gap:14px;padding-bottom:12px}.robot-tools button{min-height:44px}
+.robot-energy{padding:14px;margin:0 0 28px;border:1px solid #b6c5a52a;border-radius:10px;display:grid;grid-template-columns:auto 1fr;gap:12px 18px;align-items:center;background:#101d16}
+.robot-energy button{border:1px solid #c4b18e70;padding:10px 14px;border-radius:24px;font-size:12px;min-height:44px}
+.energy-track{height:7px;background:#2c3c30;border-radius:8px;overflow:hidden}.energy-track span{display:block;height:100%;background:#b9d1a4;transform:scaleX(0);transform-origin:left;transition:transform .25s ease-out}
+.robot-energy p{grid-column:1/-1;font-size:11px;line-height:1.6;margin:0;color:#b7c4aa;min-height:35px}
+.is-charged .bot-eyes i,.is-charged .bot-antenna:before{background:#f2d798}
+.is-charged .bot-badge{color:#f2d798}
+html[data-motion=off] .energy-track span{transition:none}

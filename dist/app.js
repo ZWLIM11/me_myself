@@ -127,7 +127,6 @@
   document.querySelectorAll('a[href="https://github.com/ZWLIM11"]').forEach(link => { if (safeUrl(config.github)) link.href = safeUrl(config.github); });
   const clock = () => { document.querySelector('#local-time').textContent = new Intl.DateTimeFormat('en-GB', {timeZone:'Asia/Kuala_Lumpur',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date()) + ' MYT'; };
   clock(); setInterval(clock, 60000); document.querySelector('#year').textContent = new Date().getFullYear();
-  const glow = document.querySelector('.cursor-glow');
-  if (matchMedia('(pointer:fine)').matches && !reduceMotion.matches) document.addEventListener('pointermove', event => { glow.style.opacity = '1'; glow.style.left = event.clientX + 'px'; glow.style.top = event.clientY + 'px'; }, {passive:true});
+  // The composited focus cursor replaces the old repainting glow.
   renderProjects(); showPage(location.hash.slice(1) || 'home', true);
 })();

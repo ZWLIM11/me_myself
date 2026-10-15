@@ -16,7 +16,7 @@ const hero = element('hero');
 const orbit = element('orbit');
 const context = {
   matchMedia(query) { const result = {matches:query.includes('hover'),addEventListener:(_,fn)=>{result.change=fn;}}; queries.set(query,result); return result; },
-  document:{querySelector:selector=>selector === '.hero-image' ? hero : selector === '.contact-art' ? orbit : null,addEventListener:(name,fn)=>events.set(name,fn)},
+  document:{documentElement:{classList:{contains:()=>false}},querySelector:selector=>selector === '.hero-image' ? hero : selector === '.contact-art' ? orbit : null,addEventListener:(name,fn)=>events.set(name,fn)},
   window:{addEventListener:(name,fn)=>windowEvents.set(name,fn)},
   innerWidth:1000,innerHeight:800,requestAnimationFrame:fn=>{pending=fn;return 1;},cancelAnimationFrame:()=>{pending=null;},setTimeout
 };
@@ -44,4 +44,10 @@ const replacement=element('card'); move(replacement);
 assert.ok(replacement.values.has('--tilt-y'),'dynamically replaced project cards work');
 windowEvents.get('hashchange')();
 assert.equal(replacement.values.size,0,'navigation clears effects');
-console.log('Passed: magnetic buttons, card tilt, hero reset, pointer leave, touch, reduced motion, dynamic cards, navigation cleanup.');
+context.innerWidth=700;move(card);
+assert.equal(card.values.size,0,'narrow zoomed view skips pointer effects');
+context.innerWidth=1000;move(card);windowEvents.get('resize')();
+assert.equal(card.values.size,0,'resizing clears existing transforms');
+context.document.documentElement.classList.contains=()=>true;move(card);
+assert.equal(card.values.size,0,'active resize skips effects');
+console.log('Passed: magnetic buttons, card tilt, hero reset, pointer leave, touch, reduced motion, dynamic cards, navigation and zoom cleanup.');
