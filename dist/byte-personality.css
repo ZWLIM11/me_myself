@@ -1,0 +1,16 @@
+.bot-head .bot-face{pointer-events:auto;cursor:grab}
+.byte-role{text-align:center;font-size:11px;color:#c2cfb4;letter-spacing:.04em;margin:8px 0 0;min-height:20px}
+.byte-prop{position:absolute;top:149px;left:63px;width:74px;height:49px;transform:translateZ(43px);display:grid;place-items:center;pointer-events:none;backface-visibility:hidden}
+.byte-camera{position:relative;display:block;width:71px;height:43px;border-radius:7px;background:linear-gradient(135deg,#445651,#152622);border:2px solid #aab6a1;box-shadow:0 4px 0 #102019}
+.byte-camera:before{content:'';position:absolute;top:-8px;left:9px;width:22px;height:8px;background:#8da18b;border-radius:3px 3px 0 0}
+.byte-camera i{position:absolute;left:23px;top:6px;width:27px;height:27px;border:5px solid #8ba397;border-radius:50%;background:radial-gradient(circle at 35% 30%,#aed5c5 0 12%,#183e38 15% 45%,#071d18 48%)}
+.byte-camera b{position:absolute;top:5px;left:5px;width:9px;height:5px;background:#dfd5ae;border-radius:1px}
+.byte-terminal{display:block;width:76px;height:50px;background:#10251f;border:3px solid #9cb19a;border-radius:5px;box-shadow:0 4px 0 #405c4c;text-align:left;padding:3px 5px}
+.byte-terminal b{display:block;font:5px monospace;color:#cfbe91;letter-spacing:2px;border-bottom:1px solid #677d6355;padding-bottom:3px}
+.byte-terminal i{display:block;font:18px monospace;font-style:normal;color:#bee8be;padding-top:4px}
+.byte-book{display:flex;width:69px;height:45px;transform:rotate(-6deg);border:2px solid #8d7957;border-radius:3px;background:#d3c8a8}
+.byte-book i{width:50%;border-right:1px solid #8d7957;background:repeating-linear-gradient(0deg,transparent 0 7px,#8d795733 7px 8px);margin:5px}
+.byte-envelope{display:grid;place-items:center;width:63px;height:40px;border:2px solid #d1c199;border-radius:5px;background:linear-gradient(32deg,transparent 48%,#d1c19950 49% 51%,transparent 52%),linear-gradient(-32deg,#354f40 48%,#d1c19950 49% 51%,#354f40 52%);color:#eee1bd;font:22px monospace}
+.byte-spark{display:grid;place-items:center;width:38px;height:38px;border-radius:50%;border:1px solid #c7ba8e;background:#18372b;color:#e0d2aa;font-size:26px}
+.is-charged .bot-eyes i{height:12px;border-radius:12px 12px 3px 3px}
+.is-charged .bot-mouth{width:28px;height:11px;border-bottom-width:3px}
