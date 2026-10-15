@@ -24,7 +24,7 @@
   dialog.addEventListener('close',()=>{release();wave?.cancel();});
   window.portfolioMotion.addEventListener('change',()=>{if(window.portfolioMotion.matches)wave?.cancel();});
   const slot=document.createElement('section');slot.className='robot-slot';slot.innerHTML='<div><p class="eyebrow">A SMALL DETOUR / 3D</p><h2>Meet your <em>curious guide.</em></h2><p>A little figure with five places to take you. Turn it around, say hello, and choose a path.</p><button class="button primary" aria-haspopup="dialog">Play with the 3D guide ↗</button></div><div class="robot-slot-mark" aria-hidden="true">[ ◉ ◉ ]<span>&lt; / &gt;</span></div>';
-  document.querySelector('#projects .chapter-end').before(slot);slot.querySelector('button').addEventListener('click',()=>{select('projects');dialog.showModal();});
-  trigger.addEventListener('click',()=>select(document.querySelector('.page.active').id));
+  document.querySelector('#projects .chapter-end').before(slot);slot.querySelector('button').addEventListener('click',()=>{select('projects');dialog.showModal();dialog.scrollTop=0;});
+  trigger.addEventListener('click',()=>{select(document.querySelector('.page.active').id);dialog.scrollTop=0;});
   select('projects');paint();
 })();
