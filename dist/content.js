@@ -1,7 +1,7 @@
 // Update these fields when your contact details and resume are ready.
 window.PORTFOLIO = {
-  email: '',
-  linkedin: '',
+  email: 'limziwei2004@gmail.com',
+  jobstreet: 'https://my.jobstreet.com/profiles/lim-ziwei-qmt24rpynk',
   github: 'https://github.com/ZWLIM11',
   resumeUrl: '',
   projects: [

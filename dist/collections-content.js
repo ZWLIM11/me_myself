@@ -1,6 +1,6 @@
 // Fill these spaces with your own files and verified results when ready.
 // Use relative paths such as assets/my-photo.jpg or full HTTPS URLs.
-window.PORTFOLIO.instagram = '';
+window.PORTFOLIO.instagram = 'https://instagram.com/w_zweii';
 window.PORTFOLIO.photography = [
   {id:'city', category:'City', title:'City stories', location:'', src:'', alt:'', caption:''},
   {id:'nature', category:'Nature', title:'A quieter perspective', location:'', src:'', alt:'', caption:''},
