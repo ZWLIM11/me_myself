@@ -12,15 +12,15 @@ html[data-motion=off] .robot-object{transition:none}
 /* Byte: enamel shell, recessed glass visor, and articulated shoulders. */
 .robot-object{transition:none;will-change:auto}
 .robot-stage.dragging .robot-object{will-change:transform}
-.bot-face{border-color:#c6d1bd66;border-radius:9px;background:#718373}
+.bot-face{border-color:#c6d1bd66;border-radius:0;background:#718373}
 .bot-face.front{background:linear-gradient(145deg,#d7ddcb,#8eaa94 48%,#526f60)}
 .bot-face.top{background:#c4ceba}.bot-face.left{background:#526d60}.bot-face.right{background:#7d9681}.bot-face.back{background:#617e6c}
 .bot-head{--size:94px;left:53px;top:31px}
-.bot-head .front{border-radius:17px;padding:8px}
+.bot-head .front{padding:8px}
 .bot-visor{position:absolute;inset:13px 6px 12px;border-radius:21px;background:linear-gradient(145deg,#182e2b,#061513);border:2px solid #485f50;box-shadow:inset 0 2px 4px #0008}
 .bot-eyes{top:32px;gap:20px}.bot-eyes i{width:13px;height:16px;border-radius:7px;background:#bcebcf;box-shadow:none}
 .bot-mouth{bottom:23px;border-color:#bcebcf;width:20px}
-.bot-body .front{border-radius:13px;background:linear-gradient(145deg,#b5c4ad,#5d7e69)}
+.bot-body .front{background:linear-gradient(145deg,#b5c4ad,#5d7e69)}
 .bot-badge{display:grid;place-items:center;width:42px;height:35px;border-radius:9px;background:#112d26;color:#c8e8bf;font-size:18px;border:1px solid #708e73}
 .bot-arm{--size:26px;top:148px}.arm-left{left:28px}.arm-right{right:28px}
 .bot-foot{height:15px;border-radius:6px;background:#97b49d}
