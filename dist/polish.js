@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const reduced=matchMedia('(prefers-reduced-motion: reduce)');
+  const reduced=(window.portfolioMotion || matchMedia('(prefers-reduced-motion: reduce)'));
   const fine=matchMedia('(hover: hover) and (pointer: fine)');
   const data=window.PORTFOLIO;
   const safeURL=value=>{if(!value)return '';try{const u=new URL(value,location.href);return ['http:','https:'].includes(u.protocol)?u.href:'';}catch{return '';}};

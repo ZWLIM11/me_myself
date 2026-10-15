@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const reduced = matchMedia('(prefers-reduced-motion: reduce)');
+  const reduced = (window.portfolioMotion || matchMedia('(prefers-reduced-motion: reduce)'));
   const fine = matchMedia('(hover: hover) and (pointer: fine)');
   const header = document.querySelector('.header');
   const animations = new Set();

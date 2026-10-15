@@ -2,7 +2,7 @@
   'use strict';
   const config = window.PORTFOLIO;
   const pages = ['home', 'about', 'projects', 'photography', 'contact'];
-  const reduceMotion = window.matchMedia('(prefers-reduced-motion: reduce)');
+  const reduceMotion = (window.portfolioMotion || matchMedia('(prefers-reduced-motion: reduce)'));
   const nav = document.querySelector('.header nav');
   const menu = document.querySelector('.menu-toggle');
   const grid = document.querySelector('#project-grid');
@@ -97,8 +97,8 @@
     projectDialog.showModal();
   });
   function showInfo(type) {
-    if (type === 'email' && config.email) { location.href = 'mailto:' + encodeURIComponent(config.email); return; }
-    if (type === 'jobstreet' && safeUrl(config.jobstreet)) { window.open(safeUrl(config.jobstreet), '_blank', 'noopener,noreferrer'); return; }
+    if (type === 'email' && config.email) { window.open('https://mail.google.com/mail/?view=cm&fs=1&to=' + encodeURIComponent(config.email), '_blank', 'noopener,noreferrer'); return; }
+    if (type === 'jobstreet') { window.open(safeUrl(config.jobstreet) || 'https://my.jobstreet.com/profiles/lim-ziwei-qmt24rpynk', '_blank', 'noopener,noreferrer'); return; }
     if (type === 'resume' && config.resumeUrl && safeUrl(config.resumeUrl)) { window.open(safeUrl(config.resumeUrl), '_blank', 'noopener,noreferrer'); return; }
     const content = type === 'resume' ? `<p class="eyebrow">AT A GLANCE</p><h2 id="info-title">Lim Ziwei</h2><p>Data Science student · Malaysia</p><div class="resume-lines"><p><strong>Education</strong><br>TAR UMT — Bachelor of Data Science (current)</p><p><strong>Interests</strong><br>Data analysis, machine learning, and intelligent systems</p><p><strong>Languages</strong><br>English, Mandarin, Malay</p></div><p>The full résumé will be added soon. In the meantime, explore the projects or find me on GitHub.</p><a href="#projects" class="button primary" data-close>Explore projects ↗</a>` : `<p class="eyebrow">LET’S CONNECT</p><h2 id="info-title">${type === 'email' ? 'Email' : 'JobStreet'} details coming soon.</h2><p>This portfolio is taking shape. For now, you can find my work on GitHub.</p><a class="button primary" href="${escape(safeUrl(config.github))}" target="_blank" rel="noopener noreferrer">Find me on GitHub ↗</a>`;
     document.querySelector('#info-content').innerHTML = content;

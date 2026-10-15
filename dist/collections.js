@@ -19,7 +19,7 @@
   // Keep the hero navigation familiar while inviting visitors to scroll into the new sections.
   const scrollLink=document.querySelector('.scroll-link');
   scrollLink.href='#featured';
-  scrollLink.addEventListener('click',event=>{event.preventDefault();document.querySelector('.featured-block').scrollIntoView({behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'});});
+  scrollLink.addEventListener('click',event=>{event.preventDefault();document.querySelector('.featured-block').scrollIntoView({behavior:(window.portfolioMotion || matchMedia('(prefers-reduced-motion: reduce)')).matches?'instant':'smooth'});});
   const categories=['All',...new Set(data.photography.map(p=>p.category))];
   document.querySelector('#photo-filters').innerHTML=categories.map((category,i)=>`<button class="filter ${i?'':'active'}" data-photo-filter="${e(category)}" aria-pressed="${!i}">${e(category)}</button>`).join('');
   const renderPhotos=category=>{document.querySelector('#photo-gallery').innerHTML=data.photography.filter(p=>category==='All'||p.category===category).map(photoCard).join('');};
@@ -29,7 +29,7 @@
   const prev=document.querySelector('#photos-prev');
   const next=document.querySelector('#photos-next');
   const syncArrows=()=>{prev.disabled=track.scrollLeft<2;next.disabled=track.scrollLeft+track.clientWidth>=track.scrollWidth-2;};
-  for(const [button,direction] of [[prev,-1],[next,1]])button.addEventListener('click',()=>track.scrollBy({left:direction*track.clientWidth*.75,behavior:matchMedia('(prefers-reduced-motion: reduce)').matches?'instant':'smooth'}));
+  for(const [button,direction] of [[prev,-1],[next,1]])button.addEventListener('click',()=>track.scrollBy({left:direction*track.clientWidth*.75,behavior:(window.portfolioMotion || matchMedia('(prefers-reduced-motion: reduce)')).matches?'instant':'smooth'}));
   track.addEventListener('scroll',syncArrows,{passive:true});
   new ResizeObserver(syncArrows).observe(track); syncArrows();
   const dialog=document.querySelector('#info-dialog');
@@ -44,11 +44,9 @@
   window.renderProjectExtras = project => {
     const study=data.caseStudies[project.id]||{};
     const video=url(study.videoUrl),demo=url(study.demoUrl);
-    return `<section class="case-study"><p class="eyebrow">A CLOSER LOOK</p><h3>See the project in action.</h3>${video?`<video controls playsinline preload="metadata" ${url(study.videoPoster)?`poster="${e(url(study.videoPoster))}"`:''}><source src="${e(video)}">Your browser cannot play this video. <a href="${e(video)}">Open video</a></video>`:placeholder('Project walkthrough','A video walkthrough will be added here.','video')}<div class="demo-slot">${demo?`<a class="button primary" href="${e(demo)}" target="_blank" rel="noopener noreferrer">Try the live demo ↗</a>`:placeholder('Interactive demo','A hands-on experience is coming soon.','compact')}</div><div class="case-grid">${[['role','My contribution'],['approach','The approach'],['results','Results & evidence'],['lessons','What I learned']].map(([key,title])=>`<article><h4>${title}</h4><p>${e(study[key]||'Details coming soon.')}</p></article>`).join('')}</div><h3>Screenshots & supporting material</h3><div class="case-screens">${study.screenshots?.some(s=>url(s.src))?study.screenshots.filter(s=>url(s.src)).map(s=>`<figure><img src="${e(url(s.src))}" alt="${e(s.alt)}" loading="lazy"><figcaption>${e(s.caption)}</figcaption></figure>`).join(''):placeholder('Behind the build','Screenshots, diagrams, and results will live here.','compact')}</div></section>`;
+    return `<section class="case-study"><p class="eyebrow">A CLOSER LOOK</p><h3>See the project in action.</h3>${video?`<video controls playsinline preload="metadata" ${url(study.videoPoster)?`poster="${e(url(study.videoPoster))}"`:''}><source src="${e(video)}">Your browser cannot play this video. <a href="${e(video)}">Open video</a></video>`:placeholder('Project walkthrough','A video walkthrough will be added here.','video')}<div class="demo-slot">${demo?`<a class="button primary" href="${e(demo)}" target="_blank" rel="noopener noreferrer">Try the live demo ↗</a>`:placeholder('Interactive demo','A hands-on experience is coming soon.','compact')}</div><div class="case-grid">${[['problem','The problem'],['role','My contribution'],['approach','The approach'],['results','Results & evidence'],['lessons','What I learned']].map(([key,title])=>`<article><h4>${title}</h4><p>${e(study[key]||'Details coming soon.')}</p></article>`).join('')}</div><h3>Screenshots & supporting material</h3><div class="case-screens">${study.screenshots?.some(s=>url(s.src))?study.screenshots.filter(s=>url(s.src)).map(s=>`<figure><img src="${e(url(s.src))}" alt="${e(s.alt)}" loading="lazy"><figcaption>${e(s.caption)}</figcaption></figure>`).join(''):placeholder('Behind the build','Screenshots, diagrams, and results will live here.','compact')}</div></section>`;
   };
   document.querySelector('#project-dialog').addEventListener('close',()=>document.querySelectorAll('#project-dialog video').forEach(video=>video.pause()));
-  const contactContent=document.querySelector('.contact-content');
-  const contactSpace=document.createElement('div');contactSpace.className='contact-reserved';contactSpace.innerHTML='<span aria-hidden="true">✉</span><div><strong>A direct line, coming soon.</strong><p>A contact form will be added here once message delivery is connected.</p></div>';contactContent.append(contactSpace);
   const instagram=document.createElement(url(data.instagram)?'a':'button');
   instagram.innerHTML='<span>◎</span>Instagram <span>↗</span>';
   if(url(data.instagram)){instagram.href=url(data.instagram);instagram.target='_blank';instagram.rel='noopener noreferrer';}

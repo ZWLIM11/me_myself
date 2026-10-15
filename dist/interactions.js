@@ -1,6 +1,6 @@
 (() => {
   'use strict';
-  const motion = matchMedia('(prefers-reduced-motion: reduce)');
+  const motion = (window.portfolioMotion || matchMedia('(prefers-reduced-motion: reduce)'));
   const pointer = matchMedia('(hover: hover) and (pointer: fine)');
   const magnetic = '.button, .outline-button, .contact-links>a, .contact-links>button';
   const responsive = magnetic + ', .project-card, .about-photo';

@@ -22,6 +22,10 @@ Open http://127.0.0.1:4173. Run `npm run check` to check JavaScript syntax.
 
 ## Update your details
 
+Email opens a Gmail compose window; Contact also provides a visible address, email-app link, and Copy email button. JobStreet opens the supplied profile directly. The Motion control remembers the visitor's reduced-motion preference and also respects their system setting.
+
+Résumé remains reserved until `resumeUrl` is filled in `dist/content.js`. Project case-study fields (`problem`, `role`, `approach`, `results`, `lessons`, videos and screenshots) remain empty in `dist/collections-content.js` for verified details later.
+
 ### Add your photographs in code
 
 1. Put your image files in `dist/assets/`, for example `dist/assets/kl-sunset.jpg`.

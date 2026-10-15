@@ -20,7 +20,7 @@ window.PORTFOLIO.skills = [
 ];
 window.PORTFOLIO.caseStudies = Object.fromEntries(['food','interview','streaming'].map(id => [id, {
   previewVideoUrl:'', videoUrl:'', videoPoster:'', demoUrl:'', screenshots:[],
-  role:'', approach:'', results:'', lessons:''
+  problem:'', role:'', approach:'', results:'', lessons:''
 }]));
 // screenshots: [{src:'assets/project-screen.jpg', alt:'Describe the screen', caption:'Optional caption'}]
 // videoUrl accepts a direct browser-playable video file. Use demoUrl for a hosted demo or video page.

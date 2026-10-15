@@ -1,0 +1,18 @@
+/* Keep the spacious hero, tighten the supporting sections and reading rhythm. */
+.home-block{min-height:75svh;padding-block:85px}
+.home-connect{min-height:60svh}.projects-intro{margin-bottom:40px}
+::view-transition-old(root){animation-duration:.2s}::view-transition-new(root),::view-transition-group(site-header){animation-duration:.42s}
+.case-study{padding-block:28px}.case-grid{gap:20px}.case-grid article p{max-width:60ch;line-height:1.8}
+.case-study .content-space.video{min-height:180px}.case-study .content-space.compact{min-height:100px}
+.contact-links{flex-wrap:wrap}.contact-links>a,.contact-links>button{min-width:145px;flex:1 1 145px}
+.email-options{display:flex;gap:12px 20px;flex-wrap:wrap;align-items:center;margin-top:22px;padding:18px 0;border-block:1px solid var(--line);font-size:12px}
+.email-options>a{color:var(--accent);overflow-wrap:anywhere}.email-options button{border:1px solid var(--line);padding:9px 13px;border-radius:5px;font-size:11px}.email-options small{width:100%;color:#a6ae9d}.email-options [role=status]{color:var(--accent)}
+.home-content .eyebrow{line-height:1.8;max-width:460px}
+#motion-toggle{position:fixed;bottom:20px;right:24px;z-index:25;border:1px solid #c4b18e35;border-radius:20px;padding:8px 12px;background:#101412ed;color:#b9bdaa;font-size:10px;letter-spacing:.03em}
+#motion-toggle:disabled{opacity:.7;cursor:default}
+html[data-motion=off]{scroll-behavior:auto!important}
+html[data-motion=off] *,html[data-motion=off] *::before,html[data-motion=off] *::after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+html[data-motion=off]::view-transition-old(root),html[data-motion=off]::view-transition-new(root),html[data-motion=off]::view-transition-group(*){animation:none!important}
+html[data-motion=off] .focus-cursor,html[data-motion=off] .tap-wave{display:none!important}
+html[data-motion=off] .hero-image,html[data-motion=off] .project-image,html[data-motion=off] .about-photo img,html[data-motion=off] .photo-card img{transform:none!important;translate:none!important;scale:1!important}
+@media(max-width:700px){.home-block{min-height:auto;padding-block:70px}.home-connect{min-height:55svh}.home-content .eyebrow{max-width:290px}.contact-links>a{flex:auto;width:100%}.case-study{padding:25px 23px}.email-options{align-items:flex-start;flex-direction:column}#motion-toggle{right:16px;bottom:12px;font-size:9px}.contact-page footer{padding-bottom:40px}}
