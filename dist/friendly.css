@@ -1,0 +1,13 @@
+.project-item{min-width:0;position:relative}.project-item>.project-card{width:100%;text-align:left;display:block}.project-demo{margin-top:16px;min-height:44px;align-items:center;color:var(--accent)}
+#project-grid{align-content:start;overflow-anchor:none}
+.project-code{position:absolute;right:18px;bottom:18px;color:#e4dcc8;background:#102019e8;padding:9px 12px;border:1px solid #c4b18e45;border-radius:5px;font:11px monospace;opacity:0;translate:0 6px;transition:opacity .2s,translate .2s;pointer-events:none}
+.project-card:hover .project-code,.project-card:focus-visible .project-code{opacity:1;translate:0 0}
+.photo-card[data-photo] .photo-frame:after{border:0;background:linear-gradient(#e5d7b8,#e5d7b8) left top/28px 1px no-repeat,linear-gradient(#e5d7b8,#e5d7b8) left top/1px 28px no-repeat,linear-gradient(#e5d7b8,#e5d7b8) right bottom/28px 1px no-repeat,linear-gradient(#e5d7b8,#e5d7b8) right bottom/1px 28px no-repeat;opacity:0;transform:scale(1.04);transition:opacity .2s,transform .25s}
+.photo-card[data-photo]:hover .photo-frame:after,.photo-card[data-photo]:focus-visible .photo-frame:after{opacity:1;transform:scale(1)}
+.lightbox-stage{overflow:hidden;touch-action:none;position:relative;height:58svh;min-height:160px;cursor:grab}.lightbox-stage img{max-width:100%;max-height:100%;transform-origin:center!important;user-select:none;-webkit-user-drag:none}
+.photo-zoom-controls{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:12px 0}.photo-zoom-controls button{min-width:44px;min-height:44px;border:1px solid #c4b18e50;border-radius:22px;padding:8px 14px;font-size:12px}.photo-zoom-controls output{font:11px monospace;color:var(--accent);min-width:40px}.photo-touch-hint{font-size:11px;color:var(--muted);line-height:1.6}
+.gallery-feature{touch-action:pan-y}
+.byte-tour-launch{margin:8px 0 14px;min-height:44px}.robot-slot .byte-tour-launch{margin-left:18px}
+#byte-tour{max-width:560px;padding:44px 30px 28px}#byte-tour h2{font-size:clamp(27px,4vw,38px);letter-spacing:-.04em;margin:20px 0}#byte-tour p{font-size:14px;line-height:1.8;color:#b7c1aa}.tour-mark{font:40px monospace;color:var(--accent);margin-bottom:20px}.tour-actions{display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:15px;margin-top:25px}.tour-actions button{min-height:44px;padding:10px 15px;border:1px solid #c4b18e50;border-radius:24px}.tour-actions button:disabled{opacity:.3}.tour-step{font:10px monospace;letter-spacing:.15em;color:var(--accent)}
+@media(max-width:700px){.project-code{opacity:1;translate:0 0;font-size:9px}.lightbox-stage{height:44svh}.robot-slot .byte-tour-launch{margin-left:0;display:flex}#byte-tour{padding:45px 22px 24px}}
+html[data-motion=off] .project-code,html[data-motion=off] .photo-frame:after{transition:none}

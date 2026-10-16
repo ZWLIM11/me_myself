@@ -88,8 +88,19 @@
   document.addEventListener('keydown', event => { if (event.key === 'Escape') closeMenu(); });
   document.addEventListener('click', event => { if (!event.target.closest('.header')) closeMenu(); });
 
+  let filterAnimation;
   function renderProjects(filter = 'all') {
-    grid.innerHTML = config.projects.filter(p => filter === 'all' || p.category === filter).map((p, index) => `<button class="project-card" data-project="${escape(p.id)}" style="animation-delay:${index * 85}ms" aria-label="View ${escape(p.title)}"><div class="project-image"><span class="project-number">0${config.projects.indexOf(p) + 1} /</span><img src="${escape(p.image)}" alt="${escape(p.alt)}" loading="lazy"></div><span class="project-category">${escape(p.label)}</span><h2>${escape(p.title)}</h2><p>${escape(p.subtitle)}</p><span class="card-arrow" aria-hidden="true">↗</span></button>`).join('');
+    const previousHeight=grid.getBoundingClientRect().height;
+    filterAnimation?.cancel();
+    grid.innerHTML = config.projects.filter(p => filter === 'all' || p.category === filter).map(p => {
+      const demo=safeUrl(config.caseStudies?.[p.id]?.demoUrl);
+      return `<article class="project-item"><button class="project-card" data-project="${escape(p.id)}" aria-label="View ${escape(p.title)}"><div class="project-image"><span class="project-number">0${config.projects.indexOf(p) + 1} /</span><img src="${escape(p.image)}" alt="${escape(p.alt)}" loading="lazy"><span class="project-code" aria-hidden="true">&lt;explore /&gt;</span></div><span class="project-category">${escape(p.label)}</span><h2>${escape(p.title)}</h2><p>${escape(p.subtitle)}</p><span class="card-arrow" aria-hidden="true">↗</span></button>${demo?`<a class="project-demo text-link" href="${escape(demo)}" target="_blank" rel="noopener noreferrer" aria-label="Try ${escape(p.title)} demo (opens in a new tab)">Try demo <span aria-hidden="true">↗</span></a>`:''}</article>`;
+    }).join('');
+    if(previousHeight&&!reduceMotion.matches){
+      const height=grid.getBoundingClientRect().height;
+      filterAnimation=grid.animate([{height:`${previousHeight}px`},{height:`${height}px`}],{duration:260,easing:'cubic-bezier(.2,.7,.2,1)'});
+      [...grid.children].forEach(item=>item.animate([{opacity:.35,translate:'0 7px'},{opacity:1,translate:'0 0'}],{duration:240,easing:'ease-out'}));
+    }
   }
   document.querySelectorAll('.filter').forEach(button => button.addEventListener('click', () => {
     document.querySelectorAll('.filter').forEach(b => { const active = b === button; b.classList.toggle('active', active); b.setAttribute('aria-pressed', String(active)); });

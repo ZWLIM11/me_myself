@@ -83,7 +83,7 @@
   async function showPhoto(origin){
     const version=++revision,p=photos[index];
     image.getAnimations().forEach(animation=>animation.cancel());
-    image.src=safeURL(p.src);image.alt=p.alt||p.title;
+    image.src=safeURL(p.src);image.alt=p.alt||p.title;lightbox.dispatchEvent(new Event("photo:change"));
     lightbox.querySelector('h2').textContent=p.title;lightbox.querySelector('.lightbox-caption').textContent=p.caption||p.location||p.category;
     lightbox.querySelector('.lightbox-count').textContent=`${index+1} / ${photos.length}`;
     lightbox.querySelector('.lightbox-prev').disabled=index===0;lightbox.querySelector('.lightbox-next').disabled=index===photos.length-1;
