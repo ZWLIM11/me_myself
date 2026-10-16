@@ -3,11 +3,12 @@
   const motion=window.portfolioMotion;
   const escape=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const pages=['home','about','projects','photography','contact'];
+  const labels=['Home','About','Projects','Photos','Contact'];
   const names=['Introduction','The person','The projects','Through my lens','Let’s connect'];
 
   // Persistent chapter shortcuts also work through the keyboard and native hashes.
   const dock=document.createElement('nav');dock.className='chapter-dock';dock.setAttribute('aria-label','Chapter shortcuts');
-  dock.innerHTML=`<span class="chapter-caption" aria-hidden="true"></span><div>${pages.map((id,i)=>`<a href="#${id}" aria-label="${names[i]} — chapter ${i+1}">${String(i+1).padStart(2,'0')}</a>`).join('')}</div>`;
+  dock.innerHTML=`<span class="chapter-caption" aria-hidden="true"></span><div>${pages.map((id,i)=>`<a href="#${id}" aria-label="${names[i]} — chapter ${i+1}">${String(i+1).padStart(2,'0')}<span class="chapter-link-name">${labels[i]}</span></a>`).join('')}</div>`;
   const controls=document.createElement('div');controls.className='chapter-controls';
   controls.append(dock,document.querySelector('#motion-toggle'));document.body.append(controls);
   const progress=document.createElement('div');progress.className='chapter-progress';progress.setAttribute('aria-hidden','true');progress.innerHTML='<span></span>';document.querySelector('.header').append(progress);

@@ -1,0 +1,22 @@
+/* An in-flow editorial footer, with the same surface as the current chapter. */
+.chapter-controls{background:#101412;border-top:0;padding:18px 5.3%;gap:24px;min-height:84px}
+body:has(.home-page.active) .chapter-controls{background:#0b0d0c}
+.home-hero:before{content:'';position:absolute;bottom:0;left:0;right:0;height:100px;z-index:1;pointer-events:none;background:linear-gradient(transparent,#0b0d0c)}
+.chapter-controls .chapter-dock{border:0;border-radius:0;background:transparent;backdrop-filter:none;padding:0;gap:0;min-width:0}
+.chapter-controls .chapter-caption{display:none}
+.chapter-controls .chapter-dock>div{gap:22px}
+.chapter-controls .chapter-dock a{position:relative;display:flex;gap:9px;align-items:center;width:auto;min-width:44px;height:44px;border-radius:0;color:#8e988e;font-size:10px;background:transparent;transition:color .2s ease}
+.chapter-dock .chapter-link-name{font:11px 'DM Sans',Arial,sans-serif}
+.chapter-controls .chapter-dock a:after{content:'';position:absolute;bottom:0;left:0;right:0;height:1px;background:#c4b18e;transform:scaleX(0);transform-origin:left;transition:transform .24s ease}
+.chapter-controls .chapter-dock a[aria-current=page],.chapter-controls .chapter-dock a:hover{background:transparent;color:#e0d2b8}
+.chapter-controls .chapter-dock a[aria-current=page]:after,.chapter-controls .chapter-dock a:hover:after{transform:scaleX(1)}
+.chapter-controls #motion-toggle{background:transparent;border-color:#c4b18e28;color:#a7ae9f;min-height:36px;white-space:nowrap}
+@media(max-width:700px){
+ .chapter-controls{padding:12px 7% max(14px,env(safe-area-inset-bottom));flex-direction:column;gap:10px}
+ .chapter-controls .chapter-dock{width:100%}
+ .chapter-controls .chapter-dock>div{display:grid;grid-template-columns:repeat(5,minmax(0,1fr));width:100%;gap:6px}
+ .chapter-controls .chapter-dock a{height:46px;min-width:0;width:100%;flex-direction:column;justify-content:center;gap:4px;font-size:9px}
+ .chapter-dock .chapter-link-name{font-size:9px}
+ .chapter-controls #motion-toggle{font-size:9px;min-height:32px;padding:7px 12px}
+}
+html[data-motion=off] .chapter-controls .chapter-dock a:after{transition:none}
