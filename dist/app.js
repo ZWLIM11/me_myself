@@ -13,6 +13,10 @@
   let transition;
   let navigating = false;
   let queuedPage = null;
+  let projectVisit={filter:'all',y:0};
+  try{const saved=JSON.parse(sessionStorage.getItem('portfolio-project-visit'));if(saved&&['all',...config.projects.map(p=>p.category)].includes(saved.filter)&&Number.isFinite(saved.y))projectVisit={filter:saved.filter,y:Math.max(0,saved.y)};}catch{}
+  function saveProjectVisit(){if(current!=='projects')return;projectVisit.y=scrollY;try{sessionStorage.setItem('portfolio-project-visit',JSON.stringify(projectVisit));}catch{}}
+  addEventListener('pagehide',saveProjectVisit);
   const escape = text => String(text).replace(/[&<>"']/g, c => ({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const safeUrl = value => { if (!value) return ''; try { const url = new URL(value, location.href); return ['http:', 'https:'].includes(url.protocol) ? url.href : ''; } catch { return ''; } };
 
@@ -25,13 +29,14 @@
     const direction = pages.indexOf(id) >= pages.indexOf(current) ? 1 : -1;
     document.documentElement.style.setProperty('--page-direction', direction);
     const update = () => {
+      if(!initial)saveProjectVisit();
       for (const page of document.querySelectorAll('.page')) { page.hidden = page.id !== id; page.classList.toggle('active', page.id === id); }
       document.querySelectorAll('.header nav a').forEach(link => { const active = link.hash === '#' + id; link.classList.toggle('active', active); if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); });
       document.querySelector('#page-number').textContent = String(pages.indexOf(id) + 1).padStart(2, '0');
       document.title = `${id === 'home' ? 'Data & Possibility' : id[0].toUpperCase() + id.slice(1)} — Lim Ziwei`;
       current = id;
       if (!initial) document.getElementById(id).classList.add('has-entered');
-      window.scrollTo({top: 0, behavior: 'instant'});
+      window.scrollTo({top:id==='projects'?projectVisit.y:0,behavior:'instant'});
       if (!initial) document.querySelector('#main').focus({preventScroll:true});
       document.dispatchEvent(new CustomEvent('portfolio:pagechange'));
     };
@@ -90,6 +95,7 @@
 
   let filterAnimation;
   function renderProjects(filter = 'all') {
+    projectVisit.filter=filter;
     const previousHeight=grid.getBoundingClientRect().height;
     filterAnimation?.cancel();
     grid.innerHTML = config.projects.filter(p => filter === 'all' || p.category === filter).map(p => {
@@ -139,5 +145,7 @@
   const clock = () => { document.querySelector('#local-time').textContent = new Intl.DateTimeFormat('en-GB', {timeZone:'Asia/Kuala_Lumpur',hour:'2-digit',minute:'2-digit',hour12:false}).format(new Date()) + ' MYT'; };
   clock(); setInterval(clock, 60000); document.querySelector('#year').textContent = new Date().getFullYear();
   // The composited focus cursor replaces the old repainting glow.
-  renderProjects(); showPage(location.hash.slice(1) || 'home', true);
+  renderProjects(projectVisit.filter);
+  document.querySelectorAll('.filter[data-filter]').forEach(b=>{const active=b.dataset.filter===projectVisit.filter;b.classList.toggle('active',active);b.setAttribute('aria-pressed',String(active));});
+  showPage(location.hash.slice(1) || 'home', true);
 })();
