@@ -16,3 +16,5 @@ dialog[open]{animation-duration:240ms}
 .muted,.project-category,.gallery-hint{color:#aab69f!important}
 @media(max-width:700px){.project-results{font-size:11px}.project-results button{font-size:10px}.home-page .home-bottom{justify-content:flex-start}.photo-story p{font-size:12px}}
 html[data-motion=off] *,html[data-motion=off] *::before,html[data-motion=off] *::after{transition-duration:0s!important}
+
+.home-page:after{content:"";position:absolute;left:0;right:0;bottom:0;height:80px;background:linear-gradient(transparent,#0b0d0c 85%);pointer-events:none;z-index:1}
