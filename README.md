@@ -90,3 +90,6 @@ Project photographs: Unsplash images, saved locally to avoid runtime image depen
 
 Fonts: DM Sans and Manrope via Google Fonts, with system-font fallbacks.
 
+
+### Optional photograph details
+In `dist/collections-content.js`, each photography entry can include `location`, `date`, and `story` strings. Filled fields appear under “Behind this photograph”; empty fields stay hidden. Keep `src` blank until a real photo is ready.

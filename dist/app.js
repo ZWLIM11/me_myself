@@ -49,14 +49,14 @@
     try {
       const curtain=document.querySelector('#page-curtain');
       curtain.querySelector('span').textContent=String(pages.indexOf(id)+1).padStart(2,'0')+' / '+id.toUpperCase();
-      const cover=curtain.animate([{transform:`translateY(${direction*100}%)`},{transform:'translateY(0)'}],{duration:230,easing:'cubic-bezier(.45,0,.25,1)',fill:'forwards'});
+      const cover=curtain.animate([{transform:`translateY(${direction*100}%)`},{transform:'translateY(0)'}],{duration:190,easing:'cubic-bezier(.45,0,.25,1)',fill:'forwards'});
       routeAnimations.push(cover);
       await cover.finished.catch(()=>{});
       update();
-      const reveal=curtain.animate([{transform:'translateY(0)'},{transform:`translateY(${-direction*100}%)`}],{duration:310,easing:'cubic-bezier(.25,.7,.25,1)',fill:'forwards'});
+      const reveal=curtain.animate([{transform:'translateY(0)'},{transform:`translateY(${-direction*100}%)`}],{duration:250,easing:'cubic-bezier(.25,.7,.25,1)',fill:'forwards'});
       routeAnimations.push(reveal);
       if(!reduceMotion.matches){
-        const arrival=main.animate([{opacity:.85,transform:`translateY(${direction*12}px)`},{opacity:1,transform:'translateY(0)'}],{duration:310,easing:'cubic-bezier(.2,.7,.2,1)'});
+        const arrival=main.animate([{opacity:.85,transform:`translateY(${direction*12}px)`},{opacity:1,transform:'translateY(0)'}],{duration:250,easing:'cubic-bezier(.2,.7,.2,1)'});
         routeAnimations.push(arrival);
       }
       cover.cancel();

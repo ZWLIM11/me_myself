@@ -4,6 +4,10 @@
   const e = value => String(value ?? '').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
   const url = value => {if(!value)return '';try{const u=new URL(value,location.href);return ['https:','http:'].includes(u.protocol)?u.href:'';}catch{return '';}};
   const placeholder = (title,detail,kind='media') => `<div class="content-space ${kind}"><span class="space-icon" aria-hidden="true">${kind==='video'?'▷':'＋'}</span><strong>${e(title)}</strong><span>${e(detail)}</span><small>COMING SOON</small></div>`;
+  window.portfolioPhotoStory=photo=>{
+    const fields=[['Location',photo.location],['Date',photo.date],['The story',photo.story||photo.caption]].filter(([,value])=>value);
+    return fields.length?`<details class="photo-story"><summary>Behind this photograph</summary>${fields.map(([label,value])=>`<p><strong>${e(label)}</strong><br>${e(value)}</p>`).join('')}</details>`:'';
+  };
   function photoCard(photo) {
     const src=url(photo.src);
     return `<${src?'button':'article'} class="photo-card" ${src?`data-photo="${e(photo.id)}" aria-label="Open ${e(photo.title)}"`:''}><div class="photo-frame photo-${e(photo.category.toLowerCase())}">${src?`<img src="${e(src)}" alt="${e(photo.alt||photo.title)}" loading="lazy">`:`<span class="photo-outline" aria-hidden="true">⌑</span><span class="photo-reserved">${e(photo.category.toUpperCase())}<small>PHOTOGRAPH COMING SOON</small></span>`}</div><div class="photo-caption"><strong>${e(photo.title)}</strong><span>${e(photo.location || photo.category)}</span></div></${src?'button':'article'}>`;
@@ -20,7 +24,7 @@
     const photo=galleryPhotos.find(p=>p.id===id);if(!photo)return;
     selectedPhoto=id;
     const stage=gallery.querySelector('.gallery-feature');
-    stage.innerHTML=photoCard(photo);
+    stage.innerHTML=photoCard(photo)+window.portfolioPhotoStory(photo);
     const index=galleryPhotos.indexOf(photo);
     gallery.querySelector('.gallery-count').textContent=`${String(index+1).padStart(2,'0')} / ${String(galleryPhotos.length).padStart(2,'0')}`;
     gallery.querySelector('.gallery-prev').disabled=index===0;

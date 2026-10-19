@@ -25,8 +25,8 @@ ${!fields.length?'<p class="case-status">The detailed case study is being prepar
 <nav class="case-more" aria-label="Other projects"><p class="eyebrow">KEEP EXPLORING</p>${data.projects.filter(p=>p.id!==project.id).map(p=>`<a href="/projects/${p.id}/">${e(p.title)} <span>↗</span></a>`).join('')}</nav></main><footer class="case-footer"><a href="/#contact">Let’s connect ↗</a><span>Lim Ziwei · Portfolio</span><button id="motion-toggle" type="button" aria-label="Reduce motion" aria-pressed="false">Motion: on</button></footer><script src="/motion.js?v=20261015-sections"></script><script src="/project-page.js?v=20261015-sections"></script></body></html>`;
   const next=data.projects[(data.projects.indexOf(project)+1)%data.projects.length];
   const jump=`<nav class="case-jump" aria-label="On this project page"><a href="#overview">Overview</a>${fields.length?'<a href="#process">Process & results</a>':''}${url(study.videoUrl)||images.length?'<a href="#media">Media</a>':''}<a href="#next-project">Next project ↗</a></nav>`;
-  html=html.replace('</head>','<link rel="stylesheet" href="/finishing.css?v=20261017-polish"></head>')
-    .replace('</body>','<script src="/media-feedback.js?v=20261017-polish"></script></body>')
+  html=html.replace('</head>','<link rel="stylesheet" href="/finishing.css?v=20261019-refine"><link rel="stylesheet" href="/refine-usability.css?v=20261019-refine"></head>')
+    .replace('</body>','<script src="/media-feedback.js?v=20261019-refine"></script></body>')
     .replace('<div class="case-overview">',jump+'<div class="case-overview" id="overview">')
     .replace('<section class="case-written">','<section class="case-written" id="process">')
     .replace('<section class="case-media">','<section class="case-media" id="media">')
