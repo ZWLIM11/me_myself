@@ -41,6 +41,8 @@ const path=require('node:path');
         if(width===390||width===1440)await page.screenshot({path:path.join(out,`explore-${width}-${theme}.png`),fullPage:true});
       }
       await page.goto(base+'/#projects');
+      assert.equal(await page.locator('.header .theme-toggle').count(),1);
+      assert.equal(await page.locator('.chapter-controls .theme-toggle').count(),0);
       await page.locator('.explore-link').waitFor({state:'visible'});
       await page.evaluate(()=>location.hash='about');await page.locator('#about.active').waitFor();
       await page.locator('[data-node="4"]').click();
@@ -53,6 +55,8 @@ const path=require('node:path');
         await page.locator('#about.active').waitFor({state:'visible'});
         assert.equal(await page.locator('.menu-toggle').getAttribute('aria-expanded'),'false');
       }
+      if(width<1151)await page.locator('.menu-toggle').click();
+      await page.locator('.explore-menu summary').click();await page.locator('.explore-dropdown a[href="#beyond"]').click();await page.locator('#beyond.active').waitFor();assert.equal(await page.locator('.explore-menu').getAttribute('open'),null);
       for(const theme of ['light','dark']){
         await page.locator('.theme-toggle').click();
         for(const id of ['home','about','projects','photography','beyond','playground','board-games','contact']){
@@ -65,15 +69,17 @@ const path=require('node:path');
         }
       }
       await page.evaluate(()=>location.hash='beyond');await page.locator('#beyond.active').waitFor();
-      for(const sport of ['volleyball','football','badminton']){await page.locator('[data-sport="'+sport+'"]').click();assert.equal(await page.locator('[data-sport="'+sport+'"]').getAttribute('aria-pressed'),'true');}
+      for(const sport of ['volleyball','football','badminton']){await page.locator('[data-sport="'+sport+'"]').click();assert.equal(await page.locator('[data-sport="'+sport+'"]').getAttribute('aria-pressed'),'true');await page.locator('.sport-play').click();assert.match(await page.locator('.sport-feedback').textContent(),/1/);}
       await page.evaluate(()=>location.hash='playground');await page.locator('#playground.active').waitFor();
-      await page.locator('#cluster-step').click();assert.match(await page.locator('.cluster-summary').textContent(),/Step|settled/);
+      await page.locator('#cluster-step').click();assert.match(await page.locator('.cluster-summary').textContent(),/Step|settled/);assert.match(await page.locator('.cluster-explanation').textContent(),/points changed groups/);
       await page.locator('.reaction-pad').click();await page.locator('.reaction-pad').click();assert.match(await page.locator('#reaction-status').textContent(),/early/);
       await page.locator('#reaction-reset').click();await page.locator('.reaction-pad').click();await page.locator('.reaction-pad[data-state="ready"]').waitFor();await page.locator('.reaction-pad').click();assert.match(await page.locator('#reaction-status').textContent(),/Round complete/);
+      if(width===390){for(let round=1;round<5;round++){await page.locator('.reaction-pad').press('Space');await page.locator('.reaction-pad[data-state="ready"]').waitFor();await page.locator('.reaction-pad').press('Space');}assert.match(await page.locator('#reaction-status').textContent(),/Five rounds finished/);assert.match(await page.locator('.reaction-scores').textContent(),/average/);}
       await page.locator('.reaction-pad').click();await page.evaluate(()=>location.hash='board-games');await page.locator('#board-games.active').waitFor();assert.equal(await page.locator('.reaction-pad').getAttribute('data-state'),'idle');assert.equal(await page.locator('.game-box').count(),5);
       const gameUrls=['https://monopoly-deal.limziwei2004.workers.dev/','https://liar-bar-online.limziwei2004.workers.dev/','https://chess-online.limziwei2004.workers.dev/','https://bang-online.limziwei2004.workers.dev/','https://fortune-routes.pages.dev/'];
       for(let i=0;i<5;i++){await page.locator('.game-box').nth(i).click();assert.equal(await page.locator('.shelf-actions a').getAttribute('href'),gameUrls[i]);assert.equal(await page.locator('.game-box[aria-pressed="true"]').count(),1);assert.equal(await page.locator('.shelf-actions a').getAttribute('target'),'_blank');await check('selected game '+i);}
       await page.locator('.game-box').first().click();
+      await page.locator('.byte-context-launch').click();assert.match(await page.locator('.byte-prompts').textContent(),/Help me choose a game/);await page.getByRole('button',{name:'Help me choose a game',exact:true}).click();assert.match(await page.locator('.byte-messages').textContent(),/Arcane Chess/);await page.locator('#byte-chat .close-dialog').click();
       for(const id of ['interview','ripple','makan-mana']){
         await page.goto(base+'/projects/'+id+'/');
         for(let i=0;i<2;i++){

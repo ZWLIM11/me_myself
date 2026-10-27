@@ -9,11 +9,14 @@
     if(!window.portfolioMotion.matches)art.animate([{opacity:.3,transform:'translateY(6px)'},{opacity:1,transform:'none'}],{duration:260});
   }
   document.querySelectorAll('[data-sport]').forEach(b=>b.addEventListener('click',()=>sport(b.dataset.sport)));sport('badminton');
-  const pad=document.querySelector('.reaction-pad'),status=document.querySelector('#reaction-status');let phase='idle',timer,started=0;
-  function reset(){clearTimeout(timer);phase='idle';pad.dataset.state='idle';pad.textContent='Start a round ↗';status.textContent='Your next round starts here.';}
+  const pad=document.querySelector('.reaction-pad'),status=document.querySelector('#reaction-status');let phase='idle',timer,started=0,rounds=[];
+  const scores=document.createElement('p');scores.className='reaction-scores';scores.setAttribute('aria-live','polite');status.after(scores);
+  function scoreboard(){scores.textContent=rounds.length?'Rounds: '+rounds.join(' · ')+' ms — average '+Math.round(rounds.reduce((a,b)=>a+b,0)/rounds.length)+' ms':'Five rounds. Your average will appear here.';}scoreboard();
+  function reset(){clearTimeout(timer);rounds=[];scoreboard();phase='idle';pad.dataset.state='idle';pad.textContent='Start a round ↗';status.textContent='Your next round starts here.';}
   pad.addEventListener('click',()=>{
     if(phase==='waiting'){clearTimeout(timer);phase='idle';pad.dataset.state='early';pad.textContent='Try again ↗';status.textContent='A little early! Wait for “Go” before tapping.';return;}
-    if(phase==='ready'){const ms=Math.round(performance.now()-started);phase='idle';pad.dataset.state='done';pad.textContent=ms+' ms · play again';status.textContent='Round complete. Your reaction took '+ms+' milliseconds on this device.';return;}
+    if(phase==='ready'){const ms=Math.round(performance.now()-started);rounds.push(ms);scoreboard();phase=rounds.length===5?'complete':'idle';pad.dataset.state='done';pad.textContent=rounds.length===5?'New five-round challenge ↗':'Start round '+(rounds.length+1)+' / 5';status.textContent='Round complete: '+ms+' ms. '+(rounds.length===5?'Five rounds finished. Best: '+Math.min(...rounds)+' ms.':'Take your time before the next round.');return;}
+    if(phase==='complete'){rounds=[];scoreboard();}
     phase='waiting';pad.dataset.state='waiting';pad.textContent='Wait for Go…';status.textContent='Stay ready. The pad will change when it is time.';
     timer=setTimeout(()=>{if(document.hidden||!document.querySelector('#playground').classList.contains('active')){reset();return;}phase='ready';pad.dataset.state='ready';pad.textContent='Go!';started=performance.now();status.textContent='Go—tap the pad now!';},1400+Math.random()*2200);
   });

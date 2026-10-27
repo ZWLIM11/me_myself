@@ -13,6 +13,9 @@
   ];
   window.getByteReply = input => {
     const text=String(input||'').trim().slice(0,300);
+    if(/choose.*game|game.*choose/i.test(text))return {text:'For a classic board, try Arcane Chess. For a card-table setting, explore Monopoly Deal or The Liar’s Table. Hex & Holsters and Fortune Routes are also on the shelf—select a box to open it.',label:'Choose from the shelf',href:'#board-games'};
+    if(/explain.*cluster/i.test(text))return {text:'Clustering groups nearby points. Each step moves every centre to the average of its group and then reassigns points to the nearest centre. The summary reports how many points changed groups and how far the centres moved.',label:'Try the clustering experiment',href:'#playground'};
+    if(/explain.*reaction/i.test(text))return {text:'Complete five rounds: start, wait for Go, then tap. Early taps do not count. The page shows each result, your average, and the best time. Device delays affect these numbers.',label:'Try the reaction challenge',href:'#playground'};
     if(/board.?games?|games shelf|monopoly|chess|liar|holsters|bang|fortune routes/i.test(text))return {text:'The shelf has five games: Monopoly Deal, The Liar’s Table, Arcane Chess, Hex & Holsters, and Fortune Routes. Select a box to open its game.',label:'Visit Board Games',href:'#board-games'};
     if(/playground|experiment|reaction|reflex|clustering/i.test(text))return {text:'Try grouping sample data or test your timing in the Playground. Each experiment has a reset control.',label:'Visit Playground',href:'#playground'};
     if(/beyond|badminton|volleyball|hobb(y|ies)|sports/i.test(text))return {text:'Beyond the Screen explores badminton, volleyball, football, photography, games, and new places.',label:'Go beyond the screen',href:'#beyond'};

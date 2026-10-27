@@ -61,11 +61,15 @@
   function greet(){log.replaceChildren();message('Hi, I’m Byte. Tell me what you’re curious about and I’ll help you find it.','byte');}
   function ask(text){const value=text.trim();if(!value)return;message(value,'visitor');const reply=window.getByteReply(value);message(reply.text,'byte',reply);input.value='';}
   dialog.querySelector('form').addEventListener('submit',event=>{event.preventDefault();ask(input.value);input.focus({preventScroll:true});});
-  dialog.querySelectorAll('.byte-prompts button').forEach(button=>button.addEventListener('click',()=>ask(button.textContent)));
+  dialog.querySelector('.byte-prompts').addEventListener('click',event=>{const button=event.target.closest('button');if(button)ask(button.textContent);});
+  const pagePrompts={home:['Meet Ziwei','Show me projects','What can I explore?'],about:['What are his skills?','What sports does he enjoy?','Contact Ziwei'],projects:['Show me Ripple','Show me Makan Mana','Show me RecruitView'],photography:['Show me photo stories','Beyond the screen','Contact Ziwei'],beyond:['What sports does he enjoy?','Show me photography','Show me board games'],playground:['Explain clustering','Explain the reaction challenge','Show me board games'],'board-games':['Help me choose a game','Show me chess','Show me Monopoly Deal'],contact:['How can I contact him?','Show me projects','Meet Ziwei']};
+  function contextPrompts(){const id=document.querySelector('.page.active')?.id||'home';const host=dialog.querySelector('.byte-prompts');host.replaceChildren();for(const text of pagePrompts[id]||pagePrompts.home){const button=document.createElement('button');button.type='button';button.textContent=text;host.append(button);}}
+  document.addEventListener('portfolio:pagechange',contextPrompts);contextPrompts();
   dialog.querySelector('.byte-clear').addEventListener('click',greet);
   dialog.querySelector('.close-dialog').addEventListener('click',()=>dialog.close());
   dialog.addEventListener('close',()=>{if(opener?.isConnected&&!opener.closest('dialog'))opener.focus({preventScroll:true});});
-  function launch(event){opener=event.currentTarget;document.querySelectorAll('dialog[open]').forEach(d=>d.close());dialog.showModal();if(!log.children.length)greet();dialog.querySelector('.close-dialog').focus({preventScroll:true});}
+  function launch(event){contextPrompts();opener=event.currentTarget;document.querySelectorAll('dialog[open]').forEach(d=>d.close());dialog.showModal();if(!log.children.length)greet();dialog.querySelector('.close-dialog').focus({preventScroll:true});}
+  const contextual=document.createElement('button');contextual.type='button';contextual.className='text-link byte-context-launch';contextual.textContent='Ask Byte ↗';contextual.setAttribute('aria-haspopup','dialog');document.querySelector('.chapter-controls').append(contextual);contextual.addEventListener('click',launch);
   for(const parent of [document.querySelector('.home-content .actions'),document.querySelector('.robot-dialog-content .curiosity-intro'),document.querySelector('.robot-slot>div'),document.querySelector('.contact-content')]){
     if(!parent)continue;const button=document.createElement('button');button.type='button';button.className='text-link byte-chat-launch';button.textContent='Ask Byte ↗';button.setAttribute('aria-haspopup','dialog');parent.append(button);button.addEventListener('click',launch);
   }

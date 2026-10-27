@@ -8,7 +8,7 @@
   }
   apply();system.addEventListener('change',apply);
   document.addEventListener('DOMContentLoaded',()=>{
-    const host=document.querySelector('.chapter-controls,.case-footer,.explore-tools');if(!host)return;
+    const host=document.querySelector('.header')||document.querySelector('.case-header')||document.querySelector('.explore-tools');if(!host)return;
     const button=document.createElement('button');button.type='button';button.className='theme-toggle';
     button.addEventListener('click',()=>{choice=root.dataset.theme==='light'?'dark':'light';try{localStorage.setItem('portfolio-theme',choice);}catch{}apply();});host.append(button);apply();
   });
