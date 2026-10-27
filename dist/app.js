@@ -99,8 +99,7 @@
     const previousHeight=grid.getBoundingClientRect().height;
     filterAnimation?.cancel();
     grid.innerHTML = config.projects.filter(p => filter === 'all' || p.category === filter).map(p => {
-      const demo=safeUrl(config.caseStudies?.[p.id]?.demoUrl);
-      return `<article class="project-item"><button class="project-card" data-project="${escape(p.id)}" aria-label="View ${escape(p.title)}"><div class="project-image"><span class="project-number">0${config.projects.indexOf(p) + 1} /</span><img src="${escape(p.image)}" alt="${escape(p.alt)}" loading="lazy"><span class="project-code" aria-hidden="true">&lt;explore /&gt;</span></div><span class="project-category">${escape(p.label)}</span><h2>${escape(p.title)}</h2><p>${escape(p.subtitle)}</p><span class="card-arrow" aria-hidden="true">↗</span></button>${demo?`<a class="project-demo text-link" href="${escape(demo)}" target="_blank" rel="noopener noreferrer" aria-label="Try ${escape(p.title)} demo (opens in a new tab)">Try demo <span aria-hidden="true">↗</span></a>`:''}</article>`;
+      return `<article class="project-item"><button class="project-card" data-project="${escape(p.id)}" aria-label="View ${escape(p.title)}"><div class="project-image"><span class="project-number">0${config.projects.indexOf(p) + 1} /</span><img src="${escape(p.image)}" alt="${escape(p.alt)}" loading="lazy"><span class="project-code" aria-hidden="true">&lt;explore /&gt;</span></div><span class="project-category">${escape(p.label)}</span><h2>${escape(p.title)}</h2><p>${escape(p.subtitle)}</p><span class="card-arrow" aria-hidden="true">↗</span></button></article>`;
     }).join('');
     if(previousHeight&&!reduceMotion.matches){
       const height=grid.getBoundingClientRect().height;

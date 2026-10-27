@@ -9,16 +9,16 @@ window.PORTFOLIO.photography = [
   {id:'travel', category:'Travel', title:'Somewhere new', location:'', src:'', alt:'', caption:''}
 ];
 window.PORTFOLIO.skills = [
-  {name:'Python',icon:'Py',projects:['food','streaming'],description:'Explore Python across recommendation and data-processing projects.'},
+  {name:'Python',icon:'Py',projects:[],description:'Python for data exploration and building useful tools.'},
   {name:'SQL',icon:'▤',projects:[],description:'A space for a SQL case study, queries, and a database walkthrough.'},
-  {name:'Machine Learning',icon:'◇',projects:['food'],description:'Explore personalized recommendations and learning from preferences.'},
+  {name:'Machine Learning',icon:'◇',projects:[],description:'Exploring how models learn patterns from data.'},
   {name:'Deep Learning',icon:'⌘',projects:[],description:'A space for a model walkthrough, experiments, and evaluation results.'},
   {name:'NLP',icon:'文',projects:['interview'],description:'Explore the language-processing workflow in RecruitView.'},
-  {name:'Data Analysis',icon:'▥',projects:['food','streaming'],description:'Explore how data informs recommendations and environmental analysis.'},
-  {name:'Big Data',icon:'⌗',projects:['streaming'],description:'Explore Kafka, PySpark, and distributed data processing.'},
+  {name:'Data Analysis',icon:'▥',projects:[],description:'Turning data into meaningful insights.'},
+  {name:'Big Data',icon:'⌗',projects:[],description:'Exploring distributed data processing.'},
   {name:'Web / App',icon:'</>',projects:[],description:'You’re exploring this portfolio: responsive layouts, interactive galleries, and accessible browser interactions.'}
 ];
-window.PORTFOLIO.caseStudies = Object.fromEntries(['food','interview','streaming','ripple','makan-mana'].map(id => [id, {
+window.PORTFOLIO.caseStudies = Object.fromEntries(['interview','ripple','makan-mana'].map(id => [id, {
   previewVideoUrl:'', videoUrl:'', videoPoster:'', demoUrl:'', screenshots:[],
   problem:'', role:'', approach:'', results:'', lessons:''
 }]));
