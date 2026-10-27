@@ -70,7 +70,10 @@ const path=require('node:path');
       await page.locator('#cluster-step').click();assert.match(await page.locator('.cluster-summary').textContent(),/Step|settled/);
       await page.locator('.reaction-pad').click();await page.locator('.reaction-pad').click();assert.match(await page.locator('#reaction-status').textContent(),/early/);
       await page.locator('#reaction-reset').click();await page.locator('.reaction-pad').click();await page.locator('.reaction-pad[data-state="ready"]').waitFor();await page.locator('.reaction-pad').click();assert.match(await page.locator('#reaction-status').textContent(),/Round complete/);
-      await page.locator('.reaction-pad').click();await page.evaluate(()=>location.hash='board-games');await page.locator('#board-games.active').waitFor();assert.equal(await page.locator('.reaction-pad').getAttribute('data-state'),'idle');assert.equal(await page.locator('.games-empty').isVisible(),true);
+      await page.locator('.reaction-pad').click();await page.evaluate(()=>location.hash='board-games');await page.locator('#board-games.active').waitFor();assert.equal(await page.locator('.reaction-pad').getAttribute('data-state'),'idle');assert.equal(await page.locator('.game-box').count(),5);
+      const gameUrls=['https://monopoly-deal.limziwei2004.workers.dev/','https://liar-bar-online.limziwei2004.workers.dev/','https://chess-online.limziwei2004.workers.dev/','https://bang-online.limziwei2004.workers.dev/','https://fortune-routes.pages.dev/'];
+      for(let i=0;i<5;i++){await page.locator('.game-box').nth(i).click();assert.equal(await page.locator('.shelf-actions a').getAttribute('href'),gameUrls[i]);assert.equal(await page.locator('.game-box[aria-pressed="true"]').count(),1);assert.equal(await page.locator('.shelf-actions a').getAttribute('target'),'_blank');await check('selected game '+i);}
+      await page.locator('.game-box').first().click();
       for(const id of ['interview','ripple','makan-mana']){
         await page.goto(base+'/projects/'+id+'/');
         for(let i=0;i<2;i++){

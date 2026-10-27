@@ -13,7 +13,7 @@
   ];
   window.getByteReply = input => {
     const text=String(input||'').trim().slice(0,300);
-    if(/board.?games?|games shelf/i.test(text))return {text:'The Board Games shelf is where published games and their rules will be collected.',label:'Visit Board Games',href:'#board-games'};
+    if(/board.?games?|games shelf|monopoly|chess|liar|holsters|bang|fortune routes/i.test(text))return {text:'The shelf has five games: Monopoly Deal, The Liar’s Table, Arcane Chess, Hex & Holsters, and Fortune Routes. Select a box to open its game.',label:'Visit Board Games',href:'#board-games'};
     if(/playground|experiment|reaction|reflex|clustering/i.test(text))return {text:'Try grouping sample data or test your timing in the Playground. Each experiment has a reset control.',label:'Visit Playground',href:'#playground'};
     if(/beyond|badminton|volleyball|hobb(y|ies)|sports/i.test(text))return {text:'Beyond the Screen explores badminton, volleyball, football, photography, games, and new places.',label:'Go beyond the screen',href:'#beyond'};
     if(/\b(photos?|pictures?|photography)\b/i.test(text)&&/\b(travel|food)\b/i.test(text))return {...answers[3]};
