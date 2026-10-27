@@ -42,6 +42,11 @@ const path=require('node:path');
       }
       await page.goto(base+'/#projects');
       await page.locator('.explore-link').waitFor({state:'visible'});
+      await page.evaluate(()=>location.hash='about');await page.locator('#about.active').waitFor();
+      await page.locator('[data-node="4"]').click();
+      assert.ok(await page.locator('.skill-edge.connected').count()>=3,'NLP highlights multiple related disciplines');
+      assert.match(await page.locator('.skill-related').textContent(),/Python/);
+      assert.match(await page.locator('.home-content .eyebrow').textContent(),/DATA SCIENTIST/);
       if(width<700){
         await page.locator('.menu-toggle').click();
         await page.locator('.header nav').getByRole('link',{name:'About',exact:true}).click();

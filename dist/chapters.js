@@ -20,16 +20,21 @@
   }
   document.addEventListener('portfolio:pagechange',updateChapter);updateChapter();
 
-  // Connections represent shared projects, never scores or invented proficiency.
+  // Conceptual links between disciplines; these do not claim shared project use.
   const skills=window.PORTFOLIO.skills, toolkit=document.querySelector('.about-toolkit');
   const points=[[23,14],[50,9],[77,14],[86,45],[77,78],[50,88],[23,78],[14,45]];
-  toolkit.innerHTML=`<div class="toolkit-heading"><p class="eyebrow">SKILLS & CONNECTIONS</p><h2>Ideas connect.<br><em>So do the tools.</em></h2><p class="body-copy">Explore a tool to see where it fits.</p></div><div class="skill-explorer"><div class="skill-network" role="group" aria-label="Explore skills"><svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">${points.map(([x,y],i)=>`<path data-connection="${i}" d="M50 48 L${x} ${y}"/>`).join('')}<circle cx="50" cy="48" r="17"/><circle cx="50" cy="48" r="12"/></svg><span class="network-core" aria-hidden="true">ZW<span>CONNECT THE DOTS</span></span>${skills.map((skill,i)=>`<button class="skill-node" data-node="${i}" aria-pressed="false" style="--x:${points[i][0]}%;--y:${points[i][1]}%"><span aria-hidden="true">${escape(skill.icon)}</span>${escape(skill.name)}</button>`).join('')}</div><div class="skill-insight"><p class="eyebrow">IN MY TOOLKIT</p><div class="skill-live" aria-live="polite"><h3></h3><p></p></div><button class="text-link" data-skill="0">Explore this tool <span aria-hidden="true">↗</span></button><small>Lines highlight tools used in the same projects.</small></div></div>`;
+  const relations=[[0,1],[0,2],[0,4],[0,5],[1,5],[1,6],[2,3],[2,4],[2,5],[3,4],[3,6],[4,7],[5,6],[5,7],[6,7]];
+  toolkit.innerHTML=`<div class="toolkit-heading"><p class="eyebrow">SKILLS & CONNECTIONS</p><h2>Ideas connect.<br><em>So do the tools.</em></h2><p class="body-copy">Explore a tool to see where it fits.</p></div><div class="skill-explorer"><div class="skill-network" role="group" aria-label="Explore skills"><svg viewBox="0 0 100 100" preserveAspectRatio="none" aria-hidden="true">${relations.map(([a,b])=>`<path class="skill-edge" data-edge="${a},${b}" d="M${points[a][0]} ${points[a][1]} L${points[b][0]} ${points[b][1]}"/>`).join('')}${points.map(([x,y],i)=>`<path data-connection="${i}" d="M50 48 L${x} ${y}"/>`).join('')}<circle cx="50" cy="48" r="17"/><circle cx="50" cy="48" r="12"/></svg><span class="network-core" aria-hidden="true">ZW<span>CONNECT THE DOTS</span></span>${skills.map((skill,i)=>`<button class="skill-node" data-node="${i}" aria-pressed="false" style="--x:${points[i][0]}%;--y:${points[i][1]}%"><span aria-hidden="true">${escape(skill.icon)}</span>${escape(skill.name)}</button>`).join('')}</div><div class="skill-insight"><p class="eyebrow">IN MY TOOLKIT</p><div class="skill-live" aria-live="polite"><h3></h3><p></p><p class="skill-related"></p></div><button class="text-link" data-skill="0">Explore this tool <span aria-hidden="true">↗</span></button><small>Connections show how these disciplines relate.</small></div></div>`;
   let chosen=-1;
   function selectSkill(index){
     if(index===chosen)return;chosen=index;const skill=skills[index];
+    const related=relations.filter(pair=>pair.includes(index)).map(pair=>pair.find(n=>n!==index));
+    toolkit.querySelectorAll('[data-node]').forEach(node=>node.classList.toggle('related',related.includes(Number(node.dataset.node))));
+    toolkit.querySelectorAll('[data-edge]').forEach(path=>path.classList.toggle('connected',path.dataset.edge.split(',').map(Number).includes(index)));
+    toolkit.querySelector('.skill-related').textContent='Connects with: '+related.map(n=>skills[n].name).join(' · ');
     toolkit.querySelectorAll('[data-node]').forEach(node=>node.setAttribute('aria-pressed',String(Number(node.dataset.node)===index)));
     toolkit.querySelectorAll('[data-connection]').forEach(path=>{
-      const other=Number(path.dataset.connection),active=other===index||skills[other].projects.some(id=>skill.projects.includes(id));
+      const other=Number(path.dataset.connection),active=other===index||related.includes(other);
       path.classList.toggle('connected',active);
       path.getAnimations().forEach(a=>a.cancel());
       if(active&&!motion.matches)path.animate([{strokeDashoffset:70},{strokeDashoffset:0}],{duration:420,easing:'ease-out'});

@@ -35,12 +35,29 @@ html[data-theme=light] .contact-page{background-image:radial-gradient(ellipse at
 html[data-theme=light] .contact-page:before{background-image:radial-gradient(circle,#56745970 1px,transparent 1.5px),url('assets/field-notes-light.svg');opacity:.6}
 html[data-theme=light] body:has(.explore-shell),html[data-theme=light] body:has(.project-document){background-image:url('assets/data-traces-light.svg'),radial-gradient(ellipse at top right,#becbb73b,transparent 65%);background-size:min(85vw,1000px) auto,100% 1400px;background-position:right top;background-repeat:no-repeat}
 html[data-theme=light] :is(.explore-shell,.project-document){isolation:isolate}
-/* Keep the portrait composition continuous from navigation to its lower rail. */
-html[data-theme=light] body:has(.home-page.active){background-color:#0b0d0c}
-html[data-theme=light] body:has(.home-page.active) :is(.header,.chapter-controls){--bg:#0b0d0c;--ink:#f3efe5;--muted:#bec7bc;--accent:#d8c49a;--line:#d8c49a30;--surface:#17231d;color:var(--ink);background:#0b0d0cf5}
-html[data-theme=light] body:has(.home-page.active) .header nav.open{background:#17231d}
+/* A daylight composition: ivory reading area, sunlit portrait, bronze detailing. */
+html[data-theme=light] body:has(.home-page.active){background-color:var(--bg)}
+html[data-theme=light] body:has(.home-page.active) :is(.header,.chapter-controls){color:var(--ink);background:var(--bg)}
+html[data-theme=light] body:has(.home-page.active) .header nav.open{background:var(--surface)}
 html[data-theme=light] body:has(.home-page.active) .chapter-controls{border-top:0}
+html[data-theme=light] .home-hero{--bg:#f5f1e8;--ink:#202d28;--muted:#42564c;--accent:#806030;background:var(--bg)}
+html[data-theme=light] .home-page .hero-image{background-color:var(--bg);filter:brightness(1.18);}
+html[data-theme=light] .hero-shade{background:linear-gradient(90deg,#f5f1e8 0%,#f5f1e8fa 30%,#f5f1e8db 43%,#f5f1e844 60%,transparent 78%),linear-gradient(0deg,#f5f1e8 0%,#f5f1e8bb 8%,transparent 27%)}
+html[data-theme=light] .home-hero:before,html[data-theme=light] .home-page:after{background:linear-gradient(transparent,#f5f1e8)}
+html[data-theme=light] .home-hero .button.primary{background:#806030;color:#fff8ed}
+html[data-theme=light] .home-hero :is(.chapter-nav a,.education,.education span,.location,.location span,.vertical-label,.text-link){color:var(--ink)}
+html[data-theme=light] .home-hero .chapter-nav{background:#f5f1e8df;border:1px solid var(--line);border-radius:12px;padding:16px}
+.skill-network .skill-edge{opacity:0;stroke-dasharray:none;transition:opacity 220ms,stroke 220ms}
+.skill-network .skill-edge.connected{opacity:.8;stroke:var(--accent);stroke-width:.25}
+.skill-node.related{border-color:var(--accent)}
+.skill-network path.connected{stroke:var(--accent)}
+.skill-live .skill-related{font-size:12px;color:var(--accent);line-height:1.7;margin-top:16px}
+html[data-theme=light] .skill-network path:not(.connected){stroke:#61766533}
+html[data-theme=light] .skill-node[aria-pressed=true]{background:#806030;color:#fff8ed;border-color:#806030}
+html[data-theme=light] .skill-node[aria-pressed=true]>span{color:#fff8ed}
 @media(max-width:700px){
+ html[data-theme=light] .hero-shade{background:linear-gradient(180deg,#f5f1e8 0%,#f5f1e8 31%,#f5f1e8d9 45%,#f5f1e840 62%,transparent 78%,#f5f1e8 97%)}
+ html[data-theme=light] .home-page .hero-image{background-size:auto 80%}
  html[data-theme=light] .about-page:before{background-position:32% 130px;opacity:.42}
  html[data-theme=light] .projects-page:before{background-position:25% 140px,center top,center top;opacity:.44}
  html[data-theme=light] .photography-page:before{background-size:850px 1500px;background-position:35% top;opacity:.65}
