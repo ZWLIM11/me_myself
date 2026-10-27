@@ -27,3 +27,35 @@ body:has(.home-page.active) .chapter-controls .chapter-dock,.chapter-controls .c
 }
 @media(prefers-reduced-motion:reduce){.page-sequence a strong{transition:none;translate:none!important}}
 html[data-motion=off] .page-sequence a strong{transition:none;translate:none!important}
+
+/* A quiet navigation rail, continuous with the page rather than a second panel. */
+.chapter-controls,body:has(.home-page.active) .chapter-controls{grid-template-columns:minmax(0,1fr) auto auto;align-items:center;column-gap:32px;row-gap:12px;padding:18px 7% max(20px,env(safe-area-inset-bottom));border:0}
+body:has(.home-page.active) .chapter-controls{background:linear-gradient(#0b0d0c,var(--bg) 160px)}
+.chapter-controls .chapter-dock{grid-column:1;grid-row:1}
+.page-sequence{grid-column:2;grid-row:1;display:flex;align-items:center;gap:22px;border:0;padding:0}
+.page-sequence a,.page-sequence a:last-child{flex-direction:row;align-items:center;text-align:left;gap:8px;min-height:44px;padding:0}
+.page-sequence a strong{font-size:14px;letter-spacing:0}
+.page-sequence a span{font-size:11px;letter-spacing:0}
+.sequence-position{display:none}
+.page-sequence[data-page=home] a:first-child{display:none}
+.page-sequence[data-page=contact] a:last-child span{font-size:0}
+.page-sequence[data-page=contact] a:last-child span:after{content:'↑';font-size:14px}
+.chapter-controls #motion-toggle{grid-column:3;grid-row:1;min-height:44px;border:0;padding:8px 0;color:var(--muted)}
+.chapter-controls .chapter-dock>div{gap:18px}
+.chapter-controls .chapter-dock a{color:var(--muted)}
+.chapter-controls .chapter-dock a:after{background:var(--accent);opacity:.65}
+@media(max-width:1100px){
+ .chapter-controls,body:has(.home-page.active) .chapter-controls{column-gap:20px}
+ .chapter-controls .chapter-dock>div{gap:12px}.chapter-controls .chapter-link-name{font-size:11px}
+ .page-sequence a strong{font-size:12px}.page-sequence{gap:12px}
+ .page-sequence a:first-child strong{display:none}
+}
+@media(max-width:700px){
+ .chapter-controls,body:has(.home-page.active) .chapter-controls{grid-template-columns:1fr auto;row-gap:12px;padding:12px 7% max(18px,env(safe-area-inset-bottom))}
+ .chapter-controls .chapter-dock{grid-column:1/-1;grid-row:1}
+ .chapter-controls .chapter-dock>div{justify-content:space-between;gap:4px 8px}
+ .chapter-controls .chapter-dock a{font-size:0;gap:0;min-height:44px}.chapter-controls .chapter-link-name{font-size:11px}
+ .page-sequence{grid-column:1;grid-row:2;justify-content:flex-start;gap:24px}
+ .page-sequence a:first-child strong{display:inline}.page-sequence a strong{font-size:12px}
+ .chapter-controls #motion-toggle{grid-column:2;grid-row:2;justify-self:end;font-size:10px}
+}

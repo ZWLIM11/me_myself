@@ -12,7 +12,8 @@
       const index=pages.indexOf(document.querySelector('.page.active')?.id);
       if(index<0)return;
       const previous=(index+pages.length-1)%pages.length,next=(index+1)%pages.length;
-      sequence.innerHTML=`<a href="#${pages[previous]}"><span>← Previous page</span><strong>${labels[previous]}</strong></a><span class="sequence-position">${String(index+1).padStart(2,'0')} / 05</span><a href="#${pages[next]}"><span>${next===0?'Back to the beginning':'Next page'} →</span><strong>${labels[next]}</strong></a>`;
+      sequence.dataset.page=pages[index];
+      sequence.innerHTML=`<a href="#${pages[previous]}" aria-label="Previous page: ${labels[previous]}"><span aria-hidden="true">←</span><strong>${labels[previous]}</strong></a><span class="sequence-position">${String(index+1).padStart(2,'0')} / 05</span><a href="#${pages[next]}" aria-label="Next page: ${labels[next]}"><span>${next===0?'Home':'Next'} →</span><strong>${labels[next]}</strong></a>`;
     }
     controls.querySelectorAll('.chapter-dock a').forEach((link,index)=>{
       link.setAttribute('aria-label',labels[index]);
