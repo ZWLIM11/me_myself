@@ -2,11 +2,11 @@
 // Use relative paths such as assets/my-photo.jpg or full HTTPS URLs.
 window.PORTFOLIO.instagram = 'https://instagram.com/w_zweii';
 window.PORTFOLIO.photography = [
-  {id:'city', category:'City', title:'City stories', location:'', src:'', alt:'', caption:''},
-  {id:'nature', category:'Nature', title:'A quieter perspective', location:'', src:'', alt:'', caption:''},
-  {id:'food', category:'Food', title:'Around the table', location:'', src:'', alt:'', caption:''},
-  {id:'street', category:'Street', title:'Between destinations', location:'', src:'', alt:'', caption:''},
-  {id:'travel', category:'Travel', title:'Somewhere new', location:'', src:'', alt:'', caption:''}
+  {id:'city', category:'City', title:'City stories', location:'', src:'', alt:'', caption:'', note:''},
+  {id:'nature', category:'Nature', title:'A quieter perspective', location:'', src:'', alt:'', caption:'', note:''},
+  {id:'food', category:'Food', title:'Around the table', location:'', src:'', alt:'', caption:'', note:''},
+  {id:'street', category:'Street', title:'Between destinations', location:'', src:'', alt:'', caption:'', note:''},
+  {id:'travel', category:'Travel', title:'Somewhere new', location:'', src:'', alt:'', caption:'', note:''}
 ];
 window.PORTFOLIO.skills = [
   {name:'Python',icon:'Py',projects:[],description:'Python for data exploration and building useful tools.'},
@@ -45,3 +45,11 @@ window.PORTFOLIO.photoCollections = [
 // screenshots: [{src:'assets/project-screen.jpg', alt:'Describe the screen', caption:'Optional caption'}]
 // videoUrl accepts a direct browser-playable video file. Use demoUrl for a hosted demo or video page.
 // previewVideoUrl: short, muted MP4/WebM clip for project-card previews (loaded only on interaction).
+
+// Photo note: add a short personal memory to note; a hover/tap flip appears once src and note are filled.
+const projectStories = {
+  interview: {inspiration:'Exploring how language technology can make interview responses easier to review and understand.', challenge:'What could you learn from the way you answer an interview question?'},
+  ripple: {inspiration:'Connecting an interest in football with a question: what changes when one player moves into a passing lane?', challenge:'Can you close a passing lane with just one defender?'},
+  'makan-mana': {inspiration:'Turning an everyday question—where should we eat?—into a useful way to discover places and plan a day out.', challenge:'Find a nearby meal and build a small trip around it.'}
+};
+window.PORTFOLIO.projects.forEach(project => Object.assign(project, projectStories[project.id] || {}));
