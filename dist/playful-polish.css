@@ -6,3 +6,22 @@
 @media(max-width:1150px){.header .resume-button{margin-right:0}.explore-menu{align-self:stretch}.explore-menu summary{padding:10px 16px}.explore-dropdown{position:static;box-shadow:none;border:0;border-left:1px solid var(--line);border-radius:0;margin:0 0 8px 24px;min-width:0;padding:0 6px}.header .menu-toggle{margin-left:8px}.header .theme-toggle{margin-left:8px}}
 @media(max-width:700px){.chapter-controls .byte-context-launch{grid-column:2;grid-row:2;justify-self:end}.game-box[aria-pressed=true] .box-cover{transform:perspective(1000px) rotateY(-9deg)}.header{gap:0}.header .resume-button{padding:10px 12px;font-size:11px}.header .theme-toggle{flex-basis:40px;width:40px}.sport-play{min-height:48px}}
 html[data-motion=off] .box-cover{transition:none;transform:none!important}@media(prefers-reduced-motion:reduce){.box-cover{transition:none;transform:none!important}}
+/* Keep the two header utilities together and give Explore a clear menu affordance. */
+.header{justify-content:flex-start}
+.header>nav{margin-inline:auto}
+.header .resume-button{margin:0;flex-shrink:0}
+.header .theme-toggle{margin-left:10px}
+.header .nav-indicator{display:none}
+.explore-menu summary{padding:0 14px;border:1px solid transparent;border-radius:24px;gap:10px;transition:background .18s,border-color .18s,color .18s}
+.explore-menu summary:after{content:'';width:6px;height:6px;border-right:1.5px solid currentColor;border-bottom:1.5px solid currentColor;transform:rotate(45deg);rotate:0deg;margin-top:-3px;transition:transform .18s}
+.explore-menu[open] summary:after{rotate:0deg;transform:rotate(225deg);margin-top:3px}
+.explore-menu summary:hover,.explore-menu[open] summary,.explore-menu summary.active{background:var(--surface);border-color:var(--line);color:var(--accent)}
+.explore-menu summary:focus-visible{outline:2px solid var(--accent);outline-offset:4px}
+.explore-dropdown{left:0;min-width:250px;padding:8px;border-radius:16px;background:var(--surface);box-shadow:0 18px 45px #0003}
+.header nav .explore-dropdown a{display:flex;align-items:center;justify-content:space-between;gap:24px;border-radius:9px;padding:14px 16px;transition:background .18s,color .18s}
+.header nav .explore-dropdown a:before{content:'↗';order:2;color:var(--accent);opacity:.6}
+.header nav .explore-dropdown a:hover,.header nav .explore-dropdown a.active{border-radius:9px}
+@media(min-width:1151px){.header>nav>a.active:after{content:'';display:block;position:absolute;left:0;right:0;bottom:-10px;height:1px;background:var(--accent);transform:none;width:auto}}
+@media(max-width:1150px){.header>nav{margin:0}.header .resume-button{margin-left:auto}.explore-menu summary{padding:10px 16px;justify-content:space-between;border-radius:10px}.explore-dropdown{min-width:0;margin:6px 0 6px 15px;padding:4px;border-left:1px solid var(--line);box-shadow:none}.header nav .explore-dropdown a{white-space:normal}}
+html[data-motion=off] .explore-menu *{transition:none}
+@media(prefers-reduced-motion:reduce){.explore-menu *{transition:none}}
