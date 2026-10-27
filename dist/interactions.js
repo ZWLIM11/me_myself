@@ -24,8 +24,8 @@
       const rect = element.getBoundingClientRect();
       const dx = Math.max(-.5, Math.min(.5,(x - rect.left) / rect.width - .5));
       const dy = Math.max(-.5, Math.min(.5,(y - rect.top) / rect.height - .5));
-      if (element.matches(magnetic)) set(element, {'--magnet-x':`${dx * 10}px`,'--magnet-y':`${dy * 10}px`});
-      else set(element, {'--tilt-x':`${-dy * 8}deg`,'--tilt-y':`${dx * 8}deg`,'--shine-x':`${(dx + .5)*100}%`,'--shine-y':`${(dy + .5)*100}%`,'--image-x':`${dx * -8}px`,'--image-y':`${dy * -8}px`});
+      if (element.matches(magnetic)) set(element, {'--magnet-x':`${dx * 6}px`,'--magnet-y':`${dy * 10}px`});
+      else set(element, {'--tilt-x':`${-dy * 5}deg`,'--tilt-y':`${dx * 5}deg`,'--shine-x':`${(dx + .5)*100}%`,'--shine-y':`${(dy + .5)*100}%`,'--image-x':`${dx * -8}px`,'--image-y':`${dy * -8}px`});
     }
     const dx = x / innerWidth - .5;
     const dy = y / innerHeight - .5;

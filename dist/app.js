@@ -49,14 +49,14 @@
     try {
       const curtain=document.querySelector('#page-curtain');
       curtain.querySelector('span').textContent=String(pages.indexOf(id)+1).padStart(2,'0')+' / '+id.toUpperCase();
-      const cover=curtain.animate([{transform:`translateY(${direction*100}%)`},{transform:'translateY(0)'}],{duration:190,easing:'cubic-bezier(.45,0,.25,1)',fill:'forwards'});
+      const cover=curtain.animate([{transform:`translateY(${direction*100}%)`},{transform:'translateY(0)'}],{duration:160,easing:'cubic-bezier(.45,0,.25,1)',fill:'forwards'});
       routeAnimations.push(cover);
       await cover.finished.catch(()=>{});
       update();
-      const reveal=curtain.animate([{transform:'translateY(0)'},{transform:`translateY(${-direction*100}%)`}],{duration:250,easing:'cubic-bezier(.25,.7,.25,1)',fill:'forwards'});
+      const reveal=curtain.animate([{transform:'translateY(0)'},{transform:`translateY(${-direction*100}%)`}],{duration:220,easing:'cubic-bezier(.25,.7,.25,1)',fill:'forwards'});
       routeAnimations.push(reveal);
       if(!reduceMotion.matches){
-        const arrival=main.animate([{opacity:.85,transform:`translateY(${direction*12}px)`},{opacity:1,transform:'translateY(0)'}],{duration:250,easing:'cubic-bezier(.2,.7,.2,1)'});
+        const arrival=main.animate([{opacity:.85,transform:`translateY(${direction*12}px)`},{opacity:1,transform:'translateY(0)'}],{duration:220,easing:'cubic-bezier(.2,.7,.2,1)'});
         routeAnimations.push(arrival);
       }
       cover.cancel();
@@ -99,12 +99,12 @@
     const previousHeight=grid.getBoundingClientRect().height;
     filterAnimation?.cancel();
     grid.innerHTML = config.projects.filter(p => filter === 'all' || p.category === filter).map(p => {
-      return `<article class="project-item"><button class="project-card" data-project="${escape(p.id)}" aria-label="View ${escape(p.title)}"><div class="project-image"><span class="project-number">0${config.projects.indexOf(p) + 1} /</span><img src="${escape(p.image)}" alt="${escape(p.alt)}" loading="lazy"><span class="project-code" aria-hidden="true">&lt;explore /&gt;</span></div><span class="project-category">${escape(p.label)}</span><h2>${escape(p.title)}</h2><p>${escape(p.subtitle)}</p><span class="card-arrow" aria-hidden="true">↗</span></button></article>`;
+      return `<article class="project-item"><button class="project-card" data-project="${escape(p.id)}" aria-label="View ${escape(p.title)}"><div class="project-image"><span class="project-number">0${config.projects.indexOf(p) + 1} /</span><img src="${escape(p.image)}" alt="${escape(p.alt)}" loading="lazy" decoding="async" width="1200" height="800"><span class="project-code" aria-hidden="true">&lt;explore /&gt;</span></div><span class="project-category">${escape(p.label)}</span><h2>${escape(p.title)}</h2><p>${escape(p.subtitle)}</p><span class="card-arrow" aria-hidden="true">↗</span></button></article>`;
     }).join('');
     if(previousHeight&&!reduceMotion.matches){
       const height=grid.getBoundingClientRect().height;
-      filterAnimation=grid.animate([{height:`${previousHeight}px`},{height:`${height}px`}],{duration:260,easing:'cubic-bezier(.2,.7,.2,1)'});
-      [...grid.children].forEach(item=>item.animate([{opacity:.35,translate:'0 7px'},{opacity:1,translate:'0 0'}],{duration:240,easing:'ease-out'}));
+      filterAnimation=grid.animate([{height:`${previousHeight}px`},{height:`${height}px`}],{duration:220,easing:'cubic-bezier(.2,.7,.2,1)'});
+      [...grid.children].forEach(item=>item.animate([{opacity:.35,translate:'0 7px'},{opacity:1,translate:'0 0'}],{duration:200,easing:'ease-out'}));
     }
   }
   document.querySelectorAll('.filter').forEach(button => button.addEventListener('click', () => {

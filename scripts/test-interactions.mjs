@@ -24,12 +24,12 @@ vm.runInNewContext(readFileSync(new URL('../dist/interactions.js',import.meta.ur
 const move = (target,x=150,y=75,pointerType='mouse') => {events.get('pointermove')({target,clientX:x,clientY:y,pointerType}); if(pending){const fn=pending;pending=null;fn();}};
 const button=element('button','#home');
 move(button);
-assert.equal(button.values.get('--magnet-x'),'2.5px');
+assert.equal(button.values.get('--magnet-x'),'1.5px');
 assert.ok(hero.values.has('--hero-x'));
 const card=element('card');
 move(card);
 assert.equal(button.values.size,0,'previous target resets');
-assert.equal(card.values.get('--tilt-y'),'2deg');
+assert.equal(card.values.get('--tilt-y'),'1.25deg');
 assert.equal(hero.values.size,0,'hero resets outside home');
 events.get('pointerout')({relatedTarget:null});
 assert.equal(card.values.size,0,'leaving viewport resets tilt');
