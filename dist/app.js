@@ -47,21 +47,13 @@
     main.setAttribute('aria-busy', 'true');
     const routeAnimations=[];
     try {
-      const curtain=document.querySelector('#page-curtain');
-      curtain.querySelector('span').textContent=String(pages.indexOf(id)+1).padStart(2,'0')+' / '+id.toUpperCase();
-      const cover=curtain.animate([{transform:`translateY(${direction*100}%)`},{transform:'translateY(0)'}],{duration:160,easing:'cubic-bezier(.45,0,.25,1)',fill:'forwards'});
-      routeAnimations.push(cover);
-      await cover.finished.catch(()=>{});
-      update();
-      const reveal=curtain.animate([{transform:'translateY(0)'},{transform:`translateY(${-direction*100}%)`}],{duration:220,easing:'cubic-bezier(.25,.7,.25,1)',fill:'forwards'});
-      routeAnimations.push(reveal);
+      const departure=main.animate([{opacity:1},{opacity:0}],{duration:110,easing:'ease-out',fill:'forwards'});
+      routeAnimations.push(departure);await departure.finished.catch(()=>{});
+      update();departure.cancel();
       if(!reduceMotion.matches){
-        const arrival=main.animate([{opacity:.85,transform:`translateY(${direction*12}px)`},{opacity:1,transform:'translateY(0)'}],{duration:220,easing:'cubic-bezier(.2,.7,.2,1)'});
-        routeAnimations.push(arrival);
+        const arrival=main.animate([{opacity:0,transform:`translateY(${direction*10}px)`},{opacity:1,transform:'none'}],{duration:260,easing:'cubic-bezier(.2,.7,.2,1)'});
+        routeAnimations.push(arrival);await arrival.finished.catch(()=>{});
       }
-      cover.cancel();
-      if(reduceMotion.matches)reveal.finish();
-      await reveal.finished.catch(()=>{});reveal.cancel();
     } catch { if (current !== id) update(); }
     finally {
       routeAnimations.forEach(animation=>animation.cancel());
