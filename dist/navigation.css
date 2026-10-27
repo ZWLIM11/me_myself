@@ -1,0 +1,29 @@
+/* The same in-flow navigation on every chapter; never covers page content. */
+.chapter-controls,body:has(.home-page.active) .chapter-controls{display:grid;grid-template-columns:minmax(0,1fr) auto;gap:24px;background:var(--bg);padding:28px 7% max(24px,env(safe-area-inset-bottom));justify-content:normal}
+body:has(.home-page.active) .chapter-controls .chapter-dock,.chapter-controls .chapter-dock{display:block;width:auto;min-width:0}
+.page-sequence{grid-column:1/-1;display:grid;grid-template-columns:minmax(0,1fr) auto minmax(0,1fr);align-items:center;gap:24px;border-top:1px solid var(--line);border-bottom:1px solid var(--line);padding:28px 0}
+.page-sequence a{display:flex;flex-direction:column;align-items:flex-start;gap:10px;min-height:64px;padding:8px 0;color:var(--ink)}
+.page-sequence a:last-child{align-items:flex-end;text-align:right}
+.page-sequence a span,.sequence-position{font-size:11px;letter-spacing:.08em;color:var(--muted)}
+.page-sequence a strong{font-size:clamp(20px,2.6vw,32px);font-weight:400;letter-spacing:-.035em;transition:color 180ms,translate 180ms}
+.page-sequence a:hover strong,.page-sequence a:focus-visible strong{color:var(--accent);translate:3px 0}
+.page-sequence a:first-child:hover strong{translate:-3px 0}
+.chapter-controls .chapter-dock>div{gap:clamp(10px,2vw,26px);flex-wrap:wrap}
+.chapter-controls .chapter-dock a,.chapter-controls #motion-toggle{min-height:44px;font-size:11px}
+.chapter-controls .chapter-link-name{font-size:12px}
+.page:not(.home-page){padding-bottom:48px}
+.contact-page footer{padding-bottom:0}.contact-page footer>a:last-child{display:none}
+.case-footer{flex-wrap:wrap}.portfolio-footer-links{width:100%;display:flex;flex-wrap:wrap;gap:12px 28px;padding-bottom:18px;border-bottom:1px solid var(--line)}
+.portfolio-footer-links a{display:inline-flex;align-items:center;min-height:44px;font-size:13px;color:var(--muted)}
+.portfolio-footer-links a:hover,.portfolio-footer-links a[aria-current]{color:var(--accent)}
+@media(max-width:700px){
+ .chapter-controls,body:has(.home-page.active) .chapter-controls{grid-template-columns:1fr;gap:16px;padding-inline:7%}
+ .page-sequence{gap:12px;padding-block:20px}.page-sequence a strong{font-size:20px}.page-sequence a span{font-size:10px;letter-spacing:0}
+ .sequence-position{display:none}.page-sequence{grid-template-columns:repeat(2,minmax(0,1fr))}
+ .chapter-controls .chapter-dock>div{display:flex;justify-content:center;gap:6px 14px}
+ .chapter-controls .chapter-dock a{width:auto;min-width:44px;flex-direction:row;gap:5px}
+ .chapter-controls .chapter-link-name{font-size:11px}.chapter-controls #motion-toggle{justify-self:center}
+ .portfolio-footer-links{gap:8px 20px}.page:not(.home-page){padding-bottom:32px}
+}
+@media(prefers-reduced-motion:reduce){.page-sequence a strong{transition:none;translate:none!important}}
+html[data-motion=off] .page-sequence a strong{transition:none;translate:none!important}
