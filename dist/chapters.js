@@ -2,9 +2,9 @@
   'use strict';
   const motion=window.portfolioMotion;
   const escape=value=>String(value).replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]));
-  const pages=['home','about','projects','photography','contact'];
-  const labels=['Home','About','Projects','Photos','Contact'];
-  const names=['Introduction','The person','The projects','Through my lens','Let’s connect'];
+  const pages=['home','about','projects','photography','beyond','playground','board-games','contact'];
+  const labels=['Home','About','Projects','Photos','Beyond the Screen','Playground','Board Games','Contact'];
+  const names=['Introduction','The person','The projects','Through my lens','Beyond the Screen','Playground','Board Games','Let’s connect'];
 
   // Persistent chapter shortcuts also work through the keyboard and native hashes.
   const dock=document.createElement('nav');dock.className='chapter-dock';dock.setAttribute('aria-label','Chapter shortcuts');

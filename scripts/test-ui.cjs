@@ -55,7 +55,7 @@ const path=require('node:path');
       }
       for(const theme of ['light','dark']){
         await page.locator('.theme-toggle').click();
-        for(const id of ['home','about','projects','photography','contact']){
+        for(const id of ['home','about','projects','photography','beyond','playground','board-games','contact']){
           await page.evaluate(id=>location.hash=id,id);
           await page.locator('#'+id+'.active').waitFor({state:'visible'});
           await check(id+' '+theme);
@@ -64,6 +64,13 @@ const path=require('node:path');
           if(width===390||width===1440)await page.screenshot({path:path.join(out,`${id}-${theme}${width===1440?"-desktop":""}.png`),fullPage:true});
         }
       }
+      await page.evaluate(()=>location.hash='beyond');await page.locator('#beyond.active').waitFor();
+      for(const sport of ['volleyball','football','badminton']){await page.locator('[data-sport="'+sport+'"]').click();assert.equal(await page.locator('[data-sport="'+sport+'"]').getAttribute('aria-pressed'),'true');}
+      await page.evaluate(()=>location.hash='playground');await page.locator('#playground.active').waitFor();
+      await page.locator('#cluster-step').click();assert.match(await page.locator('.cluster-summary').textContent(),/Step|settled/);
+      await page.locator('.reaction-pad').click();await page.locator('.reaction-pad').click();assert.match(await page.locator('#reaction-status').textContent(),/early/);
+      await page.locator('#reaction-reset').click();await page.locator('.reaction-pad').click();await page.locator('.reaction-pad[data-state="ready"]').waitFor();await page.locator('.reaction-pad').click();assert.match(await page.locator('#reaction-status').textContent(),/Round complete/);
+      await page.locator('.reaction-pad').click();await page.evaluate(()=>location.hash='board-games');await page.locator('#board-games.active').waitFor();assert.equal(await page.locator('.reaction-pad').getAttribute('data-state'),'idle');assert.equal(await page.locator('.games-empty').isVisible(),true);
       for(const id of ['interview','ripple','makan-mana']){
         await page.goto(base+'/projects/'+id+'/');
         for(let i=0;i<2;i++){

@@ -1,6 +1,6 @@
 (() => {
-  const pages=['home','about','projects','photography','contact'];
-  const labels=['Home','About','Projects','Photography','Contact'];
+  const pages=['home','about','projects','photography','beyond','playground','board-games','contact'];
+  const labels=['Home','About','Projects','Photography','Beyond the Screen','Playground','Board Games','Contact'];
   const controls=document.querySelector('.chapter-controls');
   if(controls){
     // Replace the three different end-of-page treatments with one shared sequence.
@@ -13,7 +13,7 @@
       if(index<0)return;
       const previous=(index+pages.length-1)%pages.length,next=(index+1)%pages.length;
       sequence.dataset.page=pages[index];
-      sequence.innerHTML=`<a href="#${pages[previous]}" aria-label="Previous page: ${labels[previous]}"><span aria-hidden="true">←</span><strong>${labels[previous]}</strong></a><span class="sequence-position">${String(index+1).padStart(2,'0')} / 05</span><a href="#${pages[next]}" aria-label="Next page: ${labels[next]}"><span>${next===0?'Home':'Next'} →</span><strong>${labels[next]}</strong></a>`;
+      sequence.innerHTML=`<a href="#${pages[previous]}" aria-label="Previous page: ${labels[previous]}"><span aria-hidden="true">←</span><strong>${labels[previous]}</strong></a><span class="sequence-position">${String(index+1).padStart(2,'0')} / 08</span><a href="#${pages[next]}" aria-label="Next page: ${labels[next]}"><span>${next===0?'Home':'Next'} →</span><strong>${labels[next]}</strong></a>`;
     }
     controls.querySelectorAll('.chapter-dock a').forEach((link,index)=>{
       link.setAttribute('aria-label',labels[index]);

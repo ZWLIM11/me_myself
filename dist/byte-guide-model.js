@@ -13,6 +13,9 @@
   ];
   window.getByteReply = input => {
     const text=String(input||'').trim().slice(0,300);
+    if(/board.?games?|games shelf/i.test(text))return {text:'The Board Games shelf is where published games and their rules will be collected.',label:'Visit Board Games',href:'#board-games'};
+    if(/playground|experiment|reaction|reflex|clustering/i.test(text))return {text:'Try grouping sample data or test your timing in the Playground. Each experiment has a reset control.',label:'Visit Playground',href:'#playground'};
+    if(/beyond|badminton|volleyball|hobb(y|ies)|sports/i.test(text))return {text:'Beyond the Screen explores badminton, volleyball, football, photography, games, and new places.',label:'Go beyond the screen',href:'#beyond'};
     if(/\b(photos?|pictures?|photography)\b/i.test(text)&&/\b(travel|food)\b/i.test(text))return {...answers[3]};
     const result=answers.find(answer=>answer.match.test(text));
     return result?{text:result.text,label:result.label,href:result.href}:{text:'I’m a local portfolio guide, so I can only answer questions about this site. Try “Show me Ripple”, “What does Ziwei study?”, or “How can I contact him?”',label:'Explore projects',href:'#projects'};

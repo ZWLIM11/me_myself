@@ -93,3 +93,10 @@ Fonts: DM Sans and Manrope via Google Fonts, with system-font fallbacks.
 
 ### Optional photograph details
 In `dist/collections-content.js`, each photography entry can include `location`, `date`, and `story` strings. Filled fields appear under “Behind this photograph”; empty fields stay hidden. Keep `src` blank until a real photo is ready.
+
+### Beyond the Screen, Playground, and Board Games
+- Main routes: `/#beyond`, `/#playground`, and `/#board-games`.
+- Sport labels and introductory copy live in `dist/new-pages.js`.
+- The clustering experiment lives in `dist/additions.js`; the reaction game cancels on navigation and when the tab is hidden.
+- Add verified game entries to `dist/board-games-content.js`. Each entry needs a title and HTTPS URL; description, player count, and a rules URL are optional. Entries without valid URLs remain unpublished. An empty collection shows a prepared shelf, not fictional games.
+- Run `node scripts/test-ui.cjs` with Playwright available to check all eight routes at phone, tablet, and desktop sizes.
