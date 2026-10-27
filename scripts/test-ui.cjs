@@ -56,7 +56,7 @@ const path=require('node:path');
           await check(id+' '+theme);
           assert.equal(await page.locator('.chapter-dock').isVisible(),false,'No duplicate footer menu');
           assert.equal(await page.locator('.page:visible').count(),1);
-          if(width===390)await page.screenshot({path:path.join(out,`${id}-${theme}.png`),fullPage:true});
+          if(width===390||width===1440)await page.screenshot({path:path.join(out,`${id}-${theme}${width===1440?"-desktop":""}.png`),fullPage:true});
         }
       }
       for(const id of ['interview','ripple','makan-mana']){
