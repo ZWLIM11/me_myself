@@ -18,11 +18,15 @@ window.PORTFOLIO.skills = [
   {name:'Big Data',icon:'⌗',projects:['streaming'],description:'Explore Kafka, PySpark, and distributed data processing.'},
   {name:'Web / App',icon:'</>',projects:[],description:'You’re exploring this portfolio: responsive layouts, interactive galleries, and accessible browser interactions.'}
 ];
-window.PORTFOLIO.caseStudies = Object.fromEntries(['food','interview','streaming'].map(id => [id, {
+window.PORTFOLIO.caseStudies = Object.fromEntries(['food','interview','streaming','ripple','makan-mana'].map(id => [id, {
   previewVideoUrl:'', videoUrl:'', videoPoster:'', demoUrl:'', screenshots:[],
   problem:'', role:'', approach:'', results:'', lessons:''
 }]));
 window.PORTFOLIO.caseStudies.interview.demoUrl = 'https://ai-int.notait.com';
+window.PORTFOLIO.caseStudies.ripple.demoUrl = 'https://ripple.limziwei2004.workers.dev/';
+window.PORTFOLIO.caseStudies['makan-mana'].demoUrl = 'https://makan-mana.limziwei2004.workers.dev/';
+window.PORTFOLIO.skills.find(skill => skill.name === 'Web / App').projects = ['ripple', 'makan-mana'];
+window.PORTFOLIO.skills.find(skill => skill.name === 'Web / App').description = 'Explore interactive football analysis, nearby food discovery, and map-based trip planning.';
 
 // Add verified entries here. Empty sections are hidden on the public website.
 window.PORTFOLIO.timeline = [
