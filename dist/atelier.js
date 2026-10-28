@@ -44,3 +44,37 @@
   });
   reveal();
 })();
+
+// One visible filtering interface, with native change events preserving existing filtering.
+(()=>{
+  document.querySelectorAll('.library-controls').forEach(controls=>{
+    const select=controls.querySelector('select'),input=controls.querySelector('input');
+    if(!select||!input)return;
+    const chips=document.createElement('div');chips.className='collection-chips';chips.setAttribute('role','group');chips.setAttribute('aria-label',select.getAttribute('aria-label'));
+    const buttons=[...select.options].map(option=>{
+      const button=document.createElement('button');button.type='button';button.textContent=option.textContent;
+      button.onclick=()=>{select.value=option.value;select.dispatchEvent(new Event('change',{bubbles:true}));sync();};chips.append(button);return button;
+    });
+    select.hidden=true;select.after(chips);
+    const reset=document.createElement('button');reset.type='button';reset.className='collection-reset text-link';reset.textContent='Reset filters';controls.append(reset);
+    function sync(){buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(select.selectedIndex===i)));reset.disabled=!input.value&&select.selectedIndex===0;}
+    reset.onclick=()=>{input.value='';select.selectedIndex=0;select.dispatchEvent(new Event('change',{bubbles:true}));input.dispatchEvent(new Event('input',{bubbles:true}));sync();input.focus();};
+    controls.addEventListener('input',sync);select.addEventListener('change',sync);sync();
+  });
+  for(const [id,label] of Object.entries({books:'Study', 'board-games':'Play Room',steam:'Gaming Room'})){
+    const page=document.getElementById(id);if(!page)continue;
+    page.querySelectorAll('.room-return').forEach(a=>a.remove());
+    const crumb=document.createElement('nav');crumb.className='room-breadcrumb';crumb.setAttribute('aria-label','Room location');
+    crumb.innerHTML='<a href="#living-room">← Living Room</a><span aria-hidden="true">/</span><span aria-current="page">'+label+'</span>';page.prepend(crumb);
+  }
+})();
+(()=>{
+ const host=document.querySelector('#board-collection');if(!host)return;
+ const cards=[...host.querySelectorAll('.game-slot')],genres=['Cards','Bluffing','Strategy','Cards','Strategy'];
+ const controls=document.createElement('div');controls.className='library-controls';
+ controls.innerHTML='<div class="collection-chips" role="group" aria-label="Board game genre"></div><p role="status"></p><button type="button" class="collection-reset text-link">Reset filters</button>';host.before(controls);
+ let selected='All games';const group=controls.querySelector('.collection-chips'),reset=controls.querySelector('.collection-reset');
+ for(const genre of ['All games',...new Set(genres)]){const b=document.createElement('button');b.type='button';b.textContent=genre;b.onclick=()=>{selected=genre;render();};group.append(b);}
+ function render(){let count=0;cards.forEach((c,i)=>{c.hidden=selected!=='All games'&&genres[i]!==selected;if(!c.hidden)count++;});group.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.textContent===selected)));controls.querySelector('p').textContent=`${count} of ${cards.length} games`;reset.disabled=selected==='All games';}
+ reset.onclick=()=>{selected='All games';render();};render();
+})();

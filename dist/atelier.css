@@ -80,9 +80,41 @@ body :is(.button,.sport-play):after{content:'';position:absolute;inset:-60% auto
 body .home-page .hero-image{animation-duration:.6s}
 body .home-page.has-entered .hero-image{animation:none}
 /* Finish surface reveals before the route releases; no extra Home replay. */
-html .travel-overlay.revealing i{animation-duration:.5s!important}
-html .travel-overlay.revealing .scene-panels b{animation-duration:.42s;animation-delay:calc(var(--panel-index)*20ms)}
-html[data-transition-speed=quick] .travel-overlay.revealing i{animation-duration:.2s!important}
-html[data-transition-speed=quick] .travel-overlay.revealing .scene-panels b{animation-duration:.168s;animation-delay:calc(var(--panel-index)*8ms)}
+html .travel-overlay[data-destination=home].revealing i{animation-duration:.5s!important}
+
+html[data-transition-speed=quick] .travel-overlay[data-destination=home].revealing i{animation-duration:.2s!important}
+
 html[data-motion=off] :is(.button,.sport-play):after{animation:none!important}
 @media(prefers-reduced-motion:reduce){body :is(.button,.sport-play):after{animation:none!important}}
+
+/* Quiet Home: one clear chat launcher and fewer competing edge details. */
+body #home :is(.vertical-label,.corner,.hero-seal,.chapter-nav,.scroll-link){display:none!important}
+body #home .location{font-size:11px;letter-spacing:.08em}
+body #home .location #local-time{display:none}
+/* The transition leads; content and ambient decorations wait their turn. */
+html.is-routing .page .enter{animation:none!important;opacity:1;transform:none}
+html.is-routing :is(.byte-context-launch,.byte-collapse,.data-cursor){visibility:hidden}
+html.is-routing .page :is(.hero-image,.hero-seal,.status-dot,.circuit-rotor){animation-play-state:paused!important}
+/* A compact preview appears without changing the card's dimensions. */
+body .project-card .project-preview{display:block;margin:16px 0;color:var(--muted);font-size:14px;line-height:1.6;opacity:1;transition:opacity .22s ease,transform .22s ease}
+.project-preview strong{display:block;color:var(--accent);font-size:11px;letter-spacing:.08em;text-transform:uppercase;margin-bottom:4px}
+@media(hover:hover) and (pointer:fine) and (min-width:769px){body .project-card .project-preview{opacity:0;transform:translateY(4px)}body .project-card:is(:hover,:focus-visible) .project-preview{opacity:1;transform:none}}
+body .project-card .project-code{display:none}
+body .button:not(.primary),body .outline-button:not(.resume-button){background:transparent;color:var(--ink);border:1px solid var(--line);box-shadow:none}
+body .text-link{background:transparent;box-shadow:none}
+body .text-link span{display:inline-block;transition:transform .2s ease}
+@media(hover:hover){body .text-link:hover span{transform:translate(2px,-1px)}}
+.collection-chips{display:flex;flex-wrap:wrap;gap:8px;margin:16px 0 8px;max-width:900px}
+.collection-chips button{font:inherit;font-size:13px;min-height:44px;padding:9px 16px;border:1px solid var(--line);border-radius:24px;background:transparent;color:var(--ink);cursor:pointer;transition:background .2s,border-color .2s}
+.collection-chips button[aria-pressed=true]{background:var(--accent);color:var(--bg);border-color:var(--accent)}
+.collection-chips button:hover{border-color:var(--accent)}
+.collection-chips button:focus-visible,.collection-reset:focus-visible{outline:2px solid var(--accent);outline-offset:3px}
+.collection-reset{font:inherit;color:var(--ink);min-height:44px;border:0;padding:8px 0;cursor:pointer}
+.collection-reset:disabled{opacity:.45;cursor:default}
+.library-controls select[hidden]{display:none!important}
+.room-breadcrumb{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin:0 0 32px;color:var(--muted);font-size:13px}
+.room-breadcrumb a{display:inline-flex;align-items:center;min-height:44px;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
+.room-breadcrumb a:hover{border-color:var(--accent);color:var(--accent)}
+@media(max-width:600px){.collection-chips{gap:6px}.collection-chips button{padding:9px 12px}.room-breadcrumb{margin-bottom:20px}body #home .home-bottom .location{display:none}}
+@media(prefers-reduced-motion:reduce){body .project-card .project-preview{transition:none;transform:none}}
+html[data-motion=off] .project-card .project-preview{transition:none;transform:none}

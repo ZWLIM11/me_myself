@@ -54,15 +54,15 @@
     const routeAnimations=[];
     const scene=document.createElement('div');scene.className='travel-overlay '+(roomJourney?'travel-door':'travel-chapter');scene.dataset.destination=id;scene.setAttribute('aria-hidden','true');scene.innerHTML='<i></i><i></i><span></span>';scene.querySelector('span').textContent=({'home':'Home','about':'About Me','projects':'Projects','photography':'Photography','beyond':'Beyond the Screen','playground':'Playground','living-room':'Living Room','books':'The Study','board-games':'Board Games','steam':'Gaming Room','contact':'Let’s Connect'})[id]||id;window.decoratePageTransition?.(scene,id);document.body.append(scene);
     try {
-      const departure=main.animate([{opacity:1,transform:'scale(1)'},{opacity:0,transform:roomJourney?'scale(1.07)':'scale(1)'}],{duration:duration(roomJourney?240:200),easing:'ease-out',fill:'forwards'});
-      routeAnimations.push(departure,scene.animate([{opacity:0},{opacity:1}],{duration:duration(roomJourney?240:200),fill:'forwards'}));await departure.finished.catch(()=>{});
-      const titleHold=scene.querySelector('span').animate([{opacity:1},{opacity:1}],{duration:duration(90)});routeAnimations.push(titleHold);await titleHold.finished.catch(()=>{});
+      const departure=main.animate([{opacity:1,transform:'scale(1)'},{opacity:0,transform:roomJourney?'scale(1.07)':'scale(1)'}],{duration:duration(id==='home'?200:roomJourney?420:360),easing:'ease-out',fill:'forwards'});
+      routeAnimations.push(departure,scene.animate([{opacity:0},{opacity:1}],{duration:duration(id==='home'?200:roomJourney?420:360),fill:'forwards'}));await departure.finished.catch(()=>{});
+      const titleHold=scene.querySelector('span').animate([{opacity:1},{opacity:1}],{duration:duration(id==='home'?90:220)});routeAnimations.push(titleHold);await titleHold.finished.catch(()=>{});
       update();departure.cancel();
-      const titleExit=scene.querySelector('span').animate([{opacity:1},{opacity:0}],{duration:duration(110),fill:'forwards'});routeAnimations.push(titleExit);await titleExit.finished.catch(()=>{});
+      const titleExit=scene.querySelector('span').animate([{opacity:1},{opacity:0}],{duration:duration(id==='home'?110:200),fill:'forwards'});routeAnimations.push(titleExit);await titleExit.finished.catch(()=>{});
       scene.classList.add('revealing');
       document.dispatchEvent(new CustomEvent('portfolio:arrival'));
       if(!reduceMotion.matches){
-        const arrival=main.animate([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'none'}],{duration:duration(roomJourney?600:560),easing:'cubic-bezier(.16,1,.3,1)'});
+        const arrival=main.animate([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'none'}],{duration:duration(id==='home'?560:roomJourney?950:900),easing:'cubic-bezier(.16,1,.3,1)'});
         routeAnimations.push(arrival);await arrival.finished.catch(()=>{});
       }
     } catch { if (current !== id) update(); }
@@ -103,7 +103,7 @@
     const previousHeight=grid.getBoundingClientRect().height;
     filterAnimation?.cancel();
     grid.innerHTML = config.projects.filter(p => filter === 'all' || p.category === filter).map(p => {
-      return `<article class="project-item"><button class="project-card" data-project="${escape(p.id)}" aria-label="View ${escape(p.title)}"><div class="project-image"><span class="project-number">0${config.projects.indexOf(p) + 1} /</span><img src="${escape(p.image)}" alt="${escape(p.alt)}" loading="lazy" decoding="async" width="1200" height="800"><span class="project-code" aria-hidden="true">&lt;explore /&gt;</span></div><span class="project-category">${escape(p.label)}</span><h2>${escape(p.title)}</h2><p>${escape(p.subtitle)}</p><span class="card-arrow" aria-hidden="true">↗</span></button></article>`;
+      return `<article class="project-item"><button class="project-card" data-project="${escape(p.id)}" aria-label="View ${escape(p.title)}"><div class="project-image"><span class="project-number">0${config.projects.indexOf(p) + 1} /</span><img src="${escape(p.image)}" alt="${escape(p.alt)}" loading="lazy" decoding="async" width="1200" height="800"><span class="project-code" aria-hidden="true">&lt;explore /&gt;</span></div><span class="project-preview"><strong>What you can try</strong>${escape(({interview:"Explore the interview assessment workflow.",ripple:"Move players and discover new passing lanes.","makan-mana":"Find nearby food and plan your next stop."})[p.id] || p.subtitle)}</span><span class="project-category">${escape(p.label)}</span><h2>${escape(p.title)}</h2><p>${escape(p.subtitle)}</p><span class="card-arrow" aria-hidden="true">↗</span></button></article>`;
     }).join('');
     if(previousHeight&&!reduceMotion.matches){
       const height=grid.getBoundingClientRect().height;
