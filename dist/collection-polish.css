@@ -26,3 +26,6 @@ html[data-theme=light]{--scene-paper:#eee4ce;--scene-wood:#c8ae89;--scene-metal:
 .page:not(.home-page)>h1,.page:not(.home-page) .section-heading+h1,.about-copy h1,.projects-intro h1,.contact-content h1{font-size:clamp(58px,8.5vw,124px);line-height:1.1;max-width:100%;overflow:visible;overflow-wrap:break-word}
 .page h1 .heading-line{overflow:visible;padding-block:.03em}.home-content h1{font-size:clamp(70px,9.2vw,144px);line-height:1.08}.page h1 em{padding-right:.06em}.about-layout>*{min-width:0}
 @media(max-width:700px){.page:not(.home-page)>h1,.page:not(.home-page) .section-heading+h1,.about-copy h1,.projects-intro h1,.contact-content h1{font-size:clamp(48px,12.8vw,82px);line-height:1.12}.home-content h1{font-size:clamp(60px,15.5vw,100px)}.contact-page{height:auto}.home-content{max-width:86%}}
+/* Destination titles belong to the transition, and leave before its reveal. */
+.travel-overlay>span{display:block;z-index:2;max-width:85vw;text-align:center;font-family:Manrope,Arial,sans-serif;font-size:clamp(38px,6vw,88px);font-weight:500;line-height:1.12;letter-spacing:-.035em;color:var(--ink);text-shadow:0 2px 18px var(--bg);padding:20px;overflow-wrap:break-word}
+.travel-door>span{color:#f1e6ce}html[data-theme=light] .travel-door>span{color:#25362d}
