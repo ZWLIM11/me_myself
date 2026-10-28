@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const config = window.PORTFOLIO;
-  const pages = ['home','about','projects','photography','beyond','playground','board-games','books','contact'];
+  const pages = ['home','about','projects','photography','beyond','playground','living-room','board-games','books','steam','contact'];
   const reduceMotion = (window.portfolioMotion || matchMedia('(prefers-reduced-motion: reduce)'));
   const nav = document.querySelector('.header nav');
   const menu = document.querySelector('.menu-toggle');

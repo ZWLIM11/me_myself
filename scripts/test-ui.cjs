@@ -59,7 +59,7 @@ const path=require('node:path');
       await page.locator('.explore-menu summary').click();await page.locator('.explore-dropdown a[href="#beyond"]').click();await page.locator('#beyond.active').waitFor();assert.equal(await page.locator('.explore-menu').getAttribute('open'),null);
       for(const theme of ['light','dark']){
         await page.locator('.theme-toggle').click();
-        for(const id of ['home','about','projects','photography','beyond','playground','board-games','books','contact']){
+        for(const id of ['home','about','projects','photography','beyond','playground','living-room','board-games','books','steam','contact']){
           await page.evaluate(id=>location.hash=id,id);
           await page.locator('#'+id+'.active').waitFor({state:'visible'});
           await check(id+' '+theme);
@@ -81,8 +81,8 @@ const path=require('node:path');
       await page.locator('.game-box').first().scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,'living-room-'+width+'.png'),fullPage:true});
       await page.locator('.byte-context-launch').click();assert.match(await page.locator('.byte-prompts').textContent(),/Help me choose a game/);await page.getByRole('button',{name:'Help me choose a game',exact:true}).click();assert.match(await page.locator('.byte-messages').textContent(),/Arcane Chess/);await page.locator('#byte-chat .close-dialog').click();
       await page.evaluate(()=>location.hash='books');await page.locator('#books.active').waitFor();
-      assert.ok(await page.locator('.reading-book').evaluate(el=>el.getBoundingClientRect().right<=el.parentElement.getBoundingClientRect().right));await page.locator('.reading-book').click();assert.equal(await page.locator('#book-dialog').isVisible(),true);await page.keyboard.press('Escape');
-      assert.equal(await page.locator('.reading-book').evaluate(el=>el===document.activeElement),true);
+      assert.ok(await page.locator('.reading-book').first().evaluate(el=>el.getBoundingClientRect().right<=el.parentElement.getBoundingClientRect().right));await page.locator('.reading-book').first().click();assert.equal(await page.locator('#book-dialog').isVisible(),true);await page.keyboard.press('Escape');
+      assert.equal(await page.locator('.reading-book').first().evaluate(el=>el===document.activeElement),true);
       await page.screenshot({path:path.join(out,'books-'+width+'.png'),fullPage:true});
       await page.locator('.byte-context-launch').click();await page.getByRole('button',{name:'Tell me about Mockingbird',exact:true}).click();assert.match(await page.locator('.byte-messages').textContent(),/Harper Lee/);await page.locator('#byte-chat .close-dialog').click();
       for(const id of ['interview','ripple','makan-mana']){
@@ -109,3 +109,4 @@ const path=require('node:path');
     assert.deepEqual(issues,[]);console.log('Passed theme persistence, filters, save/remove/reload, routes, rapid navigation, and overflow checks.');
   }finally{await browser?.close();server?.kill();}
 })().catch(error=>{console.error(error);process.exitCode=1;});
+
