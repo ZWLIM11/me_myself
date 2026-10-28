@@ -15,7 +15,7 @@
     ]:[
       {opacity:0,transform:'translateY(6px)'},
       {opacity:1,transform:'translateY(0)'}
-    ],{duration:document.documentElement.dataset.transitionSpeed==='quick'?240:600,easing:'cubic-bezier(.16,1,.3,1)'}));
+    ],{duration:document.documentElement.dataset.transitionSpeed==='quick'?200:500,easing:'cubic-bezier(.16,1,.3,1)'}));
   }
   document.addEventListener('portfolio:arrival',reveal);
   document.addEventListener('portfolio:pagechange',()=>{running.forEach(a=>a.cancel());running=[];});
@@ -32,6 +32,15 @@
       });
     },{passive:true});
     surface.addEventListener('pointerleave',()=>{cancelAnimationFrame(frame);surface.style.setProperty('--depth-angle','0deg');});
+  });
+  document.querySelectorAll('.page:not(.home-page) h1').forEach(title=>{
+    title.addEventListener('pointermove',event=>{
+      if(!fine.matches||window.portfolioMotion?.matches)return;
+      const rect=title.getBoundingClientRect();
+      title.style.setProperty('--name-light',`${Math.max(0,Math.min(100,(event.clientX-rect.left)/rect.width*100))}%`);
+      title.classList.add('heading-lit');
+    },{passive:true});
+    title.addEventListener('pointerleave',()=>title.classList.remove('heading-lit'));
   });
   reveal();
 })();

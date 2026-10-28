@@ -68,3 +68,21 @@ html[data-transition-speed=quick] .travel-overlay.revealing .scene-panels b{anim
 @media(hover:hover) and (pointer:fine){.depth-surface:hover{box-shadow:0 18px 32px #0003,inset 0 1px color-mix(in srgb,var(--accent) 30%,transparent)}.depth-surface:hover:after{opacity:1}}
 html[data-motion=off] .depth-surface{rotate:none!important;transition:none}html[data-motion=off] .scene-panels{display:none}
 @media(prefers-reduced-motion:reduce){.depth-surface{rotate:none!important;transition:none}.scene-panels{display:none}}
+
+/* Restore light sweeps only: retain the original typeface and layout. */
+html #home-title.name-lit,html .page h1.heading-lit{background-image:radial-gradient(ellipse 150px 170px at var(--name-light,50%) 50%,var(--accent) 0%,var(--ink) 75%);background-clip:text;-webkit-background-clip:text;color:transparent}
+html .page h1.heading-lit :is(em,.line){color:inherit}
+html[data-theme=light] #home-title.name-lit,html[data-theme=light] .page h1.heading-lit{background-image:radial-gradient(ellipse 150px 170px at var(--name-light,50%) 50%,#806030 0%,#202d28 75%)}
+body :is(.button,.sport-play){position:relative;overflow:hidden}
+body :is(.button,.sport-play):after{content:'';position:absolute;inset:-60% auto -60% -55%;width:35%;pointer-events:none;background:linear-gradient(90deg,transparent,#ffffff30,transparent);transform:skewX(-20deg);opacity:0}
+@media(hover:hover) and (pointer:fine){body :is(.button,.sport-play):hover:after{animation:button-light-pass .65s ease-out both}}
+@keyframes button-light-pass{0%{left:-55%;opacity:0}20%{opacity:1}100%{left:125%;opacity:0}}
+body .home-page .hero-image{animation-duration:.6s}
+body .home-page.has-entered .hero-image{animation:none}
+/* Finish surface reveals before the route releases; no extra Home replay. */
+html .travel-overlay.revealing i{animation-duration:.5s!important}
+html .travel-overlay.revealing .scene-panels b{animation-duration:.42s;animation-delay:calc(var(--panel-index)*20ms)}
+html[data-transition-speed=quick] .travel-overlay.revealing i{animation-duration:.2s!important}
+html[data-transition-speed=quick] .travel-overlay.revealing .scene-panels b{animation-duration:.168s;animation-delay:calc(var(--panel-index)*8ms)}
+html[data-motion=off] :is(.button,.sport-play):after{animation:none!important}
+@media(prefers-reduced-motion:reduce){body :is(.button,.sport-play):after{animation:none!important}}
