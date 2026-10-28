@@ -48,3 +48,23 @@ body .contact-links a{background:transparent;border-color:var(--line);box-shadow
 /* Keep button labels still; only the directional arrow responds. */
 body .button:hover>span,body .outline-button:hover>span{transform:none}
 body .button:hover>span:last-child,body .outline-button:hover>span:last-child{transform:translate(2px,-1px)}
+
+/* Spatial reveals: panels become the transition surface, titles remain above. */
+.travel-overlay:has(.scene-panels)>i{display:none!important}
+.scene-panels{position:absolute;inset:0;display:flex;perspective:1000px;z-index:0;pointer-events:none}
+.scene-panels b{flex:1;background:var(--bg);border-right:1px solid var(--line);transform-origin:left center}
+.travel-overlay.revealing .scene-panels b{animation:panel-turn .65s cubic-bezier(.4,0,.2,1) both;animation-delay:calc(var(--panel-index)*30ms)}
+.travel-overlay[data-destination=about].revealing .scene-panels b{animation-name:panel-rise}
+.travel-overlay[data-destination=playground].revealing .scene-panels b{animation-name:panel-scatter}
+.travel-overlay[data-destination=contact].revealing .scene-panels b{animation-name:panel-fold}
+@keyframes panel-turn{to{transform:rotateY(-95deg);opacity:0}}
+@keyframes panel-rise{to{transform:translateY(-105%);opacity:0}}
+@keyframes panel-scatter{to{transform:translateY(calc((var(--panel-index) - 2.5)*22%)) rotateY(85deg) scale(.8);opacity:0}}
+@keyframes panel-fold{to{transform:rotateX(85deg);opacity:0}}
+html[data-transition-speed=quick] .travel-overlay.revealing .scene-panels b{animation-duration:.26s;animation-delay:calc(var(--panel-index)*12ms)}
+.depth-surface{position:relative;isolation:isolate;transform-style:preserve-3d;transition:rotate .32s ease-out,box-shadow .32s ease-out;rotate:var(--depth-y,0) var(--depth-x,0) 0 var(--depth-angle,0deg)}
+.depth-surface:after{content:'';position:absolute;inset:0;pointer-events:none;border-radius:inherit;opacity:0;background:radial-gradient(circle at var(--light-x,50%) var(--light-y,50%),color-mix(in srgb,var(--accent) 15%,transparent),transparent 65%);transition:opacity .25s}
+.depth-surface:focus-visible{outline:2px solid var(--accent);outline-offset:5px}
+@media(hover:hover) and (pointer:fine){.depth-surface:hover{box-shadow:0 18px 32px #0003,inset 0 1px color-mix(in srgb,var(--accent) 30%,transparent)}.depth-surface:hover:after{opacity:1}}
+html[data-motion=off] .depth-surface{rotate:none!important;transition:none}html[data-motion=off] .scene-panels{display:none}
+@media(prefers-reduced-motion:reduce){.depth-surface{rotate:none!important;transition:none}.scene-panels{display:none}}
