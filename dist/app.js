@@ -111,8 +111,8 @@
       [...grid.children].forEach(item=>item.animate([{opacity:.35,translate:'0 7px'},{opacity:1,translate:'0 0'}],{duration:200,easing:'ease-out'}));
     }
   }
-  document.querySelectorAll('.filter').forEach(button => button.addEventListener('click', () => {
-    document.querySelectorAll('.filter').forEach(b => { const active = b === button; b.classList.toggle('active', active); b.setAttribute('aria-pressed', String(active)); });
+  document.querySelectorAll('.filter[data-filter]').forEach(button => button.addEventListener('click', () => {
+    document.querySelectorAll('.filter[data-filter]').forEach(b => { const active = b === button; b.classList.toggle('active', active); b.setAttribute('aria-pressed', String(active)); });
     renderProjects(button.dataset.filter);
   }));
   function openProject(id, source) {

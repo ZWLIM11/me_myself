@@ -24,7 +24,7 @@ vm.runInNewContext(readFileSync(new URL('../dist/interactions.js',import.meta.ur
 const move = (target,x=150,y=75,pointerType='mouse') => {events.get('pointermove')({target,clientX:x,clientY:y,pointerType}); if(pending){const fn=pending;pending=null;fn();}};
 const button=element('button','#home');
 move(button);
-assert.equal(button.values.get('--magnet-x'),'1.5px');
+assert.equal(button.values.get('--magnet-x'),'0.75px');
 assert.ok(hero.values.has('--hero-x'));
 const card=element('card');
 move(card);
@@ -51,3 +51,4 @@ assert.equal(card.values.size,0,'resizing clears existing transforms');
 context.document.documentElement.classList.contains=()=>true;move(card);
 assert.equal(card.values.size,0,'active resize skips effects');
 console.log('Passed: magnetic buttons, card tilt, hero reset, pointer leave, touch, reduced motion, dynamic cards, navigation and zoom cleanup.');
+

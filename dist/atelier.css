@@ -11,7 +11,7 @@ body .chapter-controls .transition-speed{grid-column:3;grid-row:1;margin:0}
 body :is(.button,.sport-play,.filter,.explore-filters button,.transition-speed,.contact-links a,.resume-button,.theme-toggle){box-shadow:inset 0 1px var(--button-shine),0 4px 0 var(--button-edge),0 8px 16px #0002;border:1px solid var(--line);background-image:linear-gradient(var(--button-shine),transparent 55%);transition:translate .28s cubic-bezier(.2,.8,.2,1),box-shadow .28s ease,background-color .28s ease}
 body :is(.button,.sport-play,.filter,.explore-filters button,.transition-speed,.contact-links a,.resume-button,.theme-toggle):active{translate:0 3px;box-shadow:inset 0 1px var(--button-shine),0 1px 0 var(--button-edge)}
 body :is(.button,.sport-play,.filter,.explore-filters button,.transition-speed,.contact-links a,.resume-button,.theme-toggle):focus-visible{outline:2px solid var(--accent);outline-offset:6px}
-@media(hover:hover){body :is(.button,.sport-play,.filter,.explore-filters button,.transition-speed,.contact-links a,.resume-button,.theme-toggle):hover{translate:0 -3px;box-shadow:inset 0 1px var(--button-shine),0 6px 0 var(--button-edge),0 12px 22px #0003}}
+@media(hover:hover){body :is(.button,.sport-play,.filter,.explore-filters button,.transition-speed,.contact-links a,.resume-button,.theme-toggle):hover{translate:0 -2px;box-shadow:inset 0 1px var(--button-shine),0 5px 0 var(--button-edge),0 10px 20px #0002}}
 @media(max-width:700px){body .chapter-controls,body:has(.home-page.active) .chapter-controls{padding:24px 7% max(100px,env(safe-area-inset-bottom));grid-template-columns:1fr auto;gap:16px;min-height:220px}body .chapter-controls .page-sequence{grid-column:1/-1;grid-row:1}body .chapter-controls #motion-toggle{grid-column:1;grid-row:2;justify-self:start}body .chapter-controls .transition-speed{grid-column:2;grid-row:2}}
 @media(prefers-reduced-motion:reduce){body :is(.button,.sport-play,.filter,.explore-filters button,.transition-speed,.contact-links a,.resume-button,.theme-toggle){transition:none;translate:none!important}}
 html[data-motion=off] :is(.button,.sport-play,.filter,.explore-filters button,.transition-speed,.contact-links a,.resume-button,.theme-toggle){transition:none;translate:none!important}
@@ -20,3 +20,9 @@ html[data-motion=off] :is(.button,.sport-play,.filter,.explore-filters button,.t
 body :is(.button,.sport-play,.filter,.explore-filters button,.transition-speed,.contact-links a,.resume-button,.theme-toggle):active{translate:0 3px;box-shadow:inset 0 2px 5px #0002,0 1px 0 var(--button-edge)}
 body .header .header-utilities{gap:7px;padding:6px;background:var(--surface)}
 body .header .header-utilities :is(.resume-button,.theme-toggle){border:1px solid var(--line);border-radius:8px;background-color:var(--surface)}
+
+/* Small controls settle without stretching text or shifting layout. */
+#video-game-dialog[open]{animation:gentle-screen-in .32s cubic-bezier(.2,.8,.2,1) both}
+@keyframes gentle-screen-in{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
+@media(prefers-reduced-motion:reduce){#video-game-dialog[open]{animation:none}}
+html[data-motion=off] #video-game-dialog[open]{animation:none}
