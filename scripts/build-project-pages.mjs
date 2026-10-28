@@ -32,7 +32,7 @@ ${images.length?`<section class="case-media"><h2>Behind the build.</h2>${images.
     .replace('<section class="case-written">','<section class="case-written" id="process">')
     .replace('<section class="case-media">','<section class="case-media" id="media">')
     .replace('<nav class="case-more"',`<a class="case-next" id="next-project" href="/projects/${next.id}/"><img src="${e(asset(next.image))}" alt="" loading="lazy" width="300" height="220"><span><small>NEXT PROJECT</small><strong>${e(next.title)} ↗</strong></span></a><nav class="case-more"`);
-  html=html.replace('</head>','<script src="/theme.js?v=20261028-polish"></script><link rel="stylesheet" href="/refinement.css?v=20261028-daylight"></head>');
+  html=html.replace('</head>','<script src="/theme.js?v=20261028-polish"></script><link rel="stylesheet" href="/refinement.css?v=20261028-daylight"><link rel="stylesheet" href="/atelier.css?v=1"></head>');
   const destination=path.join(root,'projects',project.id);await mkdir(destination,{recursive:true});await writeFile(path.join(destination,'index.html'),html);
 }
 console.log(`Generated ${data.projects.length} standalone project pages.`);
