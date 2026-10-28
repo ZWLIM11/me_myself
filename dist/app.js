@@ -49,7 +49,7 @@
     const main = document.querySelector('#main');
     main.setAttribute('aria-busy', 'true');
     const routeAnimations=[];
-    const scene=document.createElement('div');scene.className='travel-overlay '+(roomJourney?'travel-door':'travel-chapter');scene.dataset.destination=id;scene.setAttribute('aria-hidden','true');scene.innerHTML='<i></i><i></i><span></span>';scene.querySelector('span').textContent=({'home':'Home','about':'About Me','projects':'Projects','photography':'Photography','beyond':'Beyond the Screen','playground':'Playground','living-room':'Living Room','books':'The Study','board-games':'Board Games','steam':'Gaming Room','contact':'Let’s Connect'})[id]||id;document.body.append(scene);
+    const scene=document.createElement('div');scene.className='travel-overlay '+(roomJourney?'travel-door':'travel-chapter');scene.dataset.destination=id;scene.setAttribute('aria-hidden','true');scene.innerHTML='<i></i><i></i><span></span>';scene.querySelector('span').textContent=({'home':'Home','about':'About Me','projects':'Projects','photography':'Photography','beyond':'Beyond the Screen','playground':'Playground','living-room':'Living Room','books':'The Study','board-games':'Board Games','steam':'Gaming Room','contact':'Let’s Connect'})[id]||id;window.decoratePageTransition?.(scene,id);document.body.append(scene);
     try {
       const departure=main.animate([{opacity:1,transform:'scale(1)'},{opacity:0,transform:roomJourney?'scale(1.07)':'scale(1)'}],{duration:roomJourney?420:360,easing:'ease-out',fill:'forwards'});
       routeAnimations.push(departure,scene.animate([{opacity:0},{opacity:1}],{duration:roomJourney?420:360,fill:'forwards'}));await departure.finished.catch(()=>{});
