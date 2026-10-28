@@ -23,6 +23,9 @@
   function closeMenu() { nav.classList.remove('open'); menu.setAttribute('aria-expanded', 'false'); menu.setAttribute('aria-label', 'Open navigation'); }
   async function showPage(id, initial = false) {
     if (!pages.includes(id)) id = 'home';
+    const roomIds=['books','board-games','steam'];
+    if(roomIds.includes(id)&&current!=='living-room'&&current!==id){id='living-room';history.replaceState(null,'','#living-room');}
+    const roomJourney=roomIds.includes(id)||roomIds.includes(current);
     closeMenu();
     if (navigating) { queuedPage = id; return; }
     if (current === id && !initial) return;
@@ -47,11 +50,11 @@
     main.setAttribute('aria-busy', 'true');
     const routeAnimations=[];
     try {
-      const departure=main.animate([{opacity:1},{opacity:0}],{duration:160,easing:'ease-out',fill:'forwards'});
+      const departure=main.animate([{opacity:1,transform:'scale(1)'},{opacity:0,transform:roomJourney?'scale(1.07)':'scale(1)'}],{duration:roomJourney?280:160,easing:'ease-out',fill:'forwards'});
       routeAnimations.push(departure);await departure.finished.catch(()=>{});
       update();departure.cancel();
       if(!reduceMotion.matches){
-        const arrival=main.animate([{opacity:0,transform:`translateY(${direction*24}px)`},{opacity:1,transform:'none'}],{duration:420,easing:'cubic-bezier(.16,1,.3,1)'});
+        const arrival=main.animate([{opacity:0,transform:roomJourney?'scale(.94)':`translateY(${direction*24}px)`},{opacity:1,transform:'none'}],{duration:420,easing:'cubic-bezier(.16,1,.3,1)'});
         routeAnimations.push(arrival);await arrival.finished.catch(()=>{});
       }
     } catch { if (current !== id) update(); }
