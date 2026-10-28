@@ -60,6 +60,7 @@
       update();departure.cancel();
       const titleExit=scene.querySelector('span').animate([{opacity:1},{opacity:0}],{duration:duration(200),fill:'forwards'});routeAnimations.push(titleExit);await titleExit.finished.catch(()=>{});
       scene.classList.add('revealing');
+      document.dispatchEvent(new CustomEvent('portfolio:arrival'));
       if(!reduceMotion.matches){
         const arrival=main.animate([{opacity:0,transform:'translateY(8px)'},{opacity:1,transform:'none'}],{duration:duration(roomJourney?950:900),easing:'cubic-bezier(.16,1,.3,1)'});
         routeAnimations.push(arrival);await arrival.finished.catch(()=>{});
