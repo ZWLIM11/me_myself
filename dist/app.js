@@ -49,7 +49,7 @@
     const main = document.querySelector('#main');
     main.setAttribute('aria-busy', 'true');
     const routeAnimations=[];
-    const scene=document.createElement('div');scene.className='travel-overlay '+(roomJourney?'travel-door':'travel-chapter');scene.setAttribute('aria-hidden','true');scene.innerHTML='<i></i><i></i><span></span>';scene.querySelector('span').textContent=id.replaceAll('-',' ').toUpperCase();document.body.append(scene);
+    const scene=document.createElement('div');scene.className='travel-overlay '+(roomJourney?'travel-door':'travel-chapter');scene.dataset.destination=id;scene.setAttribute('aria-hidden','true');scene.innerHTML='<i></i><i></i><span></span>';scene.querySelector('span').textContent=id.replaceAll('-',' ').toUpperCase();document.body.append(scene);
     try {
       const departure=main.animate([{opacity:1,transform:'scale(1)'},{opacity:0,transform:roomJourney?'scale(1.07)':'scale(1)'}],{duration:roomJourney?380:320,easing:'ease-out',fill:'forwards'});
       routeAnimations.push(departure,scene.animate([{opacity:0},{opacity:1}],{duration:roomJourney?380:320,fill:'forwards'}));await departure.finished.catch(()=>{});
