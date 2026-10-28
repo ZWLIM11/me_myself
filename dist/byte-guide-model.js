@@ -13,7 +13,10 @@
   ];
   window.getByteReply = input => {
     const text=String(input||'').trim().slice(0,300);
-    if(/living room|steam|gaming room/i.test(text))return {text:'Choose a door: the study for books, the play room for board games, or the gaming room for the Steam collection.',label:'Enter the living room',href:'#living-room'};
+    if(/reading notes|notebook/i.test(text))return {text:'Open a book summary to add your reading status, a note, or a favourite quote. Save them on this browser; nothing is sent or published.',label:'Enter the study through the living room',href:'#living-room'};
+    if(/choose.*book|book.*choose/i.test(text))return {text:'For a mystery, browse Sherlock Holmes. For social observation, try Jane Austen. For a fantasy journey, explore the Harry Potter collection. The study has search and category chips to narrow the shelf.',label:'Enter the study through the living room',href:'#living-room'};
+    if(/choose.*game|game.*choose/i.test(text))return {text:'The Living Room has a game chooser. Pick solo or friends, your mood, and your available time; it explains each suggestion and takes you to the right room.',label:'Open the game chooser',href:'#living-room'};
+    if(/living room|steam|gaming room|what rooms/i.test(text))return {text:'Choose a door: the study for books, the play room for board games, or the gaming room for the Steam collection.',label:'Enter the living room',href:'#living-room'};
     if(/books?|mockingbird|harper lee|reading/i.test(text))return {text:'The reading room begins with To Kill a Mockingbird by Harper Lee. Open it for a spoiler-light summary about empathy, justice, and growing up.',label:'Open the reading room',href:'#books'};
     if(/choose.*game|game.*choose/i.test(text))return {text:'For a classic board, try Arcane Chess. For a card-table setting, explore Monopoly Deal or The Liar’s Table. Hex & Holsters and Fortune Routes are also on the shelf—select a box to open it.',label:'Choose from the shelf',href:'#board-games'};
     if(/explain.*cluster/i.test(text))return {text:'Clustering groups nearby points. Each step moves every centre to the average of its group and then reassigns points to the nearest centre. The summary reports how many points changed groups and how far the centres moved.',label:'Try the clustering experiment',href:'#playground'};

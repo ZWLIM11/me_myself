@@ -53,3 +53,25 @@ const projectStories = {
   'makan-mana': {inspiration:'Turning an everyday question—where should we eat?—into a useful way to discover places and plan a day out.', challenge:'Find a nearby meal and build a small trip around it.'}
 };
 window.PORTFOLIO.projects.forEach(project => Object.assign(project, projectStories[project.id] || {}));
+// Editorial summaries based on the portfolio's documented features; no measured outcomes claimed.
+Object.assign(window.PORTFOLIO.caseStudies.interview, {
+ problem:'Interview responses can be difficult to review consistently when the useful evidence is buried in a long recording.',
+ role:'Developing an interview-assessment project around speech-to-text and language-based review, with attention to how responses are presented for inspection.',
+ approach:'Connect transcription, language-based feature extraction, and an assessment workflow so that a response can be examined in stages.',
+ results:'Explore the live app and its workflow. This portfolio does not yet include accuracy benchmarks or an independent evaluation.',
+ lessons:'An assessment is more useful when a reviewer can inspect the evidence behind it. Automated feedback needs clear limits and human judgment.'
+});
+Object.assign(window.PORTFOLIO.caseStudies.ripple, {
+ problem:'A passing lane can look open until a small change in a defender’s position changes the decision.',
+ role:'Shaping an interactive football tactics tool and refining how visitors move players, explore passing options, and understand the feedback.',
+ approach:'Use an interactive pitch to connect player positions, orientation, and passing-foot choices with inspectable passing recommendations.',
+ results:'Move a defender into a passing lane in the live app, then compare the recommendation. This is an exploratory simulation, not a validated match predictor.',
+ lessons:'A recommendation becomes easier to understand when the visitor can change an input and see why the output changes.'
+});
+Object.assign(window.PORTFOLIO.caseStudies['makan-mana'], {
+ problem:'Finding somewhere to eat and planning how to get there often means switching between lists, maps, reviews, and notes.',
+ role:'Shaping the food-discovery and trip-planning flow, including distance groups, independent load-more controls, saved places, and phone-friendly browsing.',
+ approach:'Connect nearby venue data with maps and itinerary planning. Link to reviews, menus, prices, and hours when those details are not available directly.',
+ results:'Find a meal within a chosen radius, explore a distance group, and add a stop to a trip. Data coverage varies; external links help visitors verify details.',
+ lessons:'Useful filters must reflect the data available. Clear distance groups and honest links to missing information are more helpful than controls that cannot deliver.'
+});

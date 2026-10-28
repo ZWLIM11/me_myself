@@ -50,8 +50,10 @@
     const main = document.querySelector('#main');
     main.setAttribute('aria-busy', 'true');
     const quick=document.documentElement.dataset.transitionSpeed==='quick';
-    const duration=ms=>quick?Math.round(ms*.4):ms;
+    let skipped=false;
+    const duration=ms=>skipped?1:quick?Math.round(ms*.4):ms;
     const routeAnimations=[];
+    const skip=document.createElement('button');skip.type='button';skip.className='skip-transition';skip.textContent='Skip animation';skip.onclick=()=>{skipped=true;routeAnimations.forEach(a=>{try{a.finish();}catch{}});};document.body.append(skip);
     const scene=document.createElement('div');scene.className='travel-overlay '+(roomJourney?'travel-door':'travel-chapter');scene.dataset.destination=id;scene.setAttribute('aria-hidden','true');scene.innerHTML='<i></i><i></i><span></span>';scene.querySelector('span').textContent=({'home':'Home','about':'About Me','projects':'Projects','photography':'Photography','beyond':'Beyond the Screen','playground':'Playground','living-room':'Living Room','books':'The Study','board-games':'Board Games','steam':'Gaming Room','contact':'Let’s Connect'})[id]||id;window.decoratePageTransition?.(scene,id);document.body.append(scene);
     try {
       const departure=main.animate([{opacity:1,transform:'scale(1)'},{opacity:0,transform:roomJourney?'scale(1.07)':'scale(1)'}],{duration:duration(id==='home'?200:roomJourney?420:360),easing:'ease-out',fill:'forwards'});
@@ -67,7 +69,7 @@
       }
     } catch { if (current !== id) update(); }
     finally {
-      scene.remove();
+      scene.remove();skip.remove();
       routeAnimations.forEach(animation=>animation.cancel());
       transition = null;
       navigating = false;
