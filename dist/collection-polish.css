@@ -12,3 +12,17 @@
 @media(max-width:500px){.page:not(.home-page)>h1,.page:not(.home-page) .section-heading+h1{font-size:clamp(50px,14vw,68px);overflow-wrap:anywhere}}
 html[data-motion=off] dialog[open]{animation:none!important}@media(prefers-reduced-motion:reduce){dialog[open]{animation:none!important}}
 .travel-overlay[data-destination=home].revealing i:first-child{animation:home-reveal .75s ease both}@keyframes home-reveal{to{clip-path:inset(50% 0 50% 0)}}.travel-overlay[data-destination=beyond].revealing i:first-child{animation:beyond-reveal .75s ease both}@keyframes beyond-reveal{to{transform:translate(100%,-30%);opacity:0}}.travel-overlay[data-destination=playground] i:first-child{background:repeating-linear-gradient(90deg,var(--bg) 0 49px,var(--line) 50px 51px)}.travel-overlay[data-destination=playground].revealing i:first-child{animation:play-reveal .75s ease both}@keyframes play-reveal{to{transform:scale(.65) rotate(8deg);opacity:0}}.travel-overlay[data-destination=living-room].revealing i:first-child{animation:lobby-reveal .75s ease both}@keyframes lobby-reveal{to{transform:scale(1.4);opacity:0}}
+/* Theme-aware scene surfaces; transition layers never intercept controls. */
+:root{--scene-paper:#39372c;--scene-wood:#443627;--scene-metal:#485c54;--scene-screen:#101f23;--scene-glass:#243b31}
+html[data-theme=light]{--scene-paper:#eee4ce;--scene-wood:#c8ae89;--scene-metal:#7f9287;--scene-screen:#e1ebe6;--scene-glass:#d3e1d9}
+.travel-overlay{overflow:hidden;pointer-events:none}.travel-overlay>span{display:none}.travel-overlay i{pointer-events:none;backface-visibility:hidden}
+.travel-door i{background:repeating-linear-gradient(0deg,#ffffff03 0 4px,transparent 5px 12px),var(--scene-wood);border-color:var(--accent)}
+.travel-overlay[data-destination=photography] i:first-child{background:var(--bg)}.travel-overlay[data-destination=photography] i:nth-child(2){border-color:var(--accent)}
+.travel-overlay[data-destination=books] i{background:repeating-linear-gradient(0deg,var(--line) 0 1px,transparent 2px 24px),var(--scene-paper);border-color:var(--accent)}
+.travel-overlay[data-destination=board-games] i{background:linear-gradient(130deg,#ffffff33,transparent 40%),var(--scene-glass);border-color:var(--scene-metal)}
+.travel-overlay[data-destination=steam] i{background:repeating-linear-gradient(0deg,var(--line) 0 1px,var(--scene-screen) 2px 5px)}
+.travel-overlay.revealing i{animation-duration:.9s!important}.travel-overlay.travel-door.revealing i{animation-duration:.95s!important}
+/* Give headings room for italic strokes and natural wrapping. */
+.page:not(.home-page)>h1,.page:not(.home-page) .section-heading+h1,.about-copy h1,.projects-intro h1,.contact-content h1{font-size:clamp(58px,8.5vw,124px);line-height:1.1;max-width:100%;overflow:visible;overflow-wrap:break-word}
+.page h1 .heading-line{overflow:visible;padding-block:.03em}.home-content h1{font-size:clamp(70px,9.2vw,144px);line-height:1.08}.page h1 em{padding-right:.06em}.about-layout>*{min-width:0}
+@media(max-width:700px){.page:not(.home-page)>h1,.page:not(.home-page) .section-heading+h1,.about-copy h1,.projects-intro h1,.contact-content h1{font-size:clamp(48px,12.8vw,82px);line-height:1.12}.home-content h1{font-size:clamp(60px,15.5vw,100px)}.contact-page{height:auto}.home-content{max-width:86%}}
