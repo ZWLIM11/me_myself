@@ -33,3 +33,18 @@ body .button:hover>span,body .outline-button:hover>span,body .contact-links>*:ho
 @keyframes gentle-screen-in{from{opacity:0;transform:translateY(10px) scale(.985)}to{opacity:1;transform:none}}
 @media(prefers-reduced-motion:reduce){#video-game-dialog[open]{animation:none}}
 html[data-motion=off] #video-game-dialog[open]{animation:none}
+
+/* A continuous composition: the portrait fades into the same page surface. */
+body .home-hero:before,html[data-theme=light] .home-hero:before{height:clamp(140px,20vh,220px);background:linear-gradient(180deg,transparent 0%,color-mix(in srgb,var(--bg) 55%,transparent) 48%,var(--bg) 100%)}
+body .home-page:after,html[data-theme=light] .home-page:after{height:80px;background:linear-gradient(transparent,var(--bg))}
+body .home-page .vertical-label{opacity:.45}
+body .home-page .corner{opacity:.3}
+body .header .header-utilities .resume-button{font-weight:400}
+/* Secondary controls support the page rather than looking like separate tiles. */
+body .filter:not(.active),body .explore-filters button:not([aria-pressed=true]){border-color:transparent}
+body .filter.active,body .explore-filters button[aria-pressed=true]{box-shadow:none}
+body .contact-links a{background:transparent;border-color:var(--line);box-shadow:none}
+@media(hover:hover){body .contact-links a:hover{background:color-mix(in srgb,var(--surface) 70%,transparent);box-shadow:none;translate:0 0}body .filter:hover{border-color:var(--line)}}
+/* Keep button labels still; only the directional arrow responds. */
+body .button:hover>span,body .outline-button:hover>span{transform:none}
+body .button:hover>span:last-child,body .outline-button:hover>span:last-child{transform:translate(2px,-1px)}
