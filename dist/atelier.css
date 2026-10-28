@@ -87,10 +87,6 @@ html[data-transition-speed=quick] .travel-overlay[data-destination=home].reveali
 html[data-motion=off] :is(.button,.sport-play):after{animation:none!important}
 @media(prefers-reduced-motion:reduce){body :is(.button,.sport-play):after{animation:none!important}}
 
-/* Quiet Home: one clear chat launcher and fewer competing edge details. */
-body #home :is(.vertical-label,.corner,.hero-seal,.chapter-nav,.scroll-link){display:none!important}
-body #home .location{font-size:11px;letter-spacing:.08em}
-body #home .location #local-time{display:none}
 /* The transition leads; content and ambient decorations wait their turn. */
 html.is-routing .page .enter{animation:none!important;opacity:1;transform:none}
 html.is-routing :is(.byte-context-launch,.byte-collapse,.data-cursor){visibility:hidden}
@@ -115,6 +111,6 @@ body .text-link span{display:inline-block;transition:transform .2s ease}
 .room-breadcrumb{display:flex;align-items:center;flex-wrap:wrap;gap:12px;margin:0 0 32px;color:var(--muted);font-size:13px}
 .room-breadcrumb a{display:inline-flex;align-items:center;min-height:44px;color:var(--ink);text-decoration:none;border-bottom:1px solid var(--line)}
 .room-breadcrumb a:hover{border-color:var(--accent);color:var(--accent)}
-@media(max-width:600px){.collection-chips{gap:6px}.collection-chips button{padding:9px 12px}.room-breadcrumb{margin-bottom:20px}body #home .home-bottom .location{display:none}}
+@media(max-width:600px){.collection-chips{gap:6px}.collection-chips button{padding:9px 12px}.room-breadcrumb{margin-bottom:20px}}
 @media(prefers-reduced-motion:reduce){body .project-card .project-preview{transition:none;transform:none}}
 html[data-motion=off] .project-card .project-preview{transition:none;transform:none}
