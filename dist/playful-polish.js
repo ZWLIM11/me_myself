@@ -3,7 +3,7 @@
   const menu=document.createElement('details');menu.className='explore-menu';
   const summary=document.createElement('summary');summary.textContent='Explore';
   const links=document.createElement('div');links.className='explore-dropdown';
-  for(const id of ['photography','beyond','playground','board-games']){const link=nav.querySelector(`[href="#${id}"]`);if(link)links.append(link);}
+  for(const id of ['photography','beyond','playground','board-games','books']){const link=nav.querySelector(`[href="#${id}"]`);if(link)links.append(link);}
   menu.append(summary,links);nav.querySelector('[href="#contact"]').before(menu);
   function mark(){const selected=links.querySelector('[aria-current="page"]');summary.classList.toggle('active',!!selected);summary.setAttribute('aria-label',selected?'Explore — '+selected.textContent:'Explore more pages');menu.open=false;}
   document.addEventListener('portfolio:pagechange',mark);mark();

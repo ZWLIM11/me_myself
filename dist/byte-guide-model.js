@@ -13,6 +13,7 @@
   ];
   window.getByteReply = input => {
     const text=String(input||'').trim().slice(0,300);
+    if(/books?|mockingbird|harper lee|reading/i.test(text))return {text:'The reading room begins with To Kill a Mockingbird by Harper Lee. Open it for a spoiler-light summary about empathy, justice, and growing up.',label:'Open the reading room',href:'#books'};
     if(/choose.*game|game.*choose/i.test(text))return {text:'For a classic board, try Arcane Chess. For a card-table setting, explore Monopoly Deal or The Liar’s Table. Hex & Holsters and Fortune Routes are also on the shelf—select a box to open it.',label:'Choose from the shelf',href:'#board-games'};
     if(/explain.*cluster/i.test(text))return {text:'Clustering groups nearby points. Each step moves every centre to the average of its group and then reassigns points to the nearest centre. The summary reports how many points changed groups and how far the centres moved.',label:'Try the clustering experiment',href:'#playground'};
     if(/explain.*reaction/i.test(text))return {text:'Complete five rounds: start, wait for Go, then tap. Early taps do not count. The page shows each result, your average, and the best time. Device delays affect these numbers.',label:'Try the reaction challenge',href:'#playground'};

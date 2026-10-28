@@ -41,7 +41,7 @@ const path=require('node:path');
         if(width===390||width===1440)await page.screenshot({path:path.join(out,`explore-${width}-${theme}.png`),fullPage:true});
       }
       await page.goto(base+'/#projects');
-      assert.equal(await page.locator('.header .theme-toggle').count(),1);
+      assert.equal(await page.locator('.header .theme-toggle').count(),1);assert.equal(await page.locator('.header-utilities .theme-toggle').count(),1);assert.ok(!(await page.locator('.header-utilities').textContent()).includes('null'));
       assert.equal(await page.locator('.chapter-controls .theme-toggle').count(),0);
       await page.locator('.explore-link').waitFor({state:'visible'});
       await page.evaluate(()=>location.hash='about');await page.locator('#about.active').waitFor();
@@ -59,7 +59,7 @@ const path=require('node:path');
       await page.locator('.explore-menu summary').click();await page.locator('.explore-dropdown a[href="#beyond"]').click();await page.locator('#beyond.active').waitFor();assert.equal(await page.locator('.explore-menu').getAttribute('open'),null);
       for(const theme of ['light','dark']){
         await page.locator('.theme-toggle').click();
-        for(const id of ['home','about','projects','photography','beyond','playground','board-games','contact']){
+        for(const id of ['home','about','projects','photography','beyond','playground','board-games','books','contact']){
           await page.evaluate(id=>location.hash=id,id);
           await page.locator('#'+id+'.active').waitFor({state:'visible'});
           await check(id+' '+theme);
@@ -80,6 +80,11 @@ const path=require('node:path');
       for(let i=0;i<5;i++){await page.locator('.game-box').nth(i).click();assert.equal(await page.locator('.shelf-actions a').getAttribute('href'),gameUrls[i]);assert.equal(await page.locator('.game-box[aria-pressed="true"]').count(),1);assert.equal(await page.locator('.shelf-actions a').getAttribute('target'),'_blank');assert.equal(await page.locator('#shelf-dialog').isVisible(),true);await check('selected game '+i);if(i===0)await page.screenshot({path:path.join(out,'game-dialog-'+width+'.png')});await page.keyboard.press('Escape');assert.equal(await page.locator('#shelf-dialog').isVisible(),false);assert.equal(await page.locator('.game-box').nth(i).evaluate(el=>el===document.activeElement),true);}
       await page.locator('.game-box').first().scrollIntoViewIfNeeded();await page.screenshot({path:path.join(out,'living-room-'+width+'.png'),fullPage:true});
       await page.locator('.byte-context-launch').click();assert.match(await page.locator('.byte-prompts').textContent(),/Help me choose a game/);await page.getByRole('button',{name:'Help me choose a game',exact:true}).click();assert.match(await page.locator('.byte-messages').textContent(),/Arcane Chess/);await page.locator('#byte-chat .close-dialog').click();
+      await page.evaluate(()=>location.hash='books');await page.locator('#books.active').waitFor();
+      assert.ok(await page.locator('.reading-book').evaluate(el=>el.getBoundingClientRect().right<=el.parentElement.getBoundingClientRect().right));await page.locator('.reading-book').click();assert.equal(await page.locator('#book-dialog').isVisible(),true);await page.keyboard.press('Escape');
+      assert.equal(await page.locator('.reading-book').evaluate(el=>el===document.activeElement),true);
+      await page.screenshot({path:path.join(out,'books-'+width+'.png'),fullPage:true});
+      await page.locator('.byte-context-launch').click();await page.getByRole('button',{name:'Tell me about Mockingbird',exact:true}).click();assert.match(await page.locator('.byte-messages').textContent(),/Harper Lee/);await page.locator('#byte-chat .close-dialog').click();
       for(const id of ['interview','ripple','makan-mana']){
         await page.goto(base+'/projects/'+id+'/');
         for(let i=0;i<2;i++){
@@ -92,6 +97,9 @@ const path=require('node:path');
     }
     const context=await browser.newContext({viewport:{width:390,height:844},reducedMotion:'no-preference'});
     const page=await context.newPage();await page.goto(base+'/');
+    await page.evaluate(()=>location.hash='books');
+    await page.waitForFunction(()=>document.querySelector('#main').getAnimations().some(a=>a.playState==='running'));
+    await page.waitForFunction(()=>!document.documentElement.classList.contains('is-routing'));
     await page.evaluate(()=>{location.hash='projects';setTimeout(()=>location.hash='contact',50);});
     await page.locator('#contact.active').waitFor();
     await page.waitForFunction(()=>!document.documentElement.classList.contains('is-routing'));
@@ -101,4 +109,3 @@ const path=require('node:path');
     assert.deepEqual(issues,[]);console.log('Passed theme persistence, filters, save/remove/reload, routes, rapid navigation, and overflow checks.');
   }finally{await browser?.close();server?.kill();}
 })().catch(error=>{console.error(error);process.exitCode=1;});
-

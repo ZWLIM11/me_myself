@@ -1,0 +1,26 @@
+/* Header utilities read as one compact group, rather than two floating pills. */
+.header .header-utilities{order:2;display:flex;align-items:center;flex-shrink:0;gap:0;border:1px solid var(--line);border-radius:12px;background:var(--surface);padding:4px}
+.header .header-utilities .resume-button{border:0;border-radius:8px;background:none;padding:10px 15px;min-height:40px;margin:0}
+.header .header-utilities .theme-toggle{border:0;border-left:1px solid var(--line);border-radius:0;background:none;margin:0;width:42px;min-height:36px;height:36px}
+.header .header-utilities button:hover{background:var(--bg)}
+/* Games have rigid lids, thick edges, and tabletop proportions. */
+.living-room .game-box{height:180px;transform:none;border-radius:7px;box-shadow:0 8px 0 #111,0 12px 14px #0006;border:1px solid #fff3}
+.living-room .box-spine{display:none}.living-room .box-cover{border-radius:6px;padding:12px;background-image:radial-gradient(circle at 80% 10%,#fff2,transparent 65%);border-bottom:7px solid #0004}
+.living-room .box-mark{margin:8px 0;width:38px;height:38px;font-size:25px}.living-room .box-cover strong{font:600 clamp(15px,1.4vw,20px)/1.1 Manrope,sans-serif}.living-room .box-number{letter-spacing:.14em}.living-room .box-edition{margin:5px 0}.living-room .box-foot{margin-top:auto}.living-room .game-box:before{display:none}
+.living-room .game-box:hover,.living-room .game-box:focus-visible{transform:translateY(-7px) rotate(-1deg)}
+#shelf-dialog .opened-book{width:125px;height:85px;border-radius:7px;transform:rotate(-3deg);box-shadow:0 7px 0 #0006;background:linear-gradient(180deg,#fff1,transparent),var(--book-color)}
+/* A separate reading room keeps books distinct from games. */
+.books-page{background:radial-gradient(ellipse at 85% 30%,#a9804722,transparent 60%)}
+.reading-room{display:grid;grid-template-columns:minmax(200px,320px) 1fr;align-items:center;gap:clamp(35px,8vw,120px);padding:40px;border:1px solid var(--line);border-bottom:14px solid #68533a;background:repeating-linear-gradient(90deg,transparent 0 200px,#a9804708 201px 202px),var(--surface);border-radius:12px}
+.reading-book{display:flex;flex-direction:column;align-items:center;justify-content:space-between;gap:20px;min-height:410px;width:100%;padding:32px 25px 25px 35px;border-radius:3px 9px 9px 3px;background:linear-gradient(90deg,#182c29 0 15px,#ffffff15 16px,transparent 20px),#36554c;border:1px solid #bda67688;box-shadow:7px 5px 0 #d9cfb1,12px 12px 24px #0003;color:#f3e8c8;transition:transform .25s}
+.reading-book:hover{transform:translateY(-6px) rotate(-2deg)}.book-author{font:10px monospace;letter-spacing:.25em}.book-bird{font-size:72px;color:#d8bb78}.reading-book strong{font:34px/1.15 Georgia,serif}.reading-book small{color:#e3d6b6}.book-open{font-size:11px;border-top:1px solid #d8bb7855;padding-top:18px;width:100%}.reading-note p{color:var(--muted);max-width:440px}
+#book-dialog{max-width:650px;padding:clamp(28px,5vw,48px);background:var(--bg)}#book-dialog h2{font:clamp(28px,5vw,42px)/1.15 Georgia,serif;margin-right:12px}#book-dialog p{line-height:1.8;color:var(--muted)}#book-dialog .eyebrow{margin-top:20px;color:var(--accent)}#book-dialog h3{font-size:18px}.book-themes{display:flex;flex-wrap:wrap;gap:8px;margin:25px 0}.book-themes span{border:1px solid var(--line);padding:8px 12px;border-radius:20px;font-size:12px}
+/* One visible chat launcher on every page; no repeated home/contact links. */
+.chapter-controls .byte-context-launch{position:fixed;z-index:25;right:24px;bottom:22px;display:flex;align-items:center;gap:12px;padding:12px 18px;border:1px solid var(--accent);border-radius:18px;background:var(--surface);color:var(--ink);box-shadow:0 8px 25px #0003;min-height:56px;font-size:13px}
+.byte-context-launch[hidden]{display:none!important}.byte-context-launch:after{display:none!important}.byte-launch-face{display:grid;place-items:center;width:32px;height:32px;border-radius:10px;background:var(--accent);color:var(--bg);font-size:24px}.byte-context-launch small{display:block;color:var(--muted);font-size:10px;margin-top:3px;letter-spacing:0}.byte-context-launch:hover .byte-launch-face{transform:rotate(-10deg)}
+.home-content .byte-chat-launch,.contact-content>.byte-chat-launch{display:none}.chapter-controls{padding-bottom:100px}
+@media(max-width:1150px){.header .header-utilities{margin-left:auto}.header .menu-toggle{order:4}.header .header-utilities .resume-button{padding:8px 10px}.header .header-utilities .theme-toggle{width:36px;flex-basis:36px}}
+@media(max-width:600px){.header .header-utilities{padding:2px}.reading-room{grid-template-columns:1fr;padding:24px}.reading-book{max-width:280px;justify-self:center;min-height:370px}.reading-note h2{font-size:29px}.living-room .game-box{height:195px}.living-room .box-cover{padding:10px 5px}.chapter-controls .byte-context-launch{right:14px;bottom:14px;padding:10px 12px;font-size:12px}.byte-context-launch small{display:none}}
+html[data-motion=off] .reading-book{transition:none;transform:none}@media(prefers-reduced-motion:reduce){.reading-book{transition:none;transform:none}}
+.reading-room>*{min-width:0}.reading-book{min-width:0}.reading-book strong{font-size:clamp(26px,3vw,34px)}
+@media(max-width:600px){.reading-room{grid-template-columns:minmax(0,1fr);padding:22px 16px}.reading-note{overflow-wrap:anywhere}.reading-note h2{font-size:27px}}

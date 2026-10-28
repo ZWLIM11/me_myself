@@ -1,7 +1,7 @@
 (() => {
   'use strict';
   const config = window.PORTFOLIO;
-  const pages = ['home','about','projects','photography','beyond','playground','board-games','contact'];
+  const pages = ['home','about','projects','photography','beyond','playground','board-games','books','contact'];
   const reduceMotion = (window.portfolioMotion || matchMedia('(prefers-reduced-motion: reduce)'));
   const nav = document.querySelector('.header nav');
   const menu = document.querySelector('.menu-toggle');
@@ -47,11 +47,11 @@
     main.setAttribute('aria-busy', 'true');
     const routeAnimations=[];
     try {
-      const departure=main.animate([{opacity:1},{opacity:0}],{duration:110,easing:'ease-out',fill:'forwards'});
+      const departure=main.animate([{opacity:1},{opacity:0}],{duration:160,easing:'ease-out',fill:'forwards'});
       routeAnimations.push(departure);await departure.finished.catch(()=>{});
       update();departure.cancel();
       if(!reduceMotion.matches){
-        const arrival=main.animate([{opacity:0,transform:`translateY(${direction*10}px)`},{opacity:1,transform:'none'}],{duration:260,easing:'cubic-bezier(.2,.7,.2,1)'});
+        const arrival=main.animate([{opacity:0,transform:`translateY(${direction*24}px)`},{opacity:1,transform:'none'}],{duration:420,easing:'cubic-bezier(.16,1,.3,1)'});
         routeAnimations.push(arrival);await arrival.finished.catch(()=>{});
       }
     } catch { if (current !== id) update(); }
