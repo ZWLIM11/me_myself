@@ -25,7 +25,8 @@
     if (!pages.includes(id)) id = 'home';
     const roomIds=['books','board-games','steam'];
     if(roomIds.includes(id)&&current!=='living-room'&&current!==id){id='living-room';history.replaceState(null,'','#living-room');}
-    const roomJourney=roomIds.includes(id)||roomIds.includes(current);
+    // Only crossing an interior doorway uses room effects; outside destinations own their transition.
+    const roomJourney=(current==='living-room'&&roomIds.includes(id))||(roomIds.includes(current)&&id==='living-room');
     closeMenu();
     if (navigating) { queuedPage = id; return; }
     if (current === id && !initial) return;
