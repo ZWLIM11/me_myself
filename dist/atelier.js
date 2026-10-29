@@ -57,9 +57,9 @@
     });
     select.hidden=true;select.after(chips);
     const reset=document.createElement('button');reset.type='button';reset.className='collection-reset text-link';reset.textContent='Reset filters';controls.append(reset);
-    function sync(){buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(select.selectedIndex===i)));reset.disabled=!input.value&&select.selectedIndex===0;}
-    reset.onclick=()=>{input.value='';select.selectedIndex=0;select.dispatchEvent(new Event('change',{bubbles:true}));input.dispatchEvent(new Event('input',{bubbles:true}));sync();input.focus();};
-    controls.addEventListener('input',sync);select.addEventListener('change',sync);sync();
+    function sync(){buttons.forEach((b,i)=>b.setAttribute('aria-pressed',String(select.selectedIndex===i)));reset.disabled=!input.value&&[...controls.querySelectorAll('select')].every(s=>s.selectedIndex===0);}
+    reset.onclick=()=>{input.value='';controls.querySelectorAll('select').forEach(s=>{s.selectedIndex=0;s.dispatchEvent(new Event('change',{bubbles:true}));});select.selectedIndex=0;select.dispatchEvent(new Event('change',{bubbles:true}));input.dispatchEvent(new Event('input',{bubbles:true}));sync();input.focus();};
+    controls.addEventListener('change',sync);controls.addEventListener('input',sync);select.addEventListener('change',sync);sync();
   });
   for(const [id,label] of Object.entries({books:'Study', 'board-games':'Play Room',steam:'Gaming Room'})){
     const page=document.getElementById(id);if(!page)continue;

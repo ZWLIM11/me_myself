@@ -25,7 +25,7 @@
   const footer=document.querySelector('.case-footer');
   if(footer){
     const nav=document.createElement('nav');nav.className='portfolio-footer-links';nav.setAttribute('aria-label','Portfolio pages');
-    nav.innerHTML=pages.map((id,index)=>`<a href="/#${id}"${id==='projects'?' aria-current="location"':''}>${labels[index]}</a>`).join('');
+    nav.innerHTML=pages.filter(id=>!['books','board-games','steam'].includes(id)).map(id=>`<a href="/#${id}"${id==='projects'?' aria-current="location"':''}>${labels[pages.indexOf(id)]}</a>`).join('');
     footer.prepend(nav);
   }
 })();

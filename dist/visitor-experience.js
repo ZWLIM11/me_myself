@@ -14,8 +14,8 @@
   const button=document.createElement('button');button.className='text-link demo-toggle';button.type='button';button.textContent='Preview interaction';button.setAttribute('aria-expanded','false');button.setAttribute('aria-controls',panel.id);item.append(button,panel);
   let pinned=false;
   const show=on=>{panel.hidden=!on;button.setAttribute('aria-expanded',String(on));button.textContent=on?'Close preview':'Preview interaction';};
-  button.onclick=()=>{pinned=!pinned;show(pinned);};document.addEventListener('portfolio:pagechange',()=>{pinned=false;show(false);});
-  item.addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'&&!reduced())show(true);});
+  button.onclick=()=>{pinned=!pinned;show(pinned);if(pinned)panel.scrollIntoView({block:'nearest',behavior:reduced()?'instant':'smooth'});};document.addEventListener('portfolio:pagechange',()=>{pinned=false;show(false);});
+  item.querySelector('.project-card').addEventListener('pointerenter',e=>{if(e.pointerType==='mouse'&&!reduced())show(true);});
   item.addEventListener('pointerleave',()=>{if(!pinned)show(false);});
   item.addEventListener('keydown',e=>{if(e.key==='Escape'){pinned=false;show(false);button.focus();}});
  });}
