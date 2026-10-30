@@ -10,7 +10,6 @@
   const infoDialog = document.querySelector('#info-dialog');
   const curtain=document.createElement('div');curtain.id='page-curtain';curtain.setAttribute('aria-hidden','true');curtain.innerHTML='<span></span>';document.body.append(curtain);
   let current = 'home';
-  const visitedPages=new Set();
   const pagePositions={};
   let transition;
   let navigating = false;
@@ -36,7 +35,6 @@
     document.documentElement.style.setProperty('--page-direction', direction);
     const update = () => {
       if(!initial){saveProjectVisit();pagePositions[current]=scrollY;}
-      visitedPages.add(id);
       for (const page of document.querySelectorAll('.page')) { page.hidden = page.id !== id; page.classList.toggle('active', page.id === id); }
       document.querySelectorAll('.header nav a').forEach(link => { const active = link.hash === '#' + id; link.classList.toggle('active', active); if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); });
       document.querySelector('#page-number').textContent = String(pages.indexOf(id) + 1).padStart(2, '0');
@@ -52,7 +50,7 @@
     document.documentElement.classList.add('is-routing');
     const main = document.querySelector('#main');
     main.setAttribute('aria-busy', 'true');
-    const quick=document.documentElement.dataset.transitionSpeed==='quick'||visitedPages.has(id);
+    const quick=document.documentElement.dataset.transitionSpeed==='quick';
     document.documentElement.classList.toggle('repeat-visit',quick);
     let skipped=false;
     const duration=ms=>skipped?1:quick?Math.round(ms*.4):ms;
