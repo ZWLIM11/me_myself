@@ -1,0 +1,36 @@
+/* Arched private rooms: emerald, timber and champagne, with a sage daylight palette. */
+#living-room{--room-wall:#22362e;--room-door:#12241e;--room-text:#f3eedf;--room-muted:#b7c4ba;--room-brass:#c5b383;--room-wood:#71664b}
+html[data-theme=light] #living-room{--room-wall:#d7ddca;--room-door:#c4cebb;--room-text:#20382d;--room-muted:#425849;--room-brass:#705525;--room-wood:#82704e}
+#living-room>h1{font-family:Georgia,'Times New Roman',serif;font-size:clamp(42px,5.6vw,84px);line-height:1.08;max-width:1000px;letter-spacing:-.04em}
+#living-room>.new-intro{max-width:620px;margin-bottom:38px}
+#living-room .living-room-scene{border:1px solid var(--line);border-radius:120px 120px 12px 12px;background:var(--room-wall);box-shadow:inset 0 12px 50px #0002;isolation:isolate}
+#living-room .room-doors{grid-template-columns:repeat(3,minmax(0,1fr));gap:6%;padding:65px 6% 0;background:transparent;border:0;border-radius:0;perspective:1200px}
+#living-room .room-doors>a{display:flex;flex-direction:column;align-items:center;justify-content:flex-end;text-align:center;min-height:390px;box-sizing:border-box;padding:38px 22px 30px;border:10px solid var(--room-wood);border-bottom:0;border-radius:120px 120px 0 0;background:var(--room-door);color:var(--room-text);box-shadow:9px 8px 18px #0003;transition:transform .4s cubic-bezier(.2,.7,.2,1),box-shadow .4s,border-color .4s;overflow:hidden;text-decoration:none}
+#living-room .room-doors>a:before{content:'';position:absolute;inset:16px;border:1px solid color-mix(in srgb,var(--room-brass) 35%,transparent);border-radius:100px 100px 0 0;pointer-events:none;background:none}
+#living-room .room-doors>a:after{display:none}
+#living-room .room-doors>a>span{font-size:10px;letter-spacing:.14em;color:var(--room-muted);margin-bottom:16px}
+#living-room .room-doors b{float:none;border:0;padding:0;margin:8px 0 16px;line-height:0}
+#living-room .room-doors svg{width:68px;height:68px;stroke:var(--room-brass);fill:none;stroke-width:1.3}
+#living-room .room-doors h2{font:clamp(22px,2.3vw,32px)/1.2 Georgia,serif;color:var(--room-text);margin:12px 0}
+#living-room .room-doors p{font-size:13px;line-height:1.6;color:var(--room-muted);margin:0 0 22px;max-width:21ch;min-height:42px}
+#living-room .room-doors strong{font-family:inherit;font-size:12px;line-height:1.6;color:var(--room-brass);margin:0}
+#living-room .room-handle{right:12px;top:53%;width:7px;height:30px;background:linear-gradient(90deg,#947342,#dfc58c);box-shadow:2px 3px 4px #0004}
+#living-room .room-doors>a:focus-visible{outline:3px solid var(--room-brass);outline-offset:5px}
+#living-room .lobby-furniture{height:115px;background:repeating-linear-gradient(100deg,#8c735022 0 100px,#8c735044 101px 103px);border-top:8px solid var(--room-wood);overflow:visible}
+#living-room .lobby-furniture> :not(.room-bench){display:none}
+.room-bench{position:absolute;bottom:38px;left:35%;width:30%;height:28px;border-radius:6px;background:linear-gradient(#97805b,#796546);box-shadow:0 14px 18px #0003}
+.room-bench:before,.room-bench:after{content:'';position:absolute;top:27px;width:8px;height:22px;background:#796546}.room-bench:before{left:12%}.room-bench:after{right:12%}
+#living-room .game-chooser{position:relative;margin:4px auto 34px;width:88%;box-sizing:border-box;border:1px solid var(--line);border-top:5px solid var(--room-wood);border-radius:12px;background:var(--bg);box-shadow:0 8px 20px #0002}
+#books .reading-room{border-radius:16px;background:radial-gradient(ellipse at 85% 0,#c9a46d20,transparent 55%),var(--surface)}
+#books .study-shelves{border-color:#695038;border-radius:8px;box-shadow:inset 0 15px 24px #0008,0 10px 22px #0002}
+#books .study-desk{border-radius:10px 10px 3px 3px}
+#board-games .glass-cabinet{border-color:#5b7068;border-radius:16px;box-shadow:inset 0 1px 0 #fff3,0 12px 30px #0002}
+#board-games .glass-cabinet .game-rack{background:linear-gradient(115deg,#d4efeb18,transparent 30%,#d4efeb08 65%),#183b31;border-radius:6px}
+html[data-theme=light] #board-games .glass-cabinet .game-rack{background:linear-gradient(115deg,#ffffff66,transparent 32%),#c4d2c6}
+#steam .gaming-station{background:radial-gradient(ellipse at 50% 40%,#53829844,transparent 70%),repeating-linear-gradient(90deg,#233135 0 65px,#152023 66px 70px);box-shadow:inset 0 1px 0 #ffffff20,0 10px 25px #0002}
+html[data-theme=light] #steam .gaming-station{background:radial-gradient(ellipse at 50% 40%,#7daeb944,transparent 70%),repeating-linear-gradient(90deg,#d3dcdb 0 65px,#bdcac8 66px 70px)}
+@media(hover:hover){#living-room .room-doors>a:hover{transform:translateY(-6px);border-color:var(--room-brass);box-shadow:10px 18px 25px #0004}}
+@media(max-width:900px){#living-room .living-room-scene{border-radius:65px 65px 12px 12px}#living-room .room-doors{gap:3%;padding:45px 4% 0}#living-room .room-doors>a{padding:30px 12px 24px;border-width:7px;min-height:350px}#living-room .room-doors h2{font-size:24px}}
+@media(max-width:700px){#living-room .living-room-scene{border-radius:50px 50px 12px 12px}#living-room .room-doors{grid-template-columns:1fr;gap:24px;padding:36px 24px 0}#living-room .room-doors>a{min-height:270px;padding:24px 28px;border-radius:85px 85px 0 0;border-bottom:7px solid var(--room-wood)}#living-room .room-doors svg{width:46px;height:46px}#living-room .room-doors b{margin:0 0 6px}#living-room .room-doors p{min-height:0;max-width:none;margin-bottom:16px}#living-room .lobby-furniture{height:78px}.room-bench{left:25%;width:50%;bottom:30px;height:20px}.room-bench:before,.room-bench:after{top:19px;height:16px}#living-room .game-chooser{width:calc(100% - 32px);margin-bottom:24px}}
+@media(prefers-reduced-motion:reduce){#living-room .room-doors>a{transition:none;animation:none;transform:none}}
+html[data-motion=off] #living-room .room-doors>a{transition:none;animation:none;transform:none}
