@@ -10,6 +10,8 @@
   const infoDialog = document.querySelector('#info-dialog');
   const curtain=document.createElement('div');curtain.id='page-curtain';curtain.setAttribute('aria-hidden','true');curtain.innerHTML='<span></span>';document.body.append(curtain);
   let current = 'home';
+  const visitedPages=new Set();
+  const pagePositions={};
   let transition;
   let navigating = false;
   let queuedPage = null;
@@ -33,14 +35,15 @@
     const direction = pages.indexOf(id) >= pages.indexOf(current) ? 1 : -1;
     document.documentElement.style.setProperty('--page-direction', direction);
     const update = () => {
-      if(!initial)saveProjectVisit();
+      if(!initial){saveProjectVisit();pagePositions[current]=scrollY;}
+      visitedPages.add(id);
       for (const page of document.querySelectorAll('.page')) { page.hidden = page.id !== id; page.classList.toggle('active', page.id === id); }
       document.querySelectorAll('.header nav a').forEach(link => { const active = link.hash === '#' + id; link.classList.toggle('active', active); if (active) link.setAttribute('aria-current', 'page'); else link.removeAttribute('aria-current'); });
       document.querySelector('#page-number').textContent = String(pages.indexOf(id) + 1).padStart(2, '0');
       document.title = `${id === 'home' ? 'Data & Possibility' : id[0].toUpperCase() + id.slice(1)} — Lim Ziwei`;
       current = id;
       if (!initial) document.getElementById(id).classList.add('has-entered');
-      window.scrollTo({top:id==='projects'?projectVisit.y:0,behavior:'instant'});
+      window.scrollTo({top:pagePositions[id]??(id==='projects'?projectVisit.y:0),behavior:'instant'});
       if (!initial) document.querySelector('#main').focus({preventScroll:true});
       document.dispatchEvent(new CustomEvent('portfolio:pagechange'));
     };
@@ -49,7 +52,8 @@
     document.documentElement.classList.add('is-routing');
     const main = document.querySelector('#main');
     main.setAttribute('aria-busy', 'true');
-    const quick=document.documentElement.dataset.transitionSpeed==='quick';
+    const quick=document.documentElement.dataset.transitionSpeed==='quick'||visitedPages.has(id);
+    document.documentElement.classList.toggle('repeat-visit',quick);
     let skipped=false;
     const duration=ms=>skipped?1:quick?Math.round(ms*.4):ms;
     const routeAnimations=[];
@@ -73,7 +77,7 @@
       routeAnimations.forEach(animation=>animation.cancel());
       transition = null;
       navigating = false;
-      document.documentElement.classList.remove('is-routing');
+      document.documentElement.classList.remove('is-routing','repeat-visit');
       main.removeAttribute('aria-busy');
       document.dispatchEvent(new CustomEvent('portfolio:transitionend'));
       const next = queuedPage; queuedPage = null;
